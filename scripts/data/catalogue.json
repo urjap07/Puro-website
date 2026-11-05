@@ -1,0 +1,583 @@
+[
+  {
+    "id": 1,
+    "name": "Good Cleanse Face Wash",
+    "category": "Face Wash",
+    "subCategory": "Facial Cleanser",
+    "certifications": [
+      "GMP Certified",
+      "Cruelty-Free (PETA)",
+      "Non-Toxic",
+      "Dermatologically Tested",
+      "FDA Approved"
+    ],
+    "price": 450,
+    "sizeLabel": "100 ml",
+    "keyIngredients": "Turmeric (high curcumin), Aloe Vera, Licorice",
+    "shelfLife": "18 months from date of manufacture",
+    "storage": "Store in cool, dry place away from direct sunlight",
+    "headline": "Farewell grease, hello clear bright skin",
+    "skinType": "Oily to Combination Skin",
+    "tagline": "Clarify it, flaunt it, naturally.",
+    "description": "Embark on a tranquil journey to reveal clean, radiant, supple, and refreshed skin with our essential daily cleanser. This gentle formula banishes excess oil, clears pores, and combats breakouts, without harsh synthetic thickeners. Enriched with the divine aroma of Sandalwood and Saffron, immerse yourself in a magical cleansing ritual!",
+    "benefits": [
+      "Retains skin's essential nutrients",
+      "Cleanses with soothing aroma of sandalwood & saffron",
+      "Enriches with minerals, vitamins & antioxidants",
+      "Controls oil production and clears pores"
+    ],
+    "howToUse": "Dampen your skin and apply 2-3 pumps of the cleanser & work up a lather. Gently massage in small circular motions for a minute & rinse off. For best results use twice daily."
+  },
+  {
+    "id": 2,
+    "name": "HydrO'Clock Foaming Facewash",
+    "category": "Face Wash",
+    "subCategory": "Facial Cleanser",
+    "certifications": [
+      "GMP Certified",
+      "Cruelty-Free (PETA)",
+      "Non-Toxic",
+      "Dermatologically Tested",
+      "FDA Approved"
+    ],
+    "price": 540,
+    "sizeLabel": "100 ml",
+    "keyIngredients": "Aquaxyl™, Vitamin E, Pro Vitamin B5, Saffron",
+    "shelfLife": "18 months from date of manufacture",
+    "storage": "Store in cool, dry place away from direct sunlight",
+    "headline": "Deep hydration & renewed barrier defence",
+    "skinType": "All Skin Types",
+    "tagline": "Quench it, flaunt it, naturally.",
+    "description": "Unlock radiant skin with our luxuriously foaming face wash! Delve into a world of intense hydration and revitalization with carefully crafted formula that optimises water reserves & maximizes water circulation between layers. Packed with all the good stuff your skin craves, it's like a splash of joy for your skin, leaving it soft, smooth, & nourished. Brace yourself for this bubbly adventure in every wash!",
+    "benefits": [
+      "Achieves intense hydration and revitalization",
+      "All-natural, skin-loving ingredients",
+      "Smooths fine lines for youthful look",
+      "Improves skin texture with consistent use"
+    ],
+    "howToUse": "Pump twice to directly foam. Massage onto damp face for 1 minute to allow ingredients to work. For best results use twice a day."
+  },
+  {
+    "id": 3,
+    "name": "Glow Up Pithi Pack",
+    "category": "Face & Body Pack",
+    "subCategory": "Mask / Pack",
+    "certifications": [
+      "GMP Certified",
+      "Cruelty-Free (PETA)",
+      "Non-Toxic",
+      "Dermatologically Tested",
+      "FDA Approved"
+    ],
+    "price": 765,
+    "sizeLabel": "100 g",
+    "keyIngredients": "Home-grown Turmeric, Saffron, Rice Bran Oil, Natural Clays",
+    "shelfLife": "18 months from date of manufacture",
+    "storage": "Store in cool, dry place away from direct sunlight",
+    "headline": "Timeless formula for radiant soft skin",
+    "skinType": "All Skin Types (Face & Body)",
+    "tagline": "Brighten it, flaunt it, naturally.",
+    "description": "Pithi is traditionally known as a beauty ritual before the wedding that uses the age old potent ingredient, turmeric. We went a step ahead to formulate our signature Sandalwood Saffron Pithi, a blend of super ingredients that brighten, tone & revive the glow skin to your special day. Pithi is age-old wisdom in a tube!",
+    "benefits": [
+      "Brightens, tones and revitalises skin",
+      "Maintains skin moisture and elasticity",
+      "Anti-aging benefits",
+      "Promotes smoother, healthier skin"
+    ],
+    "howToUse": "After cleansing, apply a thick layer on face & body, avoiding the eye area. Leave on for 20 mins till dry. Rinse clean. Slight tingling sensation is normal as the product repairs your skin. Avoid sun exposure for 2 hours after use. For best results, cleanse, tone, scrub, apply pithi, rinse, moisturize & layer with sunscreen. Use weekly."
+  },
+  {
+    "id": 4,
+    "name": "Vita Clay Ubtan Pack",
+    "category": "Face & Body Pack",
+    "subCategory": "Mask / Pack",
+    "certifications": [
+      "GMP Certified",
+      "Cruelty-Free (PETA)",
+      "Non-Toxic",
+      "Dermatologically Tested",
+      "FDA Approved"
+    ],
+    "price": 765,
+    "sizeLabel": "100 g",
+    "keyIngredients": "Volcanic Clays, Natural Citrus Oils rich in Vit C, Licorice",
+    "shelfLife": "18 months from date of manufacture",
+    "storage": "Store in cool, dry place away from direct sunlight",
+    "headline": "Oil-control, tan removal & pore tightening",
+    "skinType": "Oily to Combination Skin (Face & Body)",
+    "tagline": "Detoxify it, flaunt it, naturally.",
+    "description": "Your search for flawless skin ends here. Ubtan pack is formulated to fight blemishes, remove stubborn dirt, grime, tan & firm skin. All this with a delightful citrusy fragrance. This pack is the essential step towards youthful skin. So make way for the real skincare influencer!",
+    "benefits": [
+      "Removes blemishes and dirt",
+      "Protects from signs of aging",
+      "Removes tan and minimises pores",
+      "Detoxifies and brightens skin"
+    ],
+    "howToUse": "After cleansing, apply a thick layer on face & body, avoiding the eye area. Leave on for 20 mins till dry. Rinse clean. Slight tingling sensation is normal as the product repairs your skin. Avoid sun exposure for 2 hours after use. For best results, cleanse, tone, scrub, apply ubtan, rinse, apply Soothing Gel & layer with sunscreen. Use weekly."
+  },
+  {
+    "id": 5,
+    "name": "Scrubulush Exfoliator",
+    "category": "Body Scrub / Exfoliator",
+    "subCategory": "Exfoliator",
+    "certifications": [
+      "GMP Certified",
+      "Cruelty-Free (PETA)",
+      "Non-Toxic",
+      "Dermatologically Tested",
+      "FDA Approved"
+    ],
+    "price": 765,
+    "sizeLabel": "100 g",
+    "keyIngredients": "Rice Extracts, Olive Oil, Walnut, Natural Vitamin E, Home-grown Turmeric",
+    "shelfLife": "18 months from date of manufacture",
+    "storage": "Store in cool, dry place away from direct sunlight",
+    "headline": "Body scrub for soft youthful skin",
+    "skinType": "Normal to Dry Skin (Face & Body)",
+    "tagline": "Polish it, flaunt it, naturally.",
+    "description": "Healthy skin is not far behind. It's right under the dead cells on the surface of your skin that needs regular exfoliation. Puro's creamy Rose Vanilla body scrub not only removes dead skin build up but also maintains skin elasticity, provides moisturization & evens out the skin tone. It's like a palette cleanser that increases the efficacy of other skin care products!",
+    "benefits": [
+      "Eliminates dead skin buildup",
+      "Hydrates and moisturises skin",
+      "Prevents signs of aging",
+      "Achieves even skin tone"
+    ],
+    "howToUse": "Gently massage onto damp skin in circular motion. Rinse clean. For best results, cleanse, tone, exfoliate, apply Pithi or Ubtan pack, moisturize & layer on sunscreen. Use twice a week."
+  },
+  {
+    "id": 6,
+    "name": "Aquench Soothing Hydrogel",
+    "category": "Moisturiser / Gel",
+    "subCategory": "Gel Moisturiser",
+    "certifications": [
+      "GMP Certified",
+      "Cruelty-Free (PETA)",
+      "Non-Toxic",
+      "Dermatologically Tested",
+      "FDA Approved"
+    ],
+    "price": 693,
+    "sizeLabel": "100 g",
+    "keyIngredients": "Aloe Vera, Witch Hazel, Licorice, 5 Essential Oils",
+    "shelfLife": "18 months from date of manufacture",
+    "storage": "Store in cool, dry place away from direct sunlight",
+    "headline": "Repairs heat & pollution damage",
+    "skinType": "All Skin Types (Face & Body)",
+    "tagline": "Cool it, flaunt it, naturally.",
+    "description": "This versatile product addresses your skin concerns like heat boils, skin irritation, sunburn, tan, or redness specially post threading & waxing. Its a boost of intense hydration smartly combined with essential oils for its anti-inflammatory properties. Let your skin drink up this gel based formula, specially useful for combination & oily skin type to replenish & repair it.",
+    "benefits": [
+      "Soothing hydration after heat/pollution/threading/waxing",
+      "Quick absorption for immediate relief",
+      "Non-greasy; soft after-feel",
+      "Promotes healing and reduces redness"
+    ],
+    "howToUse": "Apply the cooling gel liberally onto the skin & gently massage until absorbed. Use every night after cleansing & toning skin. Slight tingling sensation is normal as the product repairs the skin."
+  },
+  {
+    "id": 7,
+    "name": "Aqua Riche Night Repair Gel Cream",
+    "category": "Night Cream / Gel Cream",
+    "subCategory": "Night Cream",
+    "certifications": [
+      "GMP Certified",
+      "Cruelty-Free (PETA)",
+      "Non-Toxic",
+      "Dermatologically Tested",
+      "FDA Approved"
+    ],
+    "price": 720,
+    "sizeLabel": "50 g",
+    "keyIngredients": "Aquaxyl™, Aloe Vera, Ceramide building Natural Oils",
+    "shelfLife": "18 months from date of manufacture",
+    "storage": "Store in cool, dry place away from direct sunlight",
+    "headline": "Wake up to ultra-soft skin",
+    "skinType": "Normal to Dry Skin (Face & Body)",
+    "tagline": "Renew it, flaunt it, naturally.",
+    "description": "Say hello to your new skin obsession. With each use, our non-greasy, nutrient-rich night repair formula works tirelessly to restore your skin's natural radiance. Infused with 3D hydration tech & an anti-dehydration shield, it provides a superhero boost to your skin barrier in just 24 hours. Wake up to velvety, supple and intensely hydrated skin every morning!",
+    "benefits": [
+      "Softer, smoother skin in just 28 days",
+      "Diminishes appearance of fine lines",
+      "Essential minerals, vitamins and antioxidants",
+      "3D hydration tech & anti-dehydration shield"
+    ],
+    "howToUse": "Begin with HydrO'Clock Foaming Face wash, then generously apply the gel cream, massaging it in circular motions. Wake up to visible results after just one use, and witness ongoing improvement with each application. Commit to this nightly regimen for best results"
+  },
+  {
+    "id": 8,
+    "name": "Supple Goals Body Balm",
+    "category": "Body Balm",
+    "subCategory": "Body Moisturiser",
+    "certifications": [
+      "GMP Certified",
+      "Cruelty-Free (PETA)",
+      "Non-Toxic",
+      "Dermatologically Tested",
+      "FDA Approved"
+    ],
+    "price": 540,
+    "sizeLabel": "40 g",
+    "keyIngredients": "Mustard Oil, Rice Bran Oil, Olive Oil, Glycerin, Geranium",
+    "shelfLife": "18 months from date of manufacture",
+    "storage": "Store in cool, dry place away from direct sunlight",
+    "headline": "Repairs dry damaged skin",
+    "skinType": "Dry to Damaged Skin (Face & Body)",
+    "tagline": "Rescue it, flaunt it, naturally.",
+    "description": "Indulge in our gold standard skin salve, a powerhouse blend crafted to revive supremely dry and compromised skin. From scaly arms to cracked heels and parched legs, this balm deeply hydrates, locks in moisture, and restores skin smoothness. Welcome to a new era of nourishment and vitality—your ultimate solution for dry skin concerns.",
+    "benefits": [
+      "Deep hydration; restores smoothness",
+      "Essential minerals and vitamins",
+      "Antioxidants to firm and tighten skin",
+      "Locks in moisture to prevent dryness"
+    ],
+    "howToUse": "Use the balm in small amounts & rub into areas that need relief from chapped skin. Apply daily. Product may leave oil stains on clothes, pillows so please take necessary precautions."
+  },
+  {
+    "id": 9,
+    "name": "SheaVibe Lotion",
+    "category": "Body Lotion",
+    "subCategory": "Body Moisturiser",
+    "certifications": [
+      "GMP Certified",
+      "Cruelty-Free (PETA)",
+      "Non-Toxic",
+      "Dermatologically Tested",
+      "FDA Approved"
+    ],
+    "price": 700,
+    "sizeLabel": "200 ml",
+    "keyIngredients": "Shea Butter, Cocoa Butter, Aquaxyl™, Natural Oils",
+    "shelfLife": "18 months from date of manufacture",
+    "storage": "Store in cool, dry place away from direct sunlight",
+    "headline": "7-Day Hydration, Skin Barrier Defence",
+    "skinType": "All Skin Types",
+    "tagline": "Soften it, flaunt it, naturally.",
+    "description": "Step into the world of skincare luxury with our hydrating lotion, powered by Aquaxyl™ for deep, 7-day moisture retention. It fortifies skin barrier, enhancing natural hyaluronic acid production. Shea & Cocoa butters pamper every layer, leaving skin irresistibly soft & moisturized. Aloe Vera soothes, while Jojoba & Grapeseed oils infuse natural ceramides that defy ageing. Experience unmistakable radiance as your skin absorbs unparalleled hydration & rejuvenates.",
+    "benefits": [
+      "7-day deep hydration",
+      "Strengthens skin barrier",
+      "Firms and regenerates skin",
+      "Soothes skin, promotes faster healing"
+    ],
+    "howToUse": "Gently massage in circular motion until the skin absorbs it completely. For best results, use daily on sightly damp skin just after a bath or shower."
+  },
+  {
+    "id": 10,
+    "name": "Aloe Vibe Shower Gel",
+    "category": "Shower Gel / Body Wash",
+    "subCategory": "Body Wash",
+    "certifications": [
+      "GMP Certified",
+      "Cruelty-Free (PETA)",
+      "Non-Toxic",
+      "Dermatologically Tested",
+      "FDA Approved"
+    ],
+    "price": 450,
+    "sizeLabel": "200 ml",
+    "keyIngredients": "Aloe Vera, Glycerin",
+    "shelfLife": "18 months from date of manufacture",
+    "storage": "Store in cool, dry place away from direct sunlight",
+    "headline": "Hydrating, Refreshing Daily Ritual",
+    "skinType": "All Skin Types (incl. Sensitive)",
+    "tagline": "Refresh it, flaunt it, naturally.",
+    "description": "Experience the soothing power of aloe vera combined with the moisturizing magic of glycerin. Gentle yet effective, our formula cleanses without drying, leaving your skin feeling fresh, nourished & hydrated with every wash.",
+    "benefits": [
+      "Deep moisturisation",
+      "Hydrates & softens skin",
+      "Calms and soothes irritation",
+      "Improves skin texture"
+    ],
+    "howToUse": "Apply to wet skin, lather, and gently massage for a refreshing cleanse. For best results, use with a loofah. Rinse thoroughly & enjoy soft, nourished skin daily."
+  },
+  {
+    "id": 11,
+    "name": "Terra Tress Hair & Scalp Oil",
+    "category": "Hair & Scalp Oil",
+    "subCategory": "Hair Care",
+    "certifications": [
+      "GMP Certified",
+      "Cruelty-Free (PETA)",
+      "Non-Toxic",
+      "Dermatologically Tested",
+      "FDA Approved"
+    ],
+    "price": 500,
+    "sizeLabel": "100 ml",
+    "keyIngredients": "Lavender, Rosemary, Natural Vitamin E",
+    "shelfLife": "18 months from date of manufacture",
+    "storage": "Store in cool, dry place away from direct sunlight",
+    "headline": "Stimulates Growth, Soothes Scalp & Adds Shine",
+    "skinType": "All Hair Types",
+    "tagline": "Strengthen it, flaunt it, naturally.",
+    "description": "Introducing our ultimate hair care solution, meticulously crafted to elevate your hair care ritual. Our luxurious oil blend is your go-to to achieve irresistibly soft, smooth hair. Lightweight & fast-absorbing, it effortlessly revitalizes strands, deeply nourishing and improving texture. Experience the transformative power as your hair absorbs its enriching nutrients, promoting a healthy scalp & vibrant hair.",
+    "benefits": [
+      "Deeply hydrates and repairs hair",
+      "Frizz-free hair and natural shine",
+      "Strengthens hair and revitalises scalp",
+      "Protects from damage"
+    ],
+    "howToUse": "Dispense a few pumps of oil lightly heated or warmed between palms. Gently massage into scalp & hair for 10-15 mins. For best results, wrap hair in a warm cloth for 30 mins. Rinse thoroughly with shampoo using normal to cold water. If you have oily skin, avoid leaving the oil overnight."
+  },
+  {
+    "id": 12,
+    "name": "Coco Silk Cold-Pressed Virgin Coconut Oil",
+    "category": "Hair & Scalp Oil",
+    "subCategory": "Multi-Use",
+    "certifications": [
+      "GMP Certified",
+      "Cruelty-Free (PETA)",
+      "Non-Toxic",
+      "Dermatologically Tested",
+      "FDA Approved"
+    ],
+    "price": 500,
+    "sizeLabel": "100 ml",
+    "keyIngredients": "Natural Vitamins, Phytosterol, Organic Squalene",
+    "shelfLife": "18 months from date of manufacture",
+    "storage": "Store in cool, dry place away from direct sunlight",
+    "headline": "Softens Hair, Tones & Repairs Skin",
+    "skinType": "All Hair & Skin Types",
+    "tagline": "Nourish it, flaunt it, naturally.",
+    "description": "Experience the pure essence of tropical luxury. Cold-pressed from fresh coconuts, this elixir is a natural wonder, rich in moisture-locking properties for radiant skin, soft lips, nourished cuticles & lustrous hair. Elevate your beauty ritual with nature's finest.",
+    "benefits": [
+      "Hydrates skin, hair and lips",
+      "Protects hair from dryness",
+      "Strengthens & protects skin",
+      "Moisturises and softens lips"
+    ],
+    "howToUse": "Massage onto skin/lips/cuticles for deep hydration, or hair & scalp for lustrous shine. Leave on for atleast 30 mins while it nourishes, rejuvenates, and repairs skin barrier. Can also be used as a carrier oil to dilute concentrated/essential oils like Puro's Buzz knight Anti-Mosquito Oil."
+  },
+  {
+    "id": 13,
+    "name": "Good Cleanse Bathing Bar",
+    "category": "Bathing Bar / Soap",
+    "subCategory": "Soap Bar",
+    "certifications": [
+      "GMP Certified",
+      "Cruelty-Free (PETA)",
+      "Non-Toxic",
+      "Dermatologically Tested",
+      "FDA Approved",
+      "Artisanal"
+    ],
+    "price": 144,
+    "sizeLabel": "100 g",
+    "keyIngredients": "Turmeric Extract, Licorice Extract",
+    "shelfLife": "24 months from date of manufacture",
+    "storage": "Store in cool, dry place away from direct sunlight",
+    "headline": "Glow made refreshingly simple",
+    "skinType": "All Skin Types",
+    "tagline": "Brighten it, flaunt it, naturally.",
+    "description": "Brighten up, superstar! This skin-loving bar gently refreshes dull-looking skin, keeps hydration in check, and leaves it feeling smooth, soft, and happy. It’s like sunshine and sass in one feel-good, radiant lather.",
+    "benefits": [
+      "Licorice & Turmeric enhance skin clarity and even tone",
+      "Gentle cleanse supporting fresh, healthy appearance",
+      "Skin feels soft, smooth and comfortable after every wash",
+      "Glow the way nature intended"
+    ],
+    "howToUse": "Apply the soap to wet skin, then rinse thoroughly."
+  },
+  {
+    "id": 14,
+    "name": "Wild Rose Bathing Bar",
+    "category": "Bathing Bar / Soap",
+    "subCategory": "Soap Bar",
+    "certifications": [
+      "GMP Certified",
+      "Cruelty-Free (PETA)",
+      "Non-Toxic",
+      "Dermatologically Tested",
+      "FDA Approved",
+      "Artisanal"
+    ],
+    "price": 144,
+    "sizeLabel": "100 g",
+    "keyIngredients": "Geranium Essential Oil, Olive Oil",
+    "shelfLife": "24 months from date of manufacture",
+    "storage": "Store in cool, dry place away from direct sunlight",
+    "headline": "Soft, supple, subtle glow",
+    "skinType": "All Skin Types",
+    "tagline": "Nourish it, flaunt it, naturally.",
+    "description": "This isn’t your average floral fix. Wild Rose Soap brings a soft, smooth feel with every wash—hydrating humectants meet plant-based care to gently cleanse and comfort the skin. Say hello to fresh, happy skin that feels naturally renewed.",
+    "benefits": [
+      "Geranium & Olive oil condition skin and maintain moisture balance",
+      "Cleanses without stripping; leaves skin supple and refreshed",
+      "Smooth, comfortable skin with light floral finish",
+      "Glow the way nature intended"
+    ],
+    "howToUse": "Apply the soap to wet skin, then rinse thoroughly."
+  },
+  {
+    "id": 15,
+    "name": "Buzz Knight - Diffuser Aromatherapy",
+    "category": "Wellness",
+    "subCategory": "Diffuser Oil",
+    "certifications": [
+      "GMP Certified",
+      "Cruelty-Free (PETA)",
+      "Non-Toxic",
+      "Dermatologically Tested",
+      "FDA Approved"
+    ],
+    "price": 540,
+    "sizeLabel": "30 ml",
+    "keyIngredients": "Lemongrass & Citronella",
+    "shelfLife": "18 months from date of manufacture",
+    "storage": "Store in cool, dry place away from direct sunlight",
+    "headline": "Fresh Vibes, All Day",
+    "skinType": null,
+    "tagline": "Simply calm, simply fresh, naturally",
+    "description": "Meet Buzz Knight-your fresh-going, calm-carrying aroma blend. With bright, clean citrus notes and a cool herbal finish, this lightweight blend keeps your vibe feeling balanced, breezy, and unbothered.",
+    "benefits": [
+      "Naturally Fresh, All-Day Ambience",
+      "Multiple Ways to Use, One Bottle",
+      "Calms Your Mind, Lifts Your Mood",
+      "Naturally Repels Insects"
+    ],
+    "howToUse": null
+  },
+  {
+    "id": 16,
+    "name": "Hydro Glow Essentials",
+    "category": "Gift Sets",
+    "subCategory": "Face Care Kit",
+    "certifications": [
+      "GMP Certified",
+      "Cruelty-Free (PETA)",
+      "Non-Toxic",
+      "Dermatologically Tested",
+      "FDA Approved"
+    ],
+    "price": 2500,
+    "sizeLabel": null,
+    "keyIngredients": null,
+    "shelfLife": "18 months from date of manufacture",
+    "storage": "Store in cool, dry place away from direct sunlight",
+    "headline": null,
+    "skinType": null,
+    "tagline": null,
+    "description": null,
+    "benefits": [],
+    "howToUse": null
+  },
+  {
+    "id": 17,
+    "name": "Radiant Glow Luxurious Kit",
+    "category": "Gift Sets",
+    "subCategory": "Face Care Kit",
+    "certifications": [
+      "GMP Certified",
+      "Cruelty-Free (PETA)",
+      "Non-Toxic",
+      "Dermatologically Tested",
+      "FDA Approved"
+    ],
+    "price": 1500,
+    "sizeLabel": null,
+    "keyIngredients": null,
+    "shelfLife": "18 months from date of manufacture",
+    "storage": "Store in cool, dry place away from direct sunlight",
+    "headline": null,
+    "skinType": null,
+    "tagline": null,
+    "description": null,
+    "benefits": [],
+    "howToUse": null
+  },
+  {
+    "id": 18,
+    "name": "Sole Rejuvenation Kit - Foot Spa Kit",
+    "category": "Gift Sets",
+    "subCategory": "Feet Care Kit",
+    "certifications": [
+      "GMP Certified",
+      "Cruelty-Free (PETA)",
+      "Non-Toxic",
+      "Dermatologically Tested",
+      "FDA Approved"
+    ],
+    "price": 575,
+    "sizeLabel": null,
+    "keyIngredients": null,
+    "shelfLife": "18 months from date of manufacture",
+    "storage": "Store in cool, dry place away from direct sunlight",
+    "headline": null,
+    "skinType": null,
+    "tagline": null,
+    "description": null,
+    "benefits": [],
+    "howToUse": null
+  },
+  {
+    "id": 19,
+    "name": "Pamper Yourself Kit - Facial Kit",
+    "category": "Gift Sets",
+    "subCategory": "Face Care Kit",
+    "certifications": [
+      "GMP Certified",
+      "Cruelty-Free (PETA)",
+      "Non-Toxic",
+      "Dermatologically Tested",
+      "FDA Approved"
+    ],
+    "price": 785,
+    "sizeLabel": null,
+    "keyIngredients": null,
+    "shelfLife": "18 months from date of manufacture",
+    "storage": "Store in cool, dry place away from direct sunlight",
+    "headline": null,
+    "skinType": null,
+    "tagline": null,
+    "description": null,
+    "benefits": [],
+    "howToUse": null
+  },
+  {
+    "id": 20,
+    "name": "Luxury Body Polish Kit",
+    "category": "Gift Sets",
+    "subCategory": "Body Care Kit",
+    "certifications": [
+      "GMP Certified",
+      "Cruelty-Free (PETA)",
+      "Non-Toxic",
+      "Dermatologically Tested",
+      "FDA Approved"
+    ],
+    "price": 1450,
+    "sizeLabel": null,
+    "keyIngredients": null,
+    "shelfLife": "18 months from date of manufacture",
+    "storage": "Store in cool, dry place away from direct sunlight",
+    "headline": null,
+    "skinType": null,
+    "tagline": null,
+    "description": null,
+    "benefits": [],
+    "howToUse": null
+  },
+  {
+    "id": 21,
+    "name": "Travel Basics Kit",
+    "category": "Gift Sets",
+    "subCategory": "Travel Kit",
+    "certifications": [
+      "GMP Certified",
+      "Cruelty-Free (PETA)",
+      "Non-Toxic",
+      "Dermatologically Tested",
+      "FDA Approved"
+    ],
+    "price": 575,
+    "sizeLabel": null,
+    "keyIngredients": null,
+    "shelfLife": "18 months from date of manufacture",
+    "storage": "Store in cool, dry place away from direct sunlight",
+    "headline": null,
+    "skinType": null,
+    "tagline": null,
+    "description": null,
+    "benefits": [],
+    "howToUse": null
+  }
+]

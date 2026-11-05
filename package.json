@@ -1,27 +1,39 @@
 {
-  "name": "puro-website-temp",
+  "name": "puro-website",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "db:seed": "node scripts/seed-catalogue.mjs",
+    "images": "node scripts/optimize-images.mjs"
   },
   "dependencies": {
+    "@hookform/resolvers": "^7.0.2",
+    "clsx": "^2.1.1",
+    "framer-motion": "^14.9.1",
+    "lucide-react": "^1.68.0",
+    "mysql2": "^3.24.6",
+    "next": "15.5.9",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "next": "15.5.9"
+    "react-hook-form": "^7.91.0",
+    "tailwind-merge": "^3.7.0",
+    "zod": "^4.6.7",
+    "zustand": "^5.0.16"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@eslint/eslintrc": "^3",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@tailwindcss/postcss": "^4",
-    "tailwindcss": "^4",
+    "autoprefixer": "^10.6.2",
     "eslint": "^9",
     "eslint-config-next": "15.5.9",
-    "@eslint/eslintrc": "^3"
+    "postcss": "^8.5.32",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5"
   }
 }

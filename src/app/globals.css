@@ -1,26 +1,102 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  body {
+    @apply bg-ivory font-sans text-ink antialiased;
+    font-weight: 350;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  ::selection {
+    @apply bg-gold-soft text-emerald-deep;
+  }
+
+  :focus-visible {
+    @apply outline outline-1 outline-offset-4 outline-gold;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .container-site {
+    @apply mx-auto w-full max-w-site px-5 sm:px-8 lg:px-12;
+  }
+
+  .eyebrow {
+    @apply text-[10px] font-normal uppercase tracking-eyebrow text-gold-deep;
+  }
+
+  .heading-xl {
+    @apply font-display text-[44px] font-light leading-[1.02] tracking-[-0.01em] sm:text-[64px] lg:text-[84px];
+  }
+
+  .heading-lg {
+    @apply font-display text-[36px] font-light leading-[1.08] sm:text-[46px] lg:text-[54px];
+  }
+
+  .heading-md {
+    @apply font-display text-[28px] font-light leading-[1.15] sm:text-[34px];
+  }
+
+  .body-copy {
+    @apply text-[15px] leading-[1.85] text-stone;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-3 px-8 py-4 text-[11px] font-normal uppercase tracking-[0.22em] transition-all duration-500;
+  }
+
+  .btn-primary {
+    @apply btn bg-emerald text-ivory hover:bg-emerald-deep;
+  }
+
+  .btn-gold {
+    @apply btn bg-gold text-emerald-deep hover:bg-gold-soft;
+  }
+
+  .btn-outline {
+    @apply btn border border-current hover:bg-emerald hover:text-ivory hover:border-emerald;
+  }
+
+  .btn-outline-light {
+    @apply btn border border-ivory/60 text-ivory hover:bg-ivory hover:text-emerald;
+  }
+
+  .link-underline {
+    @apply relative inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.22em];
+  }
+
+  .link-underline::after {
+    content: "";
+    @apply absolute -bottom-1.5 left-0 h-px w-full origin-left bg-current transition-transform duration-500;
+  }
+
+  .link-underline:hover::after {
+    @apply scale-x-50;
+  }
+
+  /* Thin gold rule with a centred diamond, echoing the packaging frames */
+  .ornament {
+    @apply flex items-center justify-center gap-3 text-gold;
+  }
+
+  .ornament::before,
+  .ornament::after {
+    content: "";
+    @apply h-px w-12 bg-gold/60;
+  }
+}
+
+@layer utilities {
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
 }

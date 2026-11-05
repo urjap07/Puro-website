@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# raw product photography (1.3GB+) — optimised copies live in /public/media
+/public/images/
