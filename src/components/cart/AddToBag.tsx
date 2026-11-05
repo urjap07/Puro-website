@@ -96,7 +96,7 @@ export function QuickAdd({
         add(toCartItem(product));
       }}
       className={clsx(
-        "bg-ivory/95 py-3.5 text-[10px] uppercase tracking-[0.24em] text-emerald backdrop-blur transition hover:bg-emerald hover:text-ivory",
+        "rounded-full bg-ivory/95 py-3.5 text-[10px] uppercase tracking-[0.24em] text-emerald backdrop-blur transition hover:bg-emerald hover:text-ivory",
         className
       )}
     >

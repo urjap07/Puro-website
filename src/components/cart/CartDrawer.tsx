@@ -43,7 +43,7 @@ export default function CartDrawer() {
             role="dialog"
             aria-modal="true"
             aria-label="Shopping bag"
-            className="fixed inset-y-0 right-0 z-[90] flex w-full max-w-[440px] flex-col bg-ivory shadow-2xl"
+            className="fixed inset-y-0 right-0 z-[90] flex w-full max-w-[440px] flex-col bg-mist shadow-2xl"
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
@@ -89,7 +89,7 @@ export default function CartDrawer() {
                       <Link
                         href={`/products/${item.slug}`}
                         onClick={close}
-                        className="relative h-[112px] w-[90px] shrink-0 overflow-hidden bg-parchment"
+                        className="relative h-[112px] w-[90px] shrink-0 overflow-hidden bg-mist-card"
                       >
                         {item.image && (
                           <Image
@@ -97,7 +97,7 @@ export default function CartDrawer() {
                             alt={item.name}
                             fill
                             sizes="90px"
-                            className="object-cover"
+                            className="object-cover mix-blend-multiply"
                           />
                         )}
                       </Link>
@@ -152,7 +152,7 @@ export default function CartDrawer() {
                   ))}
                 </ul>
 
-                <footer className="border-t border-line bg-parchment/60 px-7 py-6">
+                <footer className="border-t border-line bg-mist-deep/60 px-7 py-6">
                   <div className="flex items-baseline justify-between">
                     <span className="text-[11px] uppercase tracking-[0.22em] text-stone">
                       Subtotal

@@ -12,7 +12,13 @@ module.exports = {
         ivory: "#FAF7F0",
         parchment: "#F2ECE0",
         sand: "#E6DBC6",
-        line: "#E2D8C5",
+        line: "#CEDACE",
+        // Sage mist — light companion to the emerald, replaces flat cream
+        mist: {
+          DEFAULT: "#EBF0EA",
+          card: "#F5F8F3",
+          deep: "#DCE6DB",
+        },
         emerald: {
           DEFAULT: "#123B30",
           deep: "#0B2A22",

@@ -8,7 +8,7 @@
   }
 
   body {
-    @apply bg-ivory font-sans text-ink antialiased;
+    @apply bg-mist font-sans text-ink antialiased;
     font-weight: 350;
   }
 
@@ -92,6 +92,19 @@
 }
 
 @layer utilities {
+  /* Soft gold + emerald light washes for light sections */
+  .glow-botanical {
+    background-image:
+      radial-gradient(ellipse 60% 50% at 0% 0%, rgba(180, 146, 90, 0.14), transparent 70%),
+      radial-gradient(ellipse 55% 55% at 100% 100%, rgba(31, 77, 63, 0.14), transparent 70%);
+  }
+
+  .glow-botanical-alt {
+    background-image:
+      radial-gradient(ellipse 55% 55% at 100% 0%, rgba(31, 77, 63, 0.13), transparent 70%),
+      radial-gradient(ellipse 60% 50% at 0% 100%, rgba(180, 146, 90, 0.14), transparent 70%);
+  }
+
   .no-scrollbar {
     scrollbar-width: none;
   }

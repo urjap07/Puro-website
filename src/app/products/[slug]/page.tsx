@@ -173,7 +173,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
       </div>
 
       {related.length > 0 && (
-        <section className="border-t border-line bg-parchment/60 py-24">
+        <section className="glow-botanical border-t border-line bg-mist-deep/70 py-24">
           <div className="container-site">
             <SectionHeading
               eyebrow={collection?.title ?? "Discover"}

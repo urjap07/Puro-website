@@ -19,7 +19,7 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
 
   return (
     <article className="group">
-      <div className="relative aspect-[4/5] overflow-hidden bg-parchment">
+      <div className="relative aspect-[4/5] overflow-hidden rounded-xl bg-mist-card">
         <Link href={href} className="absolute inset-0" aria-label={product.name}>
           {primary ? (
             <>
@@ -29,7 +29,7 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
                 fill
                 priority={priority}
                 sizes={SIZES}
-                className="object-cover transition duration-[1400ms] ease-out group-hover:scale-[1.04]"
+                className="object-cover mix-blend-multiply transition duration-[1400ms] ease-out group-hover:scale-[1.04]"
               />
               {secondary && (
                 <Image

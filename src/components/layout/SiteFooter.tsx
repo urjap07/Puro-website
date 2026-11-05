@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { Wordmark } from "./SiteHeader";
 import NewsletterForm from "./NewsletterForm";
+import { SITE } from "@/lib/site";
 
 const COLUMNS = [
   {
@@ -17,11 +18,11 @@ const COLUMNS = [
   {
     title: "Concerns",
     links: [
-      ["Deep hydration", "/concerns/deep-hydration"],
       ["Skin brightening", "/concerns/skin-brightening"],
       ["Tan removal", "/concerns/tan-removal"],
-      ["Oil control", "/concerns/oil-control"],
-      ["Hair thinning", "/concerns/hair-thinning"],
+      ["Anti-ageing", "/concerns/anti-ageing"],
+      ["Dry skin", "/concerns/dry-skin"],
+      ["Hair fall", "/concerns/hair-fall"],
     ],
   },
   {
@@ -72,19 +73,38 @@ export default function SiteFooter() {
 
       <div className="container-site flex flex-col items-center justify-between gap-8 py-10 md:flex-row">
         <Wordmark light />
-        <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-[13px] text-ivory/60">
-          <span>hello@purobodysoul.com</span>
-          <a
-            href="https://www.instagram.com/purobodysoul/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 transition hover:text-ivory"
-          >
-            Instagram <ArrowUpRight size={13} strokeWidth={1.25} />
-          </a>
+        <div className="flex flex-col items-center gap-3 text-center text-[13px] text-ivory/60 md:items-start md:text-left">
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
+            <a href={`mailto:${SITE.email}`} className="transition hover:text-ivory">
+              {SITE.email}
+            </a>
+            <a href={SITE.phoneHref} className="transition hover:text-ivory">
+              {SITE.phone}
+            </a>
+          </div>
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
+            {[
+              ["Instagram", SITE.social.instagram],
+              ["Facebook", SITE.social.facebook],
+              ["WhatsApp", SITE.whatsapp],
+            ].map(([label, href]) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 transition hover:text-ivory"
+              >
+                {label} <ArrowUpRight size={13} strokeWidth={1.25} />
+              </a>
+            ))}
+          </div>
         </div>
         <p className="text-[10px] uppercase tracking-[0.24em] text-ivory/40">
           © {new Date().getFullYear()} Puro Body &amp; Soul
+          <span className="mt-1 block normal-case tracking-normal">
+            A division of {SITE.organisation}
+          </span>
         </p>
       </div>
     </footer>

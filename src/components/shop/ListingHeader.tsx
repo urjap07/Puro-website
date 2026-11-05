@@ -12,7 +12,7 @@ interface ListingHeaderProps {
 export default function ListingHeader({ eyebrow, title, description, image }: ListingHeaderProps) {
   if (!image) {
     return (
-      <section className="border-b border-line bg-parchment/60 py-20 text-center sm:py-24">
+      <section className="border-b border-line glow-botanical bg-mist-deep/70 py-20 text-center sm:py-24">
         <Reveal className="container-site">
           <p className="eyebrow">{eyebrow}</p>
           <h1 className="heading-xl mt-6 text-emerald">{title}</h1>

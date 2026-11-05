@@ -1,0 +1,261 @@
+{
+  "sheavibe-lotion": {
+    "liveSlug": "sheavibe-body-lotion",
+    "fullIngredients": "Aqua, Aloe Barbadensis (Aloe Vera) Extracts, Glycerin, Cetearyl Alcohol, Ceteareth-24, Simmondsia Chinensis Seed (Jojoba) Oil, Oryza Sativa (Rice) Bran Oil, AquaxylTM (Xylitylglucoside, Anhydroxylitol, Xylitol), Vitis Vinifera (Grape) Seed Oil, Cetyl Alcohol, Natural Mixed Tocopherol (Natural Vitamin E), Organic Squalene, Phytosterol, Phenoxyethanol Ethylhexylglycerin, Glyceryl Monostearate, Xanthan Gum, Zinc Oxide, Sodium Gluconate, Butyrospermum Parkii (Shea) Butter, Theobroma Cacao Seed (Cocoa) Butter, Lactic Acid, Fragrance/Parfum",
+    "frequency": "Daily",
+    "warnings": [
+      "Gently massage in circular motion until the skin absorbs it completely. For best results, use daily on sightly damp skin just after a bath or shower.",
+      "For external use only. Store in cool, dry & dark place. Natural Ingredients tend to change color over time. However, the product efficacy remains unchanged.",
+      "It is advisable to do a patch test to avoid existing or unknown allergies. Warning : Discontinue use if you notice any redness or irritation."
+    ]
+  },
+  "aloe-vibe-shower-gel": {
+    "liveSlug": "aloevibe-shower-gel",
+    "fullIngredients": "Aqua, Sodium Lauryl Ether Sulfate, Cocoamido Propyl Betaine, Glycerin, Decyl Glucoside, Sodium Chloride, PEG-7 Glyceryl Cocoate, Aloe Barbadensis (Aloe Vera) Extracts, Phenoxyethanol Ethylhexylglycerin, Fragrance/Parfum, Sodium Gluconate",
+    "frequency": "Daily",
+    "warnings": [
+      "For external use only. Store in cool, dry & dark place. Natural Ingredients tend to change color over time. However, the product efficacy remains unchanged.",
+      "It is advisable to do a patch test to avoid existing or unknown allergies. Warning : Discontinue use if you notice any redness or irritation."
+    ]
+  },
+  "terra-tress-hair-scalp-oil": {
+    "liveSlug": "terra-tress-hair-scalp-oil",
+    "fullIngredients": "Virgin Cocos Nucifera (Coconut) Oil, Lavandula Angustifolia (Lavender) Oil, Natural Mixed Tocopherol (Natural Vitamin E), Organic Squalene, Phytosterol, Rosmarinus Officinalis (Rosemary) Oil, Fragrance/Parfum",
+    "frequency": "Weekly",
+    "warnings": [
+      "For external use only. Store in cool, dry & dark place. Natural Ingredients tend to change color over time. However, the product efficacy remains unchanged. If forzen, place bottle in warm water until oil melts. Do not microwave bottle.",
+      "It is advisable to do a patch test to avoid existing or unknown allergies. Warning : Discontinue use if you notice any redness or irritation."
+    ]
+  },
+  "coco-silk-cold-pressed-virgin-coconut-oil": {
+    "liveSlug": "coco-silk",
+    "fullIngredients": "Virgin Nucifera (Coconut) Oil, Natural Mixed Tocopherol(Natural Vitamin E), Organic Squalene, Phytosterol",
+    "frequency": "Weekly",
+    "warnings": [
+      "For external use only. Store in cool, dry & dark place. This oil may naturally solidify in cooler temperatures. However, the product efficacy remains unchanged. If frozen, place bottle in warm water until oil melts. Do not microwave bottle.",
+      "It is advisable to do a patch test to avoid existing or unknown allergies. Warning : Discontinue use if you notice any redness or irritation."
+    ]
+  },
+  "hydroclock-foaming-facewash": {
+    "liveSlug": "foaming-face-wash",
+    "fullIngredients": "Aqua (Water), Glycerin, Decyl Glucoside, Potassium Cocoyl Glycinate, Potassium Cocoate, Aloe Barbadensis (Aloe Vera) Extracts, Polysorbate 20, Aquaxyl (TM) (Xylitylglucoside, Anhydroxylitol & Xylitol), Ethylhexylglycerin, Phenoxyethanol, Panthenyl Hydroxypropyl Steardimonium Chloride, Glycyrrhiza Glabra (Licorice) Extracts, Curcuma Longa Root (Turmeric) Extract, Vitis Vinifera (Grape) Seed Oil, Natural Mixed Tocopherol (Natural Vitamin E), Organic Squalene, Phytosterol, Crocus Sativus (Saffron) Flower Extract, Lavandula Angustifolia (Lavender) Oil, Rosa Damascena (Rose) Flower Oil, Sodium Gluconate, Citric Acid, Fragrance/Parfum",
+    "frequency": "Twice a Day",
+    "warnings": [
+      "For external use only.",
+      "Store in cool, dry & dark place.",
+      "Natural Ingredients tend to change color over time. However, the product efficacy remains unchanged.",
+      "Warning : Avoid contact with eyes. If contact occurs, flush eyes with water."
+    ],
+    "rating": {
+      "value": 5,
+      "count": 7
+    },
+    "reviews": [
+      {
+        "author": "Priyal",
+        "rating": 5,
+        "title": "Softness Supreme!",
+        "body": "Softness supreme is what HydrO'Clock Foaming Facewash delivers! It's like a spa treatment in every wash, leaving my skin feeling velvety smooth. With Aquaxyl™ and Organic Squalene, it's a must have for hydrated, radiant skin.",
+        "date": "2024-05-30"
+      }
+    ]
+  },
+  "good-cleanse-face-wash": {
+    "liveSlug": "good-cleanse-facewash",
+    "fullIngredients": "Aqua (Water), Glycerin, Decyl Glucoside, Potassium Cocoyl Glycinate, Potassium Cocoate, Aloe Barbadensis (Aloe Vera) Extracts, Polysorbate 20, Aquaxyl (TM) (Xylitylglucoside, Anhydroxylitol & Xylitol), Ethylhexylglycerin, Phenoxyethanol, Panthenyl Hydroxypropyl Steardimonium Chloride, Glycyrrhiza Glabra (Licorice) Extracts, Curcuma Longa Root (Turmeric) Extract, Vitis Vinifera (Grape) Seed Oil, Natural Mixed Tocopherol (Natural Vitamin E), Organic Squalene, Phytosterol, Crocus Sativus (Saffron) Flower Extract, Lavandula Angustifolia (Lavender) Oil, Rosa Damascena (Rose) Flower Oil, Sodium Gluconate, Citric Acid, Fragrance/Parfum",
+    "frequency": "For best results use twice daily.",
+    "warnings": [
+      "For external use only.",
+      "Store in cool, dry & dark place",
+      "Natural Ingredients tend to change color over time. However, the product efficacy remains unchanged."
+    ],
+    "rating": {
+      "value": 5,
+      "count": 16
+    }
+  },
+  "aqua-riche-night-repair-gel-cream": {
+    "liveSlug": "night-gel-lotion",
+    "fullIngredients": "Aloe Barbadensis (Aloe Vera) Extracts, Propanediol, Aquaxyl (TM) (Xylitylglucoside, Anhydroxylitol & Xylitol), Polysorbate 80, Helianthus Annuus (Sunflower) Seed Oil, Coco Caprylate/Caprate, Glycyrrhiza Glabra (Licorice) Extracts, Phenoxyethanol, Ethylhexylglycerin, Simmondsia Chinensis (Jojoba) Seed Oil, Crocus Sativus (Saffron) Flower Extract, Natural Mixed Tocopherol (Natural Vitamin E), Organic Squalene, Phytosterol, Cetostearyl Alcohol, Vitis Vinifera (Grape) Seed Oil, Kaolin, Sodium Gluconate, Lavandula Angustifolia (Lavender) Oil, Citric Acid, Fragrance/Parfum",
+    "frequency": "Daily"
+  },
+  "scrubulush-exfoliator": {
+    "liveSlug": "revitalizing-rose-vanilla-scrub",
+    "fullIngredients": "Aqua(Water), Glycerin, Oryza Sativa (Rice), Oryza Sativa (Rice) Bran Oil, Cetearyl Alcohol, Ceteareth-24, Olea Europaea (Olive) Oil, Fragrance/Parfum, Natural Mixed Tocopherol, Phytosterol, Organic Squalene, Juglans Regia (Walnut) Shell Powder, Phenoxyethanol, Ethylhexylglycerin, Octenidine HCl, Glycyrrhiza Glabra (Licorice) Extracts, Xanthan Gum, Curcuma longa (Turmeric) Extract, Zinc Oxide, Cetyl Alcohol, Sodium Gluconate, Citric Acid",
+    "frequency": "Twice a Week",
+    "warnings": [
+      "For external use only.",
+      "Store in cool, dry & dark place.",
+      "Natural Ingredients tend to change color over time. However, the product efficacy remains unchanged.",
+      "It is advisable to do a patch test to avoid existing or unknown allergies.",
+      "Warning : Discontinue use if you notice any redness or irritation."
+    ],
+    "rating": {
+      "value": 5,
+      "count": 21
+    },
+    "reviews": [
+      {
+        "author": "Pallavi Savla",
+        "rating": 5,
+        "title": "Just Love the product",
+        "body": "I have used this.It has done wonders for me.",
+        "date": "2024-05-31"
+      }
+    ]
+  },
+  "glow-up-pithi-pack": {
+    "liveSlug": "glow-up-pithi-pack",
+    "fullIngredients": "Aqua (Water), Aloe Barbadensis (Aloe Vera) Extracts, Kaolin Clay, Oryza Sativa (Rice) Bran Oil, Bentonite Clay, Solum Fullonum (Fuller's Earth), Cetearyl Alcohol, Ceteareth-24, Glycerin, Curcuma Longa (Turmeric) Extract, Cetyl Alcohol, Phenoxyethanol, Ethylhexylglycerin, Octenidine HCl, Glycyrrhiza Glabra (Licorice) Extracts, Mixed Tocopherol(Natural Vitamin E), Organic Squalene, Phytosterol, Xanthan Gum, Zinc Oxide, Crocus Sativus (Saffron) Extracts, Citric Acid, Fragrance/Parfum, Sodium Gluconate",
+    "frequency": "Weekly",
+    "warnings": [
+      "For external use only.",
+      "Store in cool, dry & dark place.",
+      "Natural Ingredients tend to change color over time. However, the product efficacy remains unchanged.",
+      "It is advisable to do a patch test to avoid existing or unknown allergies.",
+      "Warning :",
+      "Discontinue use if you notice any redness or irritation."
+    ],
+    "rating": {
+      "value": 5,
+      "count": 21
+    },
+    "reviews": [
+      {
+        "author": "Jasmine",
+        "rating": 5,
+        "title": "An absolute essential",
+        "body": "My weekend routine starts with the Glow up pithi pack followed by this amazing Nutri Nat hair mask. An absolute essential to get rid of all the dust pollution damage during the week. In love with the glow!!",
+        "date": "2024-05-30"
+      }
+    ]
+  },
+  "vita-clay-ubtan-pack": {
+    "liveSlug": "clarifying-citrus-ubtan-pack",
+    "fullIngredients": "Aloe Barbadensis (Aloe Vera) Extracts, Bentonite Clay, Solum Fullonum (Fuller's Earth), Kaolin Clay, Phenoxyethanol Ethylhexylglycerin Octenidine HCl, Glycyrrhiza Glabra (Licorice) Extracts, Xanthan Gum, Citrus Nobilis (Mandarin Orange) Oil, Cananga Odorata (Ylang Ylang) Oil, Fragrance/Parfum, Citrus Limon (Lemon) Oil",
+    "frequency": "Weekly",
+    "warnings": [
+      "For external use only.",
+      "Store in cool, dry & dark place.",
+      "Natural Ingredients tend to change color over time. However, the product efficacy remains unchanged.",
+      "Warning : Avoid contact with eyes. If contact occurs, flush eyes with water."
+    ],
+    "rating": {
+      "value": 5,
+      "count": 22
+    },
+    "reviews": [
+      {
+        "author": "Reshma",
+        "rating": 5,
+        "title": "Saviour for my Oily skin",
+        "body": "Being a mother of two keeps me busy always. Am so happy I found Puro's Vita Clay Ubtan Pack that gives my skin all the care with its wonderful formulation in just 20 minutes. A saviour for my oily skin & a relief during scorching summers!",
+        "date": "2024-05-30"
+      }
+    ]
+  },
+  "aquench-soothing-hydrogel": {
+    "liveSlug": "hydro-soothing-gel",
+    "fullIngredients": "Aloe Barbadensis (Aloe Vera) Extracts, Hamamelis Virginiana (Witch Hazel) Extract, Polysorbate 20, Phenoxyethanol Ethylhexylglycerin, Glycyrrhiza glabra (Licorice) Extracts, Lavandula Angustifolia (Lavender) Oil, Melaleuca Alternafolia (Tea Tree) Oil, Pelargonium Graveolens (Geranium) Oil, Citrus Limon (Lemon) Oil, Citrus Nobilis (Mandarin Orange) Oil, Fragrance/Parfum",
+    "frequency": "Twice a Week",
+    "warnings": [
+      "For external use only.",
+      "Store in cool, dry & dark place.",
+      "Natural Ingredients tend to change color over time. However, the product efficacy remains unchanged.",
+      "It is advisable to do a patch test to avoid existing or unknown allergies.",
+      "Warning : Discontinue use if you notice any redness or irritation."
+    ],
+    "rating": {
+      "value": 5,
+      "count": 16
+    },
+    "reviews": [
+      {
+        "author": "Jalpa Timbadiya",
+        "rating": 5,
+        "title": "Awsom Result & amazing product",
+        "body": "My Nephew n son both  13 year old has severe heat burns as they has to play their passion cricket in hot summer.... very effective in Reducing heat burns,redness n dryness v fast n easily",
+        "date": "2026-05-06"
+      }
+    ]
+  },
+  "supple-goals-body-balm": {
+    "liveSlug": "healing-body-balm",
+    "fullIngredients": "Oryza Sativa (Rice Bran) Oil, Polysorbate 80, Euphorbia Cerifera(Candelilla Wax), Brassica Juncea (Mustard) Oil ,Olea Europaea (Olive) Oil, Glycerin, Mixed Tocopherol (Natural Vitamin E), Organic Squalene, Phytosterol, Phenoxyethanol Ethylhexylglycerin, Fragrance/Parfum, Lavandula Angustifolia (Lavender) Oil, Cananga Odorata (Ylang Ylang) Oil, Pelargonium Graveolens (Geranium Oil)",
+    "frequency": "Daily",
+    "warnings": [
+      "For external use only.",
+      "Store in cool, dry & dark place.",
+      "Natural Ingredients tend to change color over time. However, the product efficacy remains unchanged."
+    ],
+    "rating": {
+      "value": 5,
+      "count": 1
+    },
+    "reviews": [
+      {
+        "author": "Meeta Hemani",
+        "rating": 5,
+        "title": "Best Skin healer",
+        "body": "I realised that with age, my skin needed extra nourishment. Body balm melts into my skin, comforts rought patches & uplifts the senses. Now it is my go-to product for dry skin, chapped lips, cracked heels, sunburn & chafing!",
+        "date": "2024-05-30"
+      }
+    ]
+  },
+  "good-cleanse-bathing-bar": {
+    "liveSlug": "whitening-saffron-sandalwood-handmade-soap",
+    "fullIngredients": "Soap Base, Turmeric Extracts, Saffron Oil, Sandalwood Oil, Licorice."
+  },
+  "wild-rose-bathing-bar": {
+    "liveSlug": "wild-rose-soap",
+    "fullIngredients": "Soap Base, Raw Cane Sugar, Rose Oil, Olive Oil.",
+    "rating": {
+      "value": 5,
+      "count": 1
+    },
+    "reviews": [
+      {
+        "author": "Mamta Vora",
+        "rating": 5,
+        "title": "Highly recommend this product!",
+        "body": "I was done with soaps that strip skin of its natural oils. What I love about this soap? The lovely fragrance of wild rose, the moisturizing effect, & clean ingredients!",
+        "date": "2024-05-30"
+      }
+    ]
+  },
+  "hair-regrowth-oil": {
+    "liveSlug": "hair-regrowth-oil",
+    "fullIngredients": "Virgin Coconut Oil, Special Hair Tonic, Lavender Oil, Rosemary Oil, Vitamin E",
+    "frequency": "Twice a Week",
+    "warnings": [
+      "For external use only.",
+      "Store in cool, dry & dark place.",
+      "Natural Ingredients tend to change color over time. However, the product efficacy remains unchanged."
+    ],
+    "rating": {
+      "value": 5,
+      "count": 2
+    },
+    "reviews": [
+      {
+        "author": "Smitha Borundia",
+        "rating": 5,
+        "title": "Very good product",
+        "body": "I had severe hair fall after surgery. I was so worried for my hair because day by day  volume was getting decreased Then I got to know about Puro hair regrowth oil which has no harmful chemicals .So started to apply and .got amazing results in 3 month.started to grow new baby hair on scalp.I didn't not stop application.Within a year I got same volume like earlier.",
+        "date": "2025-02-07"
+      }
+    ]
+  },
+  "sole-rejuvenation-kit-foot-spa-kit": {
+    "liveSlug": "gift-hamper-foot-spa-essential-kit"
+  },
+  "travel-basics-kit": {
+    "liveSlug": "luxurious-complete-care-package"
+  },
+  "pamper-yourself-kit-facial-kit": {
+    "liveSlug": "the-gift-of-self-love-luxurious-care-package"
+  },
+  "luxurious-care-package-travel-size": {
+    "liveSlug": "luxurious-complete-care-package-travel-size"
+  }
+}

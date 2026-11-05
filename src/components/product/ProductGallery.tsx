@@ -41,18 +41,18 @@ export default function ProductGallery({ product }: { product: Product }) {
               aria-label={`View image ${index + 1}`}
               aria-current={index === active}
               className={clsx(
-                "relative aspect-[4/5] w-[72px] shrink-0 overflow-hidden bg-parchment transition lg:w-full",
-                index === active ? "ring-1 ring-gold ring-offset-2 ring-offset-ivory" : "opacity-60 hover:opacity-100"
+                "relative aspect-[4/5] w-[72px] shrink-0 overflow-hidden bg-mist-card transition lg:w-full",
+                index === active ? "ring-1 ring-gold ring-offset-2 ring-offset-mist" : "opacity-60 hover:opacity-100"
               )}
             >
-              <Image src={image.imageUrl} alt="" fill sizes="88px" className="object-cover" />
+              <Image src={image.imageUrl} alt="" fill sizes="88px" className="object-cover mix-blend-multiply" />
             </button>
           ))}
         </div>
       )}
 
       <div
-        className="relative aspect-[4/5] flex-1 cursor-zoom-in overflow-hidden bg-parchment"
+        className="relative aspect-[4/5] flex-1 cursor-zoom-in overflow-hidden bg-mist-card"
         onMouseMove={onMove}
         onMouseLeave={() => setZoom(null)}
       >
@@ -63,7 +63,7 @@ export default function ProductGallery({ product }: { product: Product }) {
           fill
           priority
           sizes="(min-width: 1024px) 50vw, 100vw"
-          className="object-cover transition-transform duration-300 ease-out"
+          className="object-cover mix-blend-multiply transition-transform duration-300 ease-out"
           style={
             zoom
               ? { transform: "scale(1.8)", transformOrigin: `${zoom.x}% ${zoom.y}%` }

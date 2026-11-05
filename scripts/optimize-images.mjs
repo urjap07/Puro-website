@@ -67,7 +67,7 @@ async function frameStudioShot(input) {
     canvasHeight = Math.round(canvasWidth * 1.25);
   }
 
-  return sharp({
+  const framed = await sharp({
     create: { width: canvasWidth, height: canvasHeight, channels: 3, background },
   })
     .composite([
@@ -77,6 +77,16 @@ async function frameStudioShot(input) {
         top: Math.round((canvasHeight - height) / 2),
       },
     ])
+    .png()
+    .toBuffer();
+
+  // Lift the studio backdrop to pure white so packshots match and blend cleanly.
+  return sharp(framed)
+    .removeAlpha()
+    .linear(
+      [255 / background.r, 255 / background.g, 255 / background.b],
+      [0, 0, 0]
+    )
     .png()
     .toBuffer();
 }

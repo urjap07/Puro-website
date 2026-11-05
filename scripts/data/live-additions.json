@@ -1,0 +1,141 @@
+{
+  "_note": "Curated from purobodysoul.com (Nov 2026). Gift-kit prices stay as per the product sheet.",
+  "newProducts": [
+    {
+      "id": 22,
+      "slug": "hair-regrowth-oil",
+      "name": "Hair Regrowth Oil",
+      "category": "hair-scalp-oil",
+      "subCategory": "Hair Care",
+      "price": 1080,
+      "sizeLabel": "90 ml",
+      "stock": 50,
+      "headline": "Fall control & repair therapy",
+      "tagline": "Restore it, flaunt it, naturally.",
+      "skinType": "Damaged, scanty hair & hair fall",
+      "keyIngredients": "Virgin Coconut Oil, Lavender Oil, Rosemary Oil, Vitamin E",
+      "description": "Revitalise your hair with Puro's unique hair regrowth formula, a rejuvenating elixir designed to combat hair loss and stimulate regrowth. Experience the transformation as this potent formula works to give you fuller, thicker and softer hair — a promise of renewed confidence, and a journey to healthier, more resilient hair.",
+      "benefits": [
+        "Stimulates the hair follicles and promotes hair growth",
+        "Improves the overall health of hair and scalp",
+        "Minimises hair breakage",
+        "Helps prevent hair loss"
+      ],
+      "howToUse": "Shake the bottle vigorously before each use. Take a few pumps, partition your hair and apply directly into the scalp, avoiding the lengths. For best results, leave on overnight and rinse off well with shampoo using normal to cold water.",
+      "certifications": ["GMP Certified", "Cruelty-Free (PETA)", "Non-Toxic", "Dermatologically Tested"],
+      "shelfLife": "18 months from date of manufacture",
+      "storage": "Store in cool, dry place away from direct sunlight",
+      "isClassic": true
+    },
+    {
+      "id": 23,
+      "slug": "luxurious-care-package-travel-size",
+      "name": "Luxurious Complete Care Package",
+      "category": "gift-sets",
+      "subCategory": "Travel Kit",
+      "price": 900,
+      "sizeLabel": null,
+      "stock": 0,
+      "headline": "Five artisanal rituals, travel-ready",
+      "tagline": "Indulge it, flaunt it, naturally.",
+      "skinType": null,
+      "keyIngredients": null,
+      "description": "A complete skincare ritual in travel-friendly sizes. Artisanal Sandalwood Saffron and Wild Rose soaps meet an indulgent face wash, the decadent Rose Vanilla Scrub and our brightening Pithi Face Pack — all tucked into a natural jute pouch.",
+      "benefits": [
+        "Five Puro essentials in one jute pouch",
+        "Artisanal, handmade bathing bars",
+        "Travel-friendly sizes",
+        "A thoughtful, ready-to-gift set"
+      ],
+      "howToUse": "Please refer to the labels on individual packs for detailed instructions.",
+      "certifications": ["GMP Certified", "Cruelty-Free (PETA)", "Non-Toxic", "Dermatologically Tested"],
+      "shelfLife": "18 months from date of manufacture",
+      "storage": "Store in cool, dry place away from direct sunlight",
+      "isClassic": true
+    }
+  ],
+  "kitContents": {
+    "sole-rejuvenation-kit-foot-spa-kit": {
+      "contents": [
+        { "name": "Rose Foot Soak", "size": "13 g", "note": "Detoxes and deodorises the feet" },
+        { "name": "Pumice Stone", "size": null, "note": "Gently exfoliates dead skin" },
+        { "name": "Mocha Foot Polish", "size": "13 g", "note": "Removes dry, dead skin cells" },
+        { "name": "Gojiberry Foot Masque", "size": "13 g", "note": "Softens and revitalises" },
+        { "name": "Brazilian Orange Cuticle Cream", "size": "13 g", "note": "Nourishes and strengthens nails" },
+        { "name": "Cuticle Remover", "size": null, "note": null }
+      ],
+      "headline": "A five-step spa ritual for tired feet",
+      "description": "Puro's Foot Spa Kit gives your feet all the energy they need. A five-step ritual to soak, exfoliate, polish, mask and nourish — repairing dry heels, detoxifying and rejuvenating, with essential oils to pamper tired feet. Packed in a natural jute drawstring pouch.",
+      "howToUse": "Please refer to the fern tag in the pouch for step-by-step instructions."
+    },
+    "pamper-yourself-kit-facial-kit": {
+      "contents": [
+        { "name": "Rose Vanilla Scrub", "size": "25 g", "note": "Natural exfoliant for dead-skin removal" },
+        { "name": "Brightening Pithi Pack", "size": "25 g", "note": "Cleanses pores and lifts away dirt" },
+        { "name": "Soothing Hydro Gel", "size": "25 g", "note": "Hydrates; ideal after sun exposure" },
+        { "name": "Face Moisturiser", "size": "25 g", "note": "Quick-absorbing with a smooth matte finish" },
+        { "name": "Face Band", "size": null, "note": null }
+      ],
+      "headline": "Your salon facial, at home",
+      "description": "The gift of self-love: a joyful floral box holding a complete at-home facial. Rose Vanilla Scrub to polish, Brightening Pithi Pack to clarify, Soothing Hydro Gel to calm and Face Moisturiser to finish — with a soft face band for an unhurried ritual.",
+      "howToUse": "Please refer to the labels on individual packs for detailed instructions."
+    },
+    "travel-basics-kit": {
+      "contents": [
+        { "name": "Sandalwood Saffron Soap", "size": "100 g", "note": null },
+        { "name": "Sandalwood Saffron Face Wash", "size": "50 ml", "note": null },
+        { "name": "Sandalwood Saffron Shower Gel", "size": "35 ml", "note": null },
+        { "name": "Sandalwood Saffron Shampoo", "size": "35 ml", "note": null },
+        { "name": "Sandalwood Saffron Lotion", "size": "35 ml", "note": null },
+        { "name": "Jute Travel Pouch", "size": null, "note": null }
+      ],
+      "headline": "Everything you need, wherever you go",
+      "description": "Our everything travel kit: five Sandalwood Saffron essentials for face, body and hair in cabin-friendly sizes, tucked into a tropical-print jute pouch — so your ritual travels as beautifully as you do.",
+      "howToUse": "Please refer to the labels on individual packs for detailed instructions."
+    },
+    "luxurious-care-package-travel-size": {
+      "contents": [
+        { "name": "Sandalwood Saffron Soap", "size": "100 g", "note": null },
+        { "name": "Wild Rose Soap", "size": "100 g", "note": null },
+        { "name": "Sandalwood Saffron Face Wash", "size": "50 ml", "note": null },
+        { "name": "Rose Vanilla Scrub (Face & Body)", "size": "50 g", "note": null },
+        { "name": "Brightening Pithi Face Pack", "size": "50 g", "note": null },
+        { "name": "Jute Pouch", "size": null, "note": null }
+      ]
+    }
+  },
+  "classicSlugs": [
+    "good-cleanse-bathing-bar",
+    "wild-rose-bathing-bar",
+    "sole-rejuvenation-kit-foot-spa-kit",
+    "supple-goals-body-balm"
+  ],
+  "concerns": [
+    { "slug": "skin-brightening", "name": "Skin Brightening", "type": "skin", "description": "Reveal an even, luminous complexion with turmeric, saffron and licorice." },
+    { "slug": "tan-removal", "name": "Tan Removal", "type": "skin", "description": "Lift stubborn tan and restore your skin's natural glow." },
+    { "slug": "pore-tightening", "name": "Pore Tightening", "type": "skin", "description": "Refine and minimise pores with natural clays and aloe." },
+    { "slug": "anti-ageing", "name": "Anti-Ageing", "type": "skin", "description": "Soften the look of fine lines and keep skin supple and firm." },
+    { "slug": "oil-control", "name": "Oil Control", "type": "skin", "description": "Balance excess oil for clear, fresh skin." },
+    { "slug": "dry-skin", "name": "Dry Skin", "type": "skin", "description": "Deep, lasting nourishment for parched and compromised skin." },
+    { "slug": "combination-skin", "name": "Combination Skin", "type": "skin", "description": "Gentle balance for skin that is oily in places and dry in others." },
+    { "slug": "night-time-routine", "name": "Night-time Routine", "type": "skin", "description": "Repair and replenish while you sleep." },
+    { "slug": "oily-scalp", "name": "Oily Scalp", "type": "hair", "description": "Lightweight nourishment that won't weigh hair down." },
+    { "slug": "dry-hair", "name": "Dry Hair", "type": "hair", "description": "Restore softness, moisture and natural shine." },
+    { "slug": "hair-fall", "name": "Hair Fall & Thinning", "type": "hair", "description": "Strengthen roots and support fuller, thicker hair." },
+    { "slug": "frizzy-hair", "name": "Frizzy Hair", "type": "hair", "description": "Smooth, tame and protect from root to tip." }
+  ],
+  "concernProducts": {
+    "skin-brightening": ["vita-clay-ubtan-pack", "hydroclock-foaming-facewash", "glow-up-pithi-pack", "good-cleanse-face-wash", "aquench-soothing-hydrogel", "aqua-riche-night-repair-gel-cream", "scrubulush-exfoliator", "good-cleanse-bathing-bar"],
+    "tan-removal": ["vita-clay-ubtan-pack", "hydroclock-foaming-facewash", "glow-up-pithi-pack", "good-cleanse-face-wash", "aquench-soothing-hydrogel"],
+    "pore-tightening": ["vita-clay-ubtan-pack", "hydroclock-foaming-facewash", "glow-up-pithi-pack", "good-cleanse-face-wash", "aquench-soothing-hydrogel", "aqua-riche-night-repair-gel-cream"],
+    "anti-ageing": ["vita-clay-ubtan-pack", "hydroclock-foaming-facewash", "glow-up-pithi-pack", "aquench-soothing-hydrogel", "aqua-riche-night-repair-gel-cream", "scrubulush-exfoliator"],
+    "oil-control": ["vita-clay-ubtan-pack", "good-cleanse-face-wash", "aquench-soothing-hydrogel"],
+    "dry-skin": ["hydroclock-foaming-facewash", "glow-up-pithi-pack", "supple-goals-body-balm", "aqua-riche-night-repair-gel-cream", "scrubulush-exfoliator", "sheavibe-lotion", "coco-silk-cold-pressed-virgin-coconut-oil"],
+    "combination-skin": ["vita-clay-ubtan-pack", "glow-up-pithi-pack", "good-cleanse-face-wash", "aquench-soothing-hydrogel", "scrubulush-exfoliator"],
+    "night-time-routine": ["good-cleanse-face-wash", "supple-goals-body-balm", "aquench-soothing-hydrogel", "aqua-riche-night-repair-gel-cream"],
+    "oily-scalp": ["coco-silk-cold-pressed-virgin-coconut-oil"],
+    "dry-hair": ["terra-tress-hair-scalp-oil", "coco-silk-cold-pressed-virgin-coconut-oil"],
+    "hair-fall": ["hair-regrowth-oil", "terra-tress-hair-scalp-oil"],
+    "frizzy-hair": ["terra-tress-hair-scalp-oil", "coco-silk-cold-pressed-virgin-coconut-oil", "hair-regrowth-oil"]
+  }
+}

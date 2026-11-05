@@ -47,7 +47,8 @@
       "Copy of IMG_0117 copy1.jpg",
       "Copy of IMG_9507 copy.jpg",
       "Copy of IMG_9753 copy.jpg",
-      "Copy of IMG_9822 copy1.jpg"
+      "Copy of IMG_9822 copy1.jpg",
+      "Copy of IMG_9610 copy.jpg"
     ]
   },
   "aquench-soothing-hydrogel": {
@@ -179,6 +180,22 @@
       "Mini Travel Kit 1.jpg",
       "Mini Travel Kit 3.jpg"
     ]
+  },
+  "hair-regrowth-oil": {
+    "folder": "22. Hair Regrowth Oil",
+    "files": [
+      "live-03.jpg",
+      "live-01.png",
+      "live-02.jpg"
+    ],
+    "frame": false
+  },
+  "luxurious-care-package-travel-size": {
+    "folder": "23. Luxurious Complete Care Package Travel Size",
+    "files": [
+      "live-01.jpg"
+    ],
+    "frame": false
   },
   "brand": {
     "folder": "Group Pics",

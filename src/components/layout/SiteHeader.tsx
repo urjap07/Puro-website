@@ -64,6 +64,10 @@ export default function SiteHeader() {
 
   useEffect(() => setMenuOpen(false), [pathname]);
 
+  // On the homepage the header floats transparently over the hero until scrolled.
+  const overlay = pathname === "/" && !scrolled;
+  const tone = overlay ? "text-ivory" : "text-emerald";
+
   return (
     <>
       <div className="bg-emerald-deep py-2.5 text-center text-[10px] uppercase tracking-[0.28em] text-gold-soft">
@@ -73,8 +77,12 @@ export default function SiteHeader() {
 
       <header
         className={clsx(
-          "sticky top-0 z-50 border-b bg-ivory/95 backdrop-blur-md transition-all duration-500",
-          scrolled ? "border-line shadow-[0_8px_30px_-20px_rgba(18,59,48,0.35)]" : "border-transparent"
+          "sticky top-0 z-50 border-b transition-all duration-500",
+          overlay
+            ? "border-ivory/15 bg-transparent"
+            : "bg-mist/95 backdrop-blur-md",
+          scrolled && "border-line shadow-[0_8px_30px_-20px_rgba(18,59,48,0.35)]",
+          !overlay && !scrolled && "border-transparent"
         )}
       >
         <div
@@ -86,7 +94,7 @@ export default function SiteHeader() {
           <div className="flex items-center">
             <button
               type="button"
-              className="text-emerald lg:hidden"
+              className={clsx(tone, "lg:hidden")}
               onClick={() => setMenuOpen(true)}
               aria-label="Open menu"
             >
@@ -99,7 +107,7 @@ export default function SiteHeader() {
                   href={item.href}
                   className={clsx(
                     "text-[11px] uppercase tracking-[0.22em] transition-colors hover:text-gold-deep",
-                    pathname === item.href ? "text-gold-deep" : "text-emerald"
+                    pathname === item.href ? "text-gold-deep" : tone
                   )}
                 >
                   {item.label}
@@ -109,16 +117,16 @@ export default function SiteHeader() {
           </div>
 
           <Link href="/" aria-label="Puro Body & Soul — home">
-            <Wordmark />
+            <Wordmark light={overlay} />
           </Link>
 
-          <div className="flex items-center justify-end gap-6 text-emerald">
+          <div className={clsx("flex items-center justify-end gap-6", tone)}>
             <nav className="hidden items-center gap-8 xl:flex">
               {SECONDARY.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="text-[11px] uppercase tracking-[0.22em] text-emerald transition-colors hover:text-gold-deep"
+                  className="text-[11px] uppercase tracking-[0.22em] transition-colors hover:text-gold-deep"
                 >
                   {item.label}
                 </Link>

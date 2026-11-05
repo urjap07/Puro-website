@@ -12,7 +12,7 @@ export default function TrustMarquee() {
   const row = [...CLAIMS, ...CLAIMS];
 
   return (
-    <div className="overflow-hidden border-b border-line bg-parchment py-5" aria-label="Our promises">
+    <div className="overflow-hidden border-b border-line bg-mist-deep py-5" aria-label="Our promises">
       <div className="flex w-max animate-marquee motion-reduce:animate-none">
         {row.map((claim, index) => (
           <span

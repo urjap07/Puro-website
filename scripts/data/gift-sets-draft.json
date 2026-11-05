@@ -1,5 +1,5 @@
 {
-  "_note": "DRAFT copy for gift sets — the product sheet has no copy for these rows. Written from the product photography only; please confirm contents before launch.",
+  "_note": "DRAFT copy for gift sets without confirmed contents (16, 17, 20). Kits 18, 19 and 21 use contents from purobodysoul.com via live-additions.json.",
   "16": {
     "headline": "A gift of deep, lasting hydration",
     "tagline": "Quench it, flaunt it, naturally.",
@@ -29,9 +29,9 @@
     "tagline": "Restore it, flaunt it, naturally.",
     "description": "Everything you need to give your feet the care they quietly deserve. Packed in a natural jute drawstring pouch, this kit pairs Puro foot-care essentials with a pumice stone and an illustrated step-by-step guide, turning an ordinary evening into a restorative spa moment.",
     "benefits": [
-      "Complete foot-spa ritual in one pouch",
-      "Includes pumice stone and illustrated guide",
-      "Packed in a reusable jute drawstring bag",
+      "Complete five-step foot-spa ritual",
+      "Includes pumice stone and cuticle remover",
+      "Packed in a reusable jute drawstring pouch",
       "A thoughtful, practical gift"
     ],
     "howToUse": "Follow the illustrated step-by-step guide enclosed in the kit."
@@ -43,7 +43,7 @@
     "benefits": [
       "A complete four-step facial ritual",
       "Scrub, Pithi pack, hydro gel and moisturiser",
-      "Includes a soft cleansing cloth",
+      "Includes a soft face band",
       "Presented in a floral keepsake box"
     ],
     "howToUse": "Cleanse, then scrub, apply the Pithi Face Pack, rinse, soothe with Hydro Gel and finish with Face Moisturiser."
@@ -65,10 +65,10 @@
     "tagline": "Pack it, flaunt it, naturally.",
     "description": "Four travel-sized Puro essentials tucked into a tropical-print jute pouch, so your daily ritual travels as beautifully as you do. Compact enough for a weekend bag, generous enough for a week away.",
     "benefits": [
-      "Four travel-sized Puro essentials",
-      "Tropical-print jute travel pouch",
+      "Five Sandalwood Saffron essentials",
+      "Face, body and hair in one kit",
       "Cabin-friendly, compact sizes",
-      "Perfect for weekends and gifting"
+      "Tropical-print jute travel pouch"
     ],
     "howToUse": "Use each product as directed on its pack."
   }

@@ -24,6 +24,12 @@ interface ProductRow extends RowDataPacket {
     size_label: string | null;
     shelf_life: string | null;
     storage_instructions: string | null;
+    frequency: string | null;
+    warnings: string[] | null;
+    kit_contents: KitItem[] | null;
+    rating_value: string | null;
+    rating_count: number | null;
+    is_classic: number;
     is_featured: number;
     is_active: number;
     created_at: Date;
@@ -53,6 +59,7 @@ interface ConcernRow extends RowDataPacket {
     name: string;
     slug: string;
     description: string | null;
+    type: ConcernType;
 }
 
 interface ImageRow extends RowDataPacket {
@@ -66,6 +73,12 @@ interface ImageRow extends RowDataPacket {
 /* --------------------------------
    Product response types
 --------------------------------- */
+
+export interface KitItem {
+    name: string;
+    size: string | null;
+    note: string | null;
+}
 
 export interface Product {
     id: number;
@@ -85,18 +98,19 @@ export interface Product {
     sizeLabel: string | null;
     shelfLife: string | null;
     storage: string | null;
+    frequency: string | null;
+    warnings: string[];
+    kitContents: KitItem[];
+    /** Aggregate rating carried over from the previous store. */
+    rating: { value: number; count: number } | null;
+    isClassic: boolean;
     isFeatured: boolean;
     categories: {
         id: number;
         name: string;
         slug: string;
     }[];
-    concerns: {
-        id: number;
-        name: string;
-        slug: string;
-        description: string | null;
-    }[];
+    concerns: Concern[];
     images: {
         id: number;
         imageUrl: string;
@@ -174,7 +188,8 @@ async function attachProductRelations(
         c.id,
         c.name,
         c.slug,
-        c.description
+        c.description,
+        c.type
       FROM product_concerns pco
       INNER JOIN concerns c
         ON pco.concern_id = c.id
@@ -249,6 +264,17 @@ async function attachProductRelations(
         sizeLabel: product.size_label,
         shelfLife: product.shelf_life,
         storage: product.storage_instructions,
+        frequency: product.frequency,
+        warnings: product.warnings ?? [],
+        kitContents: product.kit_contents ?? [],
+        rating:
+            product.rating_value && product.rating_count
+                ? {
+                      value: Number(product.rating_value),
+                      count: product.rating_count,
+                  }
+                : null,
+        isClassic: Boolean(product.is_classic),
         isFeatured: Boolean(product.is_featured),
 
         categories: (categoriesMap.get(product.id) || []).map((category) => ({
@@ -262,6 +288,7 @@ async function attachProductRelations(
             name: concern.name,
             slug: concern.slug,
             description: concern.description,
+            type: concern.type,
         })),
 
         images: (imagesMap.get(product.id) || []).map((image) => ({
@@ -311,6 +338,12 @@ export const getActiveProducts = cache(async (): Promise<Product[]> => {
         size_label,
         shelf_life,
         storage_instructions,
+        frequency,
+        warnings,
+        kit_contents,
+        rating_value,
+        rating_count,
+        is_classic,
         is_featured,
         is_active,
         created_at
@@ -350,6 +383,12 @@ export const getProductBySlug = cache(async (
         size_label,
         shelf_life,
         storage_instructions,
+        frequency,
+        warnings,
+        kit_contents,
+        rating_value,
+        rating_count,
+        is_classic,
         is_featured,
         is_active,
         created_at
@@ -374,11 +413,14 @@ export const getProductBySlug = cache(async (
    Concerns and ingredients
 --------------------------------- */
 
+export type ConcernType = "skin" | "hair";
+
 export interface Concern {
     id: number;
     name: string;
     slug: string;
     description: string | null;
+    type: ConcernType;
 }
 
 export interface Ingredient {
@@ -399,14 +441,15 @@ interface IngredientRow extends RowDataPacket {
 
 export const getConcerns = cache(async (): Promise<Concern[]> => {
     const [concerns] = await pool.query<(Concern & RowDataPacket)[]>(
-        `SELECT id, name, slug, description FROM concerns ORDER BY id ASC`
+        `SELECT id, name, slug, description, type FROM concerns ORDER BY id ASC`
     );
 
-    return concerns.map(({ id, name, slug, description }) => ({
+    return concerns.map(({ id, name, slug, description, type }) => ({
         id,
         name,
         slug,
         description,
+        type,
     }));
 });
 
@@ -423,3 +466,85 @@ export const getIngredients = cache(async (): Promise<Ingredient[]> => {
         imageUrl: ingredient.image_url,
     }));
 });
+
+/* --------------------------------
+   Reviews
+--------------------------------- */
+
+export interface Review {
+    id: number;
+    productId: number;
+    productName: string;
+    productSlug: string;
+    author: string;
+    rating: number;
+    title: string | null;
+    comment: string | null;
+    createdAt: string | null;
+}
+
+interface ReviewRow extends RowDataPacket {
+    id: number;
+    product_id: number;
+    product_name: string;
+    product_slug: string;
+    author: string | null;
+    rating: number;
+    title: string | null;
+    comment: string | null;
+    created_at: Date | null;
+}
+
+function toReview(row: ReviewRow): Review {
+    return {
+        id: row.id,
+        productId: row.product_id,
+        productName: row.product_name,
+        productSlug: row.product_slug,
+        author: row.author?.trim() || "Verified customer",
+        rating: row.rating,
+        title: row.title,
+        comment: row.comment,
+        createdAt: row.created_at ? row.created_at.toISOString() : null,
+    };
+}
+
+const REVIEW_SELECT = `
+      SELECT
+        r.id,
+        r.product_id,
+        p.name AS product_name,
+        p.slug AS product_slug,
+        COALESCE(r.author_name, u.name) AS author,
+        r.rating,
+        r.title,
+        r.comment,
+        r.created_at
+      FROM reviews r
+      INNER JOIN products p
+        ON r.product_id = p.id
+      LEFT JOIN users u
+        ON r.user_id = u.id
+      WHERE r.is_approved = 1
+`;
+
+export const getProductReviews = cache(
+    async (productId: number): Promise<Review[]> => {
+        const [rows] = await pool.query<ReviewRow[]>(
+            `${REVIEW_SELECT} AND r.product_id = ? ORDER BY r.created_at DESC`,
+            [productId]
+        );
+        return rows.map(toReview);
+    }
+);
+
+/** Highest-rated, most detailed reviews for testimonials. */
+export const getFeaturedReviews = cache(
+    async (limit = 6): Promise<Review[]> => {
+        const [rows] = await pool.query<ReviewRow[]>(
+            `${REVIEW_SELECT} AND r.rating = 5 ORDER BY CHAR_LENGTH(r.comment) DESC LIMIT ?`,
+            [limit]
+        );
+        return rows.map(toReview);
+    }
+);

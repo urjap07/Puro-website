@@ -1,11 +1,17 @@
 /**
- * Adds product-detail columns and seeds the catalogue from the product sheet.
+ * Adds product-detail columns and seeds the catalogue.
  *
  *   python3 scripts/export-catalogue.py   # xlsx -> scripts/data/catalogue.json
  *   node scripts/optimize-images.mjs      # raw photos -> public/media
  *   npm run db:seed                       # this script
  *
- * Safe to re-run: columns are only added when missing and every row is rewritten.
+ * Sources, in order of precedence:
+ *   catalogue.json        — the product sheet (names, prices, copy, benefits)
+ *   live-additions.json   — products/kit contents/concerns from purobodysoul.com
+ *   live-site.json        — full ingredients, warnings, ratings, reviews (live site)
+ *   gift-sets-draft.json  — placeholder copy for gift sets not yet confirmed
+ *
+ * Safe to re-run: schema changes are only applied when missing and rows are rewritten.
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -19,10 +25,13 @@ const env = Object.fromEntries(
     .map((line) => [line.slice(0, line.indexOf("=")), line.slice(line.indexOf("=") + 1).trim()])
 );
 
-const catalogue = JSON.parse(fs.readFileSync("scripts/data/catalogue.json", "utf8"));
-const giftSetDrafts = JSON.parse(fs.readFileSync("scripts/data/gift-sets-draft.json", "utf8"));
+const readJson = (file) => JSON.parse(fs.readFileSync(`scripts/data/${file}`, "utf8"));
+const catalogue = readJson("catalogue.json");
+const giftSetDrafts = readJson("gift-sets-draft.json");
+const additions = readJson("live-additions.json");
+const liveSite = readJson("live-site.json");
 
-const NEW_COLUMNS = {
+const PRODUCT_COLUMNS = {
   headline: "VARCHAR(255) NULL",
   tagline: "VARCHAR(255) NULL",
   skin_type: "VARCHAR(255) NULL",
@@ -33,18 +42,26 @@ const NEW_COLUMNS = {
   size_label: "VARCHAR(50) NULL",
   shelf_life: "VARCHAR(255) NULL",
   storage_instructions: "VARCHAR(255) NULL",
+  frequency: "VARCHAR(100) NULL",
+  warnings: "JSON NULL",
+  kit_contents: "JSON NULL",
+  // Aggregate rating carried over from the previous store (purobodysoul.com).
+  rating_value: "DECIMAL(2,1) NULL",
+  rating_count: "INT NULL",
+  is_classic: "TINYINT(1) NOT NULL DEFAULT 0",
 };
 
 /** Products shown in "The Signatures" on the homepage. */
-const FEATURED_IDS = [3, 4, 7, 9, 2, 5, 11, 6];
-
-const CONCERN_PRODUCTS = {
-  "deep-hydration": [2, 6, 7, 8, 9, 10, 12, 16],
-  "skin-brightening": [1, 3, 4, 5, 13, 17, 19, 20],
-  "tan-removal": [3, 4, 5, 6],
-  "oil-control": [1, 4, 6],
-  "hair-thinning": [11, 12],
-};
+const FEATURED_SLUGS = [
+  "glow-up-pithi-pack",
+  "vita-clay-ubtan-pack",
+  "aqua-riche-night-repair-gel-cream",
+  "sheavibe-lotion",
+  "hydroclock-foaming-facewash",
+  "scrubulush-exfoliator",
+  "terra-tress-hair-scalp-oil",
+  "aquench-soothing-hydrogel",
+];
 
 const INGREDIENTS = [
   ["Turmeric", "turmeric", "Home-grown and rich in curcumin — the golden heart of our Pithi and Good Cleanse rituals.", "/media/products/glow-up-pithi-pack/04.jpg"],
@@ -62,16 +79,42 @@ const pool = mysql.createPool({
   database: env.DB_NAME,
 });
 
-async function addMissingColumns() {
-  const [existing] = await pool.query(
-    "SELECT COLUMN_NAME FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'products'"
+async function columnsOf(table) {
+  const [rows] = await pool.query(
+    "SELECT COLUMN_NAME, IS_NULLABLE FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ?",
+    [table]
   );
-  const present = new Set(existing.map((row) => row.COLUMN_NAME));
-  for (const [column, definition] of Object.entries(NEW_COLUMNS)) {
-    if (!present.has(column)) {
+  return new Map(rows.map((row) => [row.COLUMN_NAME, row]));
+}
+
+async function migrate() {
+  const productColumns = await columnsOf("products");
+  for (const [column, definition] of Object.entries(PRODUCT_COLUMNS)) {
+    if (!productColumns.has(column)) {
       await pool.query(`ALTER TABLE products ADD COLUMN ${column} ${definition}`);
       console.log(`+ products.${column}`);
     }
+  }
+
+  const concernColumns = await columnsOf("concerns");
+  if (!concernColumns.has("type")) {
+    await pool.query("ALTER TABLE concerns ADD COLUMN type VARCHAR(20) NOT NULL DEFAULT 'skin'");
+    console.log("+ concerns.type");
+  }
+
+  // Reviews imported from the previous store have an author name but no account.
+  const reviewColumns = await columnsOf("reviews");
+  if (reviewColumns.get("user_id")?.IS_NULLABLE === "NO") {
+    await pool.query("ALTER TABLE reviews MODIFY user_id INT NULL");
+    console.log("~ reviews.user_id nullable");
+  }
+  if (!reviewColumns.has("author_name")) {
+    await pool.query("ALTER TABLE reviews ADD COLUMN author_name VARCHAR(120) NULL");
+    console.log("+ reviews.author_name");
+  }
+  if (!reviewColumns.has("source")) {
+    await pool.query("ALTER TABLE reviews ADD COLUMN source VARCHAR(40) NULL");
+    console.log("+ reviews.source");
   }
 }
 
@@ -85,44 +128,121 @@ function productImages(slug) {
     .map((file) => `/media/products/${slug}/${file}`);
 }
 
-async function seedProducts() {
-  const [rows] = await pool.query("SELECT id, slug, name FROM products");
-  const byId = new Map(rows.map((row) => [row.id, row]));
+/** Creates rows for products that exist on the live site but not in the sheet. */
+async function insertNewProducts() {
+  for (const item of additions.newProducts) {
+    const [[existing]] = await pool.query("SELECT id FROM products WHERE id = ?", [item.id]);
+    if (!existing) {
+      await pool.query("INSERT INTO products (id, name, slug, is_active) VALUES (?, ?, ?, 1)", [
+        item.id,
+        item.name,
+        item.slug,
+      ]);
+      await pool.query(
+        "INSERT INTO product_variants (product_id, sku, variant_name, price, stock_quantity, weight_grams, is_active) VALUES (?, ?, ?, ?, ?, 0, 1)",
+        [item.id, `PURO-${item.slug.slice(0, 10).toUpperCase()}`, item.sizeLabel ?? "Gift box", item.price, item.stock]
+      );
+      console.log(`+ product ${item.slug}`);
+    }
+    await pool.query("UPDATE product_variants SET stock_quantity = ? WHERE product_id = ?", [
+      item.stock,
+      item.id,
+    ]);
 
-  for (const item of catalogue) {
-    const product = byId.get(item.id);
-    if (!product) {
+    const [[category]] = await pool.query("SELECT id FROM categories WHERE slug = ?", [item.category]);
+    await pool.query("DELETE FROM product_categories WHERE product_id = ?", [item.id]);
+    await pool.query("INSERT INTO product_categories (product_id, category_id) VALUES (?, ?)", [
+      item.id,
+      category.id,
+    ]);
+  }
+}
+
+/** One normalised record per product, merging every data source. */
+function buildRecords(slugById) {
+  const fromSheet = catalogue.map((item) => {
+    const draft = giftSetDrafts[String(item.id)] ?? {};
+    return {
+      id: item.id,
+      name: item.name.replace(" - Diffuser Aromatherapy", ""),
+      price: item.price,
+      sizeLabel: item.sizeLabel,
+      headline: item.headline ?? draft.headline ?? null,
+      tagline: item.tagline ?? draft.tagline ?? null,
+      skinType: item.skinType,
+      subCategory: item.subCategory,
+      description: item.description ?? draft.description ?? null,
+      howToUse: item.howToUse ?? draft.howToUse ?? null,
+      keyIngredients: item.keyIngredients,
+      benefits: item.benefits.length ? item.benefits : draft.benefits ?? [],
+      certifications: item.certifications,
+      shelfLife: item.shelfLife,
+      storage: item.storage,
+    };
+  });
+
+  return [...fromSheet, ...additions.newProducts].map((record) => {
+    const slug = slugById.get(record.id);
+    const kit = additions.kitContents[slug] ?? {};
+    const live = liveSite[slug] ?? {};
+    return {
+      ...record,
+      slug,
+      headline: kit.headline ?? record.headline,
+      description: kit.description ?? record.description,
+      howToUse: kit.howToUse ?? record.howToUse,
+      kitContents: kit.contents ?? null,
+      fullIngredients: live.fullIngredients ?? null,
+      frequency: live.frequency ?? null,
+      // Drop label-only lines such as "Warning :".
+      warnings: (live.warnings ?? []).filter((line) => !/:\s*$/.test(line)),
+      rating: live.rating ?? null,
+      isClassic: record.isClassic ?? additions.classicSlugs.includes(slug),
+    };
+  });
+}
+
+async function seedProducts() {
+  const [rows] = await pool.query("SELECT id, slug FROM products");
+  const slugById = new Map(rows.map((row) => [row.id, row.slug]));
+
+  for (const item of buildRecords(slugById)) {
+    if (!item.slug) {
       console.warn(`! No database product with id ${item.id} (${item.name})`);
       continue;
     }
-
-    const draft = giftSetDrafts[String(item.id)] ?? {};
-    const headline = item.headline ?? draft.headline ?? null;
 
     await pool.query(
       `UPDATE products SET
          name = ?, summary = ?, headline = ?, tagline = ?, skin_type = ?,
          sub_category = ?, description = ?, how_to_use = ?, key_ingredients = ?,
          full_ingredients_list = ?, benefits = ?, certifications = ?, size_label = ?,
-         shelf_life = ?, storage_instructions = ?, is_featured = ?
+         shelf_life = ?, storage_instructions = ?, frequency = ?, warnings = ?,
+         kit_contents = ?, rating_value = ?, rating_count = ?, is_classic = ?, is_featured = ?
        WHERE id = ?`,
       [
-        item.name.replace(" - Diffuser Aromatherapy", ""),
-        headline,
-        headline,
-        item.tagline ?? draft.tagline ?? null,
+        item.name,
+        item.headline,
+        item.headline,
+        item.tagline,
         item.skinType,
         item.subCategory,
-        item.description ?? draft.description ?? null,
-        item.howToUse ?? draft.howToUse ?? null,
+        item.description,
+        item.howToUse,
         item.keyIngredients,
-        item.keyIngredients,
-        JSON.stringify(item.benefits.length ? item.benefits : draft.benefits ?? []),
+        item.fullIngredients,
+        JSON.stringify(item.benefits),
         JSON.stringify(item.certifications),
         item.sizeLabel,
         item.shelfLife,
         item.storage,
-        FEATURED_IDS.includes(item.id) ? 1 : 0,
+        item.frequency,
+        item.warnings.length ? JSON.stringify(item.warnings) : null,
+        item.kitContents ? JSON.stringify(item.kitContents) : null,
+        item.rating?.value ?? null,
+        item.rating?.count ?? null,
+        item.isClassic ? 1 : 0,
+        FEATURED_SLUGS.includes(item.slug) ? 1 : 0,
         item.id,
       ]
     );
@@ -132,7 +252,7 @@ async function seedProducts() {
       [item.price, item.sizeLabel ?? "Gift box", item.id]
     );
 
-    const images = productImages(product.slug);
+    const images = productImages(item.slug);
     await pool.query("DELETE FROM product_images WHERE product_id = ?", [item.id]);
     for (const [index, url] of images.entries()) {
       await pool.query(
@@ -141,22 +261,48 @@ async function seedProducts() {
       );
     }
 
-    console.log(`✓ ${product.slug} — ${images.length} images`);
+    console.log(`✓ ${item.slug} — ${images.length} images`);
   }
 }
 
 async function seedConcerns() {
-  const [concerns] = await pool.query("SELECT id, slug FROM concerns");
+  const [products] = await pool.query("SELECT id, slug FROM products");
+  const idBySlug = new Map(products.map((row) => [row.slug, row.id]));
+
   await pool.query("DELETE FROM product_concerns");
-  for (const concern of concerns) {
-    for (const productId of CONCERN_PRODUCTS[concern.slug] ?? []) {
-      await pool.query(
-        "INSERT INTO product_concerns (product_id, concern_id) VALUES (?, ?)",
-        [productId, concern.id]
-      );
+  await pool.query("DELETE FROM concerns");
+  for (const [index, concern] of additions.concerns.entries()) {
+    const [result] = await pool.query(
+      "INSERT INTO concerns (id, name, slug, description, type) VALUES (?, ?, ?, ?, ?)",
+      [index + 1, concern.name, concern.slug, concern.description, concern.type]
+    );
+    for (const slug of additions.concernProducts[concern.slug] ?? []) {
+      await pool.query("INSERT INTO product_concerns (product_id, concern_id) VALUES (?, ?)", [
+        idBySlug.get(slug),
+        result.insertId,
+      ]);
     }
   }
-  console.log(`✓ concerns linked`);
+  console.log(`✓ ${additions.concerns.length} concerns linked`);
+}
+
+async function seedReviews() {
+  const [products] = await pool.query("SELECT id, slug FROM products");
+  const idBySlug = new Map(products.map((row) => [row.slug, row.id]));
+
+  await pool.query("DELETE FROM reviews WHERE source = 'purobodysoul.com'");
+  let count = 0;
+  for (const [slug, entry] of Object.entries(liveSite)) {
+    for (const review of entry.reviews ?? []) {
+      await pool.query(
+        `INSERT INTO reviews (product_id, user_id, author_name, rating, title, comment, is_approved, source, created_at)
+         VALUES (?, NULL, ?, ?, ?, ?, 1, 'purobodysoul.com', ?)`,
+        [idBySlug.get(slug), review.author, review.rating, review.title, review.body, review.date || null]
+      );
+      count++;
+    }
+  }
+  console.log(`✓ ${count} reviews imported`);
 }
 
 async function seedIngredients() {
@@ -171,9 +317,11 @@ async function seedIngredients() {
 }
 
 try {
-  await addMissingColumns();
+  await migrate();
+  await insertNewProducts();
   await seedProducts();
   await seedConcerns();
+  await seedReviews();
   await seedIngredients();
 } finally {
   await pool.end();

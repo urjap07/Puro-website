@@ -91,26 +91,32 @@ export default function ShopGrid({
             </label>
           </div>
 
-          {concerns.length > 0 && (
-            <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
-              <span className="text-[10px] uppercase tracking-[0.22em] text-stone">Concern</span>
-              {concerns.map((item) => (
-                <button
-                  key={item.slug}
-                  type="button"
-                  onClick={() => setConcern(concern === item.slug ? null : item.slug)}
-                  className={clsx(
-                    "font-display text-[18px] transition",
-                    concern === item.slug
-                      ? "text-gold-deep underline decoration-gold decoration-1 underline-offset-[6px]"
-                      : "text-emerald hover:text-gold-deep"
-                  )}
-                >
-                  {item.name}
-                </button>
-              ))}
-            </div>
-          )}
+          {(["skin", "hair"] as const).map((type) => {
+            const group = concerns.filter((item) => item.type === type);
+            if (group.length === 0) return null;
+            return (
+              <div key={type} className="flex flex-wrap items-center gap-x-6 gap-y-3">
+                <span className="w-12 text-[10px] uppercase tracking-[0.22em] text-stone">
+                  {type}
+                </span>
+                {group.map((item) => (
+                  <button
+                    key={item.slug}
+                    type="button"
+                    onClick={() => setConcern(concern === item.slug ? null : item.slug)}
+                    className={clsx(
+                      "font-display text-[18px] transition",
+                      concern === item.slug
+                        ? "text-gold-deep underline decoration-gold decoration-1 underline-offset-[6px]"
+                        : "text-emerald hover:text-gold-deep"
+                    )}
+                  >
+                    {item.name}
+                  </button>
+                ))}
+              </div>
+            );
+          })}
         </div>
       )}
 
