@@ -14,7 +14,7 @@ export const SANISA_PROMO: GridPromo = {
   eyebrow: "The heart of Puro",
   title: "Every purchase empowers a woman",
   text: "Puro is a division of Shramik Naari Sangh. Every product you buy helps a rural woman live a life of dignity.",
-  href: "/#story",
+  href: "/our-story",
   cta: "Our story",
   image: "/media/products/good-cleanse-face-wash/04.jpg",
 };

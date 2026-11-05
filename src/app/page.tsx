@@ -429,12 +429,14 @@ export default async function Home() {
             <p className="mt-5 font-display text-[22px] italic text-gold-soft">
               Beauty that gives back. Ethical, inside out.
             </p>
-            <Link
-              href="/shop"
-              className="btn-outline-light mt-10 rounded-full px-9"
-            >
-              Shop with purpose <ArrowRight size={15} strokeWidth={1.25} />
-            </Link>
+            <div className="mt-10 flex flex-wrap items-center gap-7">
+              <Link href="/shop" className="btn-outline-light rounded-full px-9">
+                Shop with purpose <ArrowRight size={15} strokeWidth={1.25} />
+              </Link>
+              <Link href="/our-story" className="link-underline text-ivory">
+                Read our story
+              </Link>
+            </div>
           </Reveal>
         </div>
       </section>

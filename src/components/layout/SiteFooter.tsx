@@ -28,7 +28,7 @@ const COLUMNS = [
   {
     title: "The Puro World",
     links: [
-      ["Our story", "/#story"],
+      ["Our story", "/our-story"],
       ["The ritual", "/#ritual"],
       ["Ingredients", "/#ingredients"],
       ["FAQs", "/#faq"],

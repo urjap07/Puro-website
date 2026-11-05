@@ -19,7 +19,7 @@ const NAVIGATION = [
 ];
 
 const SECONDARY = [
-  { label: "Our Story", href: "/#story" },
+  { label: "Our Story", href: "/our-story" },
   { label: "Rituals", href: "/#ritual" },
   { label: "Ingredients", href: "/#ingredients" },
 ];
@@ -38,6 +38,9 @@ const FEATURED = [
     image: "/media/products/radiant-glow-luxurious-kit/02.jpg",
   },
 ];
+
+/** Pages whose full-bleed hero sits beneath a transparent header. */
+const OVERLAY_PAGES = ["/", "/our-story"];
 
 /** Header height; the homepage hero tucks underneath it. */
 export const HEADER_HEIGHT = 96;
@@ -105,7 +108,7 @@ export default function SiteHeader({ concerns = [] }: { concerns?: Concern[] }) 
   };
 
   // On the homepage the header floats transparently over the hero until scrolled.
-  const overlay = pathname === "/" && !scrolled && !shopOpen;
+  const overlay = OVERLAY_PAGES.includes(pathname) && !scrolled && !shopOpen;
   // Light text on the transparent hero header and on the emerald open-menu header.
   const dark = overlay || shopOpen;
   const tone = dark ? "text-ivory" : "text-emerald";
