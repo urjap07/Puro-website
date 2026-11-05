@@ -1,26 +1,119 @@
 @import "tailwindcss";
 
+/* ==========================================
+   PURO BODY SOUL — QUIET LUXURY DESIGN
+========================================== */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Primary palette */
+  --puro-ivory: #F5F0E8;
+  --puro-cream: #FAF7F2;
+  --puro-forest: #302820;
+  --puro-sage: #A58C72;
+  --puro-clay: #E9DED5;
+  --puro-gold: #B89B68;
+
+  /* Supporting colours */
+  --puro-champagne: #D8C9B5;
+  --puro-taupe: #8A7968;
+  --puro-rose: #E9DED5;
+
+  /* Text */
+  --puro-text: #302820;
+  --puro-muted: #81776D;
+
+  /* Surfaces */
+  --background: var(--puro-cream);
+  --foreground: var(--puro-text);
+  --surface: #FFFFFF;
+  --border: #E7DED2;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+  --color-puro-ivory: var(--puro-ivory);
+  --color-puro-cream: var(--puro-cream);
+  --color-puro-forest: var(--puro-forest);
+  --color-puro-sage: var(--puro-sage);
+  --color-puro-clay: var(--puro-clay);
+  --color-puro-gold: var(--puro-gold);
+  --color-puro-champagne: var(--puro-champagne);
+  --color-puro-taupe: var(--puro-taupe);
+  --color-puro-rose: var(--puro-rose);
+  --color-puro-text: var(--puro-text);
+  --color-puro-muted: var(--puro-muted);
+  --color-puro-surface: var(--surface);
+  --color-puro-border: var(--border);
+
+  --font-sans: var(--font-dm-sans);
+  --font-serif: var(--font-cormorant);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Base styles */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
+  margin: 0;
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-dm-sans), sans-serif;
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: 0.01em;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: var(--puro-gold);
+  color: var(--puro-forest);
+}
+
+/* Editorial typography */
+
+.font-editorial {
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-weight: 400;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+/* Premium details */
+
+.puro-gold-line {
+  height: 1px;
+  background: var(--puro-gold);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+
+  a,
+  button {
+    transition-property: color, background-color, border-color, opacity;
+    transition-duration: 300ms;
+  }
 }
