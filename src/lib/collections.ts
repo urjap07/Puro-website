@@ -8,6 +8,8 @@ export interface Collection {
   image: string;
   /** Database category slugs that belong to this collection. */
   categorySlugs: string[];
+  /** Products standing in the arches of the collection header. */
+  showcase: string[];
 }
 
 export const COLLECTIONS: Collection[] = [
@@ -24,6 +26,7 @@ export const COLLECTIONS: Collection[] = [
       "moisturiser-gel",
       "night-cream-gel-cream",
     ],
+    showcase: ["vita-clay-ubtan-pack", "aqua-riche-night-repair-gel-cream"],
   },
   {
     slug: "body",
@@ -39,6 +42,7 @@ export const COLLECTIONS: Collection[] = [
       "shower-gel-body-wash",
       "bathing-bar-soap",
     ],
+    showcase: ["sheavibe-lotion", "scrubulush-exfoliator"],
   },
   {
     slug: "hair",
@@ -48,6 +52,7 @@ export const COLLECTIONS: Collection[] = [
       "Lightweight botanical oils that revitalise the scalp and restore natural shine.",
     image: "/media/products/terra-tress-hair-scalp-oil/02.jpg",
     categorySlugs: ["hair-scalp-oil"],
+    showcase: ["terra-tress-hair-scalp-oil", "hair-regrowth-oil"],
   },
   {
     slug: "gifting",
@@ -57,6 +62,7 @@ export const COLLECTIONS: Collection[] = [
       "Keepsake boxes inspired by palace gardens, filled with Puro rituals for every celebration.",
     image: "/media/products/hydro-glow-essentials/02.jpg",
     categorySlugs: ["gift-sets"],
+    showcase: ["hydro-glow-essentials", "radiant-glow-luxurious-kit"],
   },
   {
     slug: "wellness",
@@ -66,6 +72,7 @@ export const COLLECTIONS: Collection[] = [
       "Aromatherapy blends that bring calm and freshness into every space.",
     image: "/media/brand/02.jpg",
     categorySlugs: ["wellness"],
+    showcase: [],
   },
 ];
 
@@ -86,4 +93,13 @@ export function productsInCollection(products: Product[], collection: Collection
       collection.categorySlugs.includes(category.slug)
     )
   );
+}
+
+/** Picks the named products (in order), falling back to the first available. */
+export function pickShowcase(products: Product[], slugs: string[], count = 2) {
+  const named = slugs
+    .map((slug) => products.find((product) => product.slug === slug))
+    .filter((product): product is Product => Boolean(product));
+  const rest = products.filter((product) => !named.includes(product));
+  return [...named, ...rest].slice(0, count);
 }

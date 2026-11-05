@@ -216,13 +216,13 @@ export default async function Home() {
                     </div>
                     <div className="mt-6 flex items-start justify-between gap-4">
                       <div>
-                        <p className="font-display text-[15px] italic text-gold-soft">
+                        <p className="font-display text-[17px] italic text-gold-soft">
                           {item.verb}
                         </p>
                         <h3 className="mt-1 font-display text-[26px] font-light">
                           {product.name}
                         </h3>
-                        <p className="mt-2 text-[13px] text-ivory/60">
+                        <p className="mt-2 text-[15px] leading-relaxed text-ivory/70">
                           {product.headline}
                         </p>
                       </div>
@@ -333,13 +333,13 @@ export default async function Home() {
                     <span className="relative z-10 mx-auto -mt-6 flex h-12 w-12 items-center justify-center rounded-full border border-gold/60 bg-emerald-deep font-display text-[18px] text-gold-soft">
                       0{index + 1}
                     </span>
-                    <h3 className="mt-5 font-display text-[32px] font-light">
+                    <h3 className="mt-5 font-display text-[34px] font-light">
                       {item.step}
                     </h3>
-                    <p className="mt-1 text-[10px] uppercase tracking-[0.24em] text-gold-soft">
+                    <p className="mt-2 text-[12px] uppercase tracking-[0.22em] text-gold-soft">
                       {product.name}
                     </p>
-                    <p className="mx-auto mt-4 max-w-[260px] text-[14px] leading-7 text-ivory/65">
+                    <p className="mx-auto mt-4 max-w-[280px] text-[16px] leading-[1.8] text-ivory/75">
                       {item.note}
                     </p>
                   </Link>

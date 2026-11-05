@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import clsx from "clsx";
 import { notFound } from "next/navigation";
 import { getActiveProducts, getConcerns } from "@/db/queries/products";
+import { GIFT_PROMO, featuredFirst } from "@/lib/listing";
 import ShopGrid from "@/components/shop/ShopGrid";
 import ListingHeader from "@/components/shop/ListingHeader";
 
@@ -26,31 +25,36 @@ export default async function ConcernPage({ params }: ConcernPageProps) {
   const concern = concerns.find((item) => item.slug === slug);
   if (!concern) notFound();
 
-  const matching = products.filter((product) =>
-    product.concerns.some((item) => item.slug === slug)
+  const matching = featuredFirst(
+    products.filter((product) => product.concerns.some((item) => item.slug === slug))
   );
+  // Rotate through the matching products so each concern shows a different pair.
+  const offset = matching.length > 2 ? (concern.id * 2) % matching.length : 0;
+  const showcase = [...matching.slice(offset), ...matching.slice(0, offset)];
+  // A lifestyle shot (second image) of the lead product sets the mood.
+  const backdrop = showcase[0]?.images[1]?.imageUrl ?? "/media/brand/02.jpg";
 
   return (
     <>
-      <ListingHeader eyebrow="Shop by concern" title={concern.name} description={concern.description} />
-      <div className="container-site py-14 sm:py-20">
-        <nav className="no-scrollbar -mx-5 mb-12 flex gap-2 overflow-x-auto px-5 sm:mx-0 sm:flex-wrap sm:justify-center sm:px-0">
-          {concerns.map((item) => (
-            <Link
-              key={item.slug}
-              href={`/concerns/${item.slug}`}
-              className={clsx(
-                "whitespace-nowrap border px-5 py-2.5 text-[10px] uppercase tracking-[0.22em] transition",
-                item.slug === slug
-                  ? "border-emerald bg-emerald text-ivory"
-                  : "border-line text-emerald hover:border-emerald"
-              )}
-            >
-              {item.name}
-            </Link>
-          ))}
-        </nav>
-        <ShopGrid products={matching} showFilters={false} />
+      <ListingHeader
+        eyebrow={concern.type === "hair" ? "Shop by hair concern" : "Shop by skin concern"}
+        title={concern.name}
+        description={concern.description}
+        backdrop={backdrop}
+        products={showcase}
+        count={matching.length}
+        links={concerns
+          .filter((item) => item.type === concern.type)
+          .map((item) => ({
+            label: item.name,
+            href: `/concerns/${item.slug}`,
+            active: item.slug === slug,
+          }))}
+      />
+      <div className="glow-botanical">
+        <div className="container-site py-14 sm:py-20">
+          <ShopGrid products={matching} showFilters={false} promo={GIFT_PROMO} />
+        </div>
       </div>
     </>
   );

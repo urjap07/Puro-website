@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import clsx from "clsx";
-import { Minus, Plus } from "lucide-react";
+import { Check, Minus, Plus, ShoppingBag } from "lucide-react";
 import { useCart } from "@/lib/cart-store";
 import type { Product } from "@/db/queries/products";
 import { formatPrice } from "@/lib/format";
@@ -75,7 +75,7 @@ export function AddToBagPanel({ product }: { product: CartProduct }) {
   );
 }
 
-/** Compact quick-add, revealed on product card hover. */
+/** Labelled add-to-bag button used in product card footers. */
 export function QuickAdd({
   product,
   className,
@@ -84,23 +84,51 @@ export function QuickAdd({
   className?: string;
 }) {
   const add = useCart((state) => state.add);
+  const [added, setAdded] = useState(false);
   const variant = product.variants[0];
 
-  if (!variant || variant.stockQuantity <= 0) return null;
+  if (!variant) return null;
+
+  if (variant.stockQuantity <= 0) {
+    return (
+      <span
+        className={clsx(
+          "flex items-center justify-center rounded-full border border-line px-4 py-2.5 text-[10px] uppercase tracking-[0.2em] text-stone",
+          className
+        )}
+      >
+        Sold out
+      </span>
+    );
+  }
 
   return (
     <button
       type="button"
+      aria-label={`Add ${product.name} to bag`}
       onClick={(event) => {
         event.preventDefault();
         add(toCartItem(product));
+        setAdded(true);
+        setTimeout(() => setAdded(false), 1600);
       }}
       className={clsx(
-        "rounded-full bg-ivory/95 py-3.5 text-[10px] uppercase tracking-[0.24em] text-emerald backdrop-blur transition hover:bg-emerald hover:text-ivory",
+        "flex items-center justify-center gap-2 whitespace-nowrap rounded-full px-4 py-2.5 text-[11px] uppercase tracking-[0.18em] shadow-[0_10px_24px_-14px_rgba(18,59,48,0.9)] transition duration-300",
+        added
+          ? "bg-gold text-emerald-deep"
+          : "bg-emerald text-ivory hover:bg-gold hover:text-emerald-deep",
         className
       )}
     >
-      Add to bag
+      {added ? (
+        <>
+          <Check size={14} strokeWidth={1.75} /> Added
+        </>
+      ) : (
+        <>
+          <ShoppingBag size={14} strokeWidth={1.5} /> Add to bag
+        </>
+      )}
     </button>
   );
 }

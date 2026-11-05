@@ -1,7 +1,13 @@
 import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import { getActiveProducts } from "@/db/queries/products";
-import { getCollection, productsInCollection } from "@/lib/collections";
+import {
+  COLLECTIONS,
+  getCollection,
+  pickShowcase,
+  productsInCollection,
+} from "@/lib/collections";
+import { SANISA_PROMO, featuredFirst } from "@/lib/listing";
 import ShopGrid from "@/components/shop/ShopGrid";
 import ListingHeader from "@/components/shop/ListingHeader";
 
@@ -26,7 +32,7 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
   const collection = getCollection(slug);
   if (!collection) notFound();
 
-  const products = productsInCollection(await getActiveProducts(), collection);
+  const products = featuredFirst(productsInCollection(await getActiveProducts(), collection));
 
   return (
     <>
@@ -34,10 +40,19 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
         eyebrow="Collection"
         title={collection.title}
         description={collection.description}
-        image={collection.image}
+        backdrop={collection.image}
+        products={pickShowcase(products, collection.showcase)}
+        count={products.length}
+        links={COLLECTIONS.map((item) => ({
+          label: item.title,
+          href: `/collections/${item.slug}`,
+          active: item.slug === slug,
+        }))}
       />
-      <div className="container-site py-14 sm:py-20">
-        <ShopGrid products={products} showFilters={false} />
+      <div className="glow-botanical">
+        <div className="container-site py-14 sm:py-20">
+          <ShopGrid products={products} showFilters={false} promo={SANISA_PROMO} />
+        </div>
       </div>
     </>
   );

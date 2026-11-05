@@ -4,7 +4,7 @@ import { ArrowRight } from "lucide-react";
 import Reveal from "@/components/ui/Reveal";
 
 /** Header height — the hero slides underneath the transparent header. */
-const HEADER_OFFSET = "-mt-[88px]";
+const HEADER_OFFSET = "-mt-[96px]";
 
 export default function Hero() {
   return (

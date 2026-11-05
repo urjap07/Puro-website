@@ -14,9 +14,18 @@ export interface CartItem {
   quantity: number;
 }
 
+/** The most recent add, shown in the "Added to your bag" toast. */
+export interface AddedNotice {
+  item: CartItem;
+  quantity: number;
+  at: number;
+}
+
 interface CartState {
   items: CartItem[];
   isOpen: boolean;
+  lastAdded: AddedNotice | null;
+  dismissNotice: () => void;
   open: () => void;
   close: () => void;
   add: (item: Omit<CartItem, "quantity">, quantity?: number) => void;
@@ -31,7 +40,9 @@ export const useCart = create<CartState>()(
     (set) => ({
       items: [],
       isOpen: false,
-      open: () => set({ isOpen: true }),
+      lastAdded: null,
+      dismissNotice: () => set({ lastAdded: null }),
+      open: () => set({ isOpen: true, lastAdded: null }),
       close: () => set({ isOpen: false }),
 
       add: (item, quantity = 1) =>
@@ -49,7 +60,8 @@ export const useCart = create<CartState>()(
                   : cartItem
               )
             : [...state.items, { ...item, quantity }];
-          return { items, isOpen: true };
+          const added = items.find((cartItem) => cartItem.variantId === item.variantId)!;
+          return { items, lastAdded: { item: added, quantity, at: Date.now() } };
         }),
 
       setQuantity: (variantId, quantity) =>
