@@ -6,7 +6,15 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowRight, ChevronDown, Menu, Search, ShoppingBag, X } from "lucide-react";
+import {
+  ArrowRight,
+  ChevronDown,
+  HeartHandshake,
+  Menu,
+  Search,
+  ShoppingBag,
+  X,
+} from "lucide-react";
 import { cartCount, useCart } from "@/lib/cart-store";
 import { COLLECTIONS } from "@/lib/collections";
 import type { Concern } from "@/db/queries/products";
@@ -18,8 +26,9 @@ const NAVIGATION = [
   { label: "Gifting", href: "/collections/gifting" },
 ];
 
+const OUR_STORY = { label: "Our Story", href: "/our-story" };
+
 const SECONDARY = [
-  { label: "Our Story", href: "/our-story" },
   { label: "Rituals", href: "/#ritual" },
   { label: "Ingredients", href: "/#ingredients" },
 ];
@@ -120,7 +129,15 @@ export default function SiteHeader({ concerns = [] }: { concerns?: Concern[] }) 
       <div className="bg-emerald-deep py-2.5 text-center text-[10px] uppercase tracking-[0.28em] text-gold-soft sm:text-[11px]">
         Cruelty-free&nbsp;&nbsp;·&nbsp;&nbsp;Dermatologically tested
         <span className="hidden sm:inline">&nbsp;&nbsp;·&nbsp;&nbsp;GMP certified</span>
-        <span className="hidden lg:inline">&nbsp;&nbsp;·&nbsp;&nbsp;Every purchase empowers a woman</span>
+        <span className="hidden md:inline">
+          &nbsp;&nbsp;·&nbsp;&nbsp;
+          <Link
+            href={OUR_STORY.href}
+            className="text-gold-soft underline-offset-4 transition hover:text-ivory hover:underline"
+          >
+            Every purchase empowers a woman — Read our story →
+          </Link>
+        </span>
       </div>
 
       <header
@@ -192,14 +209,36 @@ export default function SiteHeader({ concerns = [] }: { concerns?: Concern[] }) 
           </Link>
 
           <div className={clsx("flex items-center justify-end gap-5 2xl:gap-7", tone)}>
-            <nav className="hidden items-center gap-6 xl:flex 2xl:gap-9">
+            <nav className="hidden items-center gap-6 lg:flex 2xl:gap-9">
+              {/* Our Story is always visible on desktop and set apart in gold */}
+              <Link
+                href={OUR_STORY.href}
+                aria-current={pathname === OUR_STORY.href ? "page" : undefined}
+                className={clsx(
+                  "flex items-center gap-2 rounded-full px-4 py-2 text-[12px] font-normal uppercase tracking-[0.16em] shadow-[0_8px_20px_-12px_rgba(11,42,34,0.7)] transition duration-300 2xl:px-5 2xl:text-[13px]",
+                  dark
+                    ? "bg-gold-soft text-emerald-deep hover:bg-ivory"
+                    : "bg-emerald text-ivory hover:bg-gold hover:text-emerald-deep"
+                )}
+              >
+                <HeartHandshake
+                  size={16}
+                  strokeWidth={1.25}
+                  className={dark ? "text-emerald-deep" : "text-gold-soft"}
+                />
+                {OUR_STORY.label}
+              </Link>
               {SECONDARY.map((item) => (
-                <Link key={item.href} href={item.href} className={clsx(navText, hover)}>
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={clsx(navText, hover, "hidden xl:inline")}
+                >
                   {item.label}
                 </Link>
               ))}
             </nav>
-            <span className={clsx("hidden h-5 w-px xl:block", dark ? "bg-ivory/30" : "bg-line")} />
+            <span className={clsx("hidden h-5 w-px lg:block", dark ? "bg-ivory/30" : "bg-line")} />
             <Link
               href="/shop"
               aria-label="Search products"
@@ -359,7 +398,7 @@ export default function SiteHeader({ concerns = [] }: { concerns?: Concern[] }) 
               <span className="w-[24px]" />
             </div>
             <nav className="flex flex-1 flex-col justify-center gap-1 px-8 py-6">
-              {[{ label: "Shop All", href: "/shop" }, ...NAVIGATION, ...SECONDARY].map((item, index) => (
+              {[{ label: "Shop All", href: "/shop" }, OUR_STORY, ...NAVIGATION, ...SECONDARY].map((item, index) => (
                 <motion.div
                   key={item.href}
                   initial={{ opacity: 0, y: 16 }}
@@ -369,9 +408,15 @@ export default function SiteHeader({ concerns = [] }: { concerns?: Concern[] }) 
                   <Link
                     href={item.href}
                     onClick={() => setMenuOpen(false)}
-                    className="block py-2 font-display text-[34px] font-light text-ivory hover:text-gold-soft"
+                    className={clsx(
+                      "flex items-center gap-3 py-2 font-display text-[34px] font-light hover:text-gold-soft",
+                      item.href === OUR_STORY.href ? "text-gold-soft" : "text-ivory"
+                    )}
                   >
                     {item.label}
+                    {item.href === OUR_STORY.href && (
+                      <HeartHandshake size={22} strokeWidth={1.1} className="text-gold-soft" />
+                    )}
                   </Link>
                 </motion.div>
               ))}

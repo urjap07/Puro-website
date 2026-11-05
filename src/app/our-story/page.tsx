@@ -136,7 +136,7 @@ export default function OurStoryPage() {
               on her own feet.
             </p>
             <div className="mt-10 flex flex-wrap items-center gap-6">
-              <Link href="/shop" className="btn-gold rounded-full px-9">
+              <Link href="/shop" className="btn-outline-light rounded-full px-9">
                 Shop the collection <ArrowRight size={15} strokeWidth={1.25} />
               </Link>
               <Link href="#sanisa" className="link-underline text-ivory">
@@ -497,7 +497,7 @@ export default function OurStoryPage() {
                   </p>
                   <Link
                     href="/shop"
-                    className="btn-primary mt-10 rounded-full px-9"
+                    className="btn-primary mt-10 rounded-full px-9 hover:bg-gold hover:text-emerald-deep"
                   >
                     Shop the collection{" "}
                     <ArrowRight size={15} strokeWidth={1.25} />

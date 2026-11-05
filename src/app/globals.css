@@ -63,7 +63,7 @@
   }
 
   .btn-outline-light {
-    @apply btn border border-ivory/60 text-ivory hover:bg-ivory hover:text-emerald;
+    @apply btn border border-ivory/60 text-ivory hover:border-gold hover:bg-gold hover:text-emerald-deep;
   }
 
   .link-underline {
