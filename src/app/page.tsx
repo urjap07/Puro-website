@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, HeartHandshake, Leaf, Rabbit } from "lucide-react";
+import { ArrowRight, HeartHandshake, Leaf, Rabbit } from "lucide-react";
 import {
   getActiveProducts,
   getConcerns,
@@ -13,7 +13,7 @@ import { formatPrice } from "@/lib/format";
 import Hero from "@/components/home/Hero";
 import TrustMarquee from "@/components/home/TrustMarquee";
 import Testimonials from "@/components/home/Testimonials";
-import RitualScroll, { type RitualStep } from "@/components/home/RitualScroll";
+import RitualScene, { type RitualSceneStep } from "@/components/home/RitualScene";
 import Reveal from "@/components/ui/Reveal";
 import MaskReveal from "@/components/ui/MaskReveal";
 import ScrollWords from "@/components/motion/ScrollWords";
@@ -26,12 +26,11 @@ import FloatImage from "@/components/motion/FloatImage";
 import RotatingSeal from "@/components/ui/RotatingSeal";
 import ConcernFinder, { type FinderProduct } from "@/components/home/ConcernFinder";
 import IngredientCards from "@/components/home/IngredientCards";
+import CollectionShowcase, { type ShowcaseCollection } from "@/components/home/CollectionShowcase";
 import SignatureStage from "@/components/home/SignatureStage";
 import WeekendStack, { type WeekendRitual } from "@/components/home/WeekendStack";
 import GiftFan, { type GiftSet } from "@/components/home/GiftFan";
-import KnowledgeSplit, {
-  type KnowledgeItem,
-} from "@/components/home/KnowledgeSplit";
+import KnowledgeTabs, { type KnowledgeItem } from "@/components/home/KnowledgeTabs";
 import ExpandingFilm from "@/components/home/ExpandingFilm";
 
 export const dynamic = "force-dynamic";
@@ -74,25 +73,33 @@ const RITUAL = [
     step: "Cleanse",
     slug: "good-cleanse-face-wash",
     mood: "/media/products/good-cleanse-face-wash/04.jpg",
-    note: "Two pumps, a gentle lather, sixty seconds of circular massage.",
+    note: "Two pumps, a gentle lather, sixty seconds of slow circular massage — then rinse with cool water.",
+    when: "Morning & night",
+    duration: "1 minute",
   },
   {
     step: "Exfoliate",
     slug: "scrubulush-exfoliator",
     mood: "/media/products/scrubulush-exfoliator/04.jpg",
-    note: "Twice a week on damp skin, to lift away dull, tired cells.",
+    note: "On damp skin, let rice and walnut lift away dull, tired cells in gentle upward strokes.",
+    when: "Twice a week",
+    duration: "2 minutes",
   },
   {
     step: "Mask",
     slug: "glow-up-pithi-pack",
     mood: "/media/products/glow-up-pithi-pack/04.jpg",
-    note: "A thick layer, twenty unhurried minutes, then rinse to reveal the glow.",
+    note: "A thick layer of turmeric and saffron, twenty unhurried minutes, then rinse to reveal the glow.",
+    when: "Once a week",
+    duration: "20 minutes",
   },
   {
     step: "Hydrate",
     slug: "aquench-soothing-hydrogel",
     mood: "/media/products/aquench-soothing-hydrogel/03.jpg",
-    note: "Massage in until absorbed to calm, cool and replenish.",
+    note: "Press a cool veil of aloe over face and neck until absorbed, to calm and replenish.",
+    when: "Every day",
+    duration: "1 minute",
   },
 ];
 
@@ -100,33 +107,53 @@ const RITUAL = [
 const WHY_PURO: KnowledgeItem[] = [
   {
     title: "What are Pithi and Ubtan?",
+    lead: "Two age-old Indian beauty rituals, reborn in a tube.",
     content:
-      "Pithi is the golden turmeric ritual performed before an Indian wedding; Ubtan is the clay-and-botanical paste our grandmothers swore by. Our Glow Up Pithi Pack and Vita Clay Ubtan Pack bring these age-old rituals into a modern, ready-to-use tube — turmeric, saffron, rice bran oil, volcanic clays and citrus oils, blended for everyday radiance.",
-    image: "/media/products/glow-up-pithi-pack/06.jpg",
+      "Pithi is the golden turmeric ritual performed before an Indian wedding; Ubtan is the clay-and-botanical paste our grandmothers swore by. Our Glow Up Pithi Pack and Vita Clay Ubtan Pack bring both into a modern, ready-to-use tube — turmeric, saffron, rice bran oil, volcanic clays and citrus oils, blended for everyday radiance.",
+    image: "/media/products/glow-up-pithi-pack/04.jpg",
+    icon: "sprout",
+    facts: ["Turmeric & saffron", "Volcanic clays", "Rice bran oil"],
+    link: { label: "Meet the Glow Up Pithi Pack", href: "/products/glow-up-pithi-pack" },
   },
   {
     title: "Ethical, inside out",
+    lead: "Clean beauty, without compromise.",
     content:
-      "Puro was founded to raise awareness about clean beauty. Our products are natural, cruelty-free and non-toxic, and free from harmful chemicals and toxins. We draw on the potent properties of botanical extracts and essential oils, and pair historical beauty knowledge with contemporary research.",
+      "Puro was founded to raise awareness about clean beauty. Our products are natural, cruelty-free and non-toxic, free from harmful chemicals and toxins. We draw on the potent properties of botanical extracts and essential oils, and pair historical beauty knowledge with contemporary research.",
     image: "/media/brand/03.jpg",
+    icon: "leaf",
+    facts: ["Natural botanicals", "Cruelty-free", "Non-toxic"],
+    link: { label: "Read our story", href: "/our-story" },
   },
   {
     title: "Every purchase supports a woman",
+    lead: "Beauty that gives back.",
     content:
       "Puro Body & Soul is a division of Shramik Naari Sangh (Sa-Ni-Sa), a charitable organisation. For every product you buy, you help a rural woman to stand on her own feet and live a life of dignity.",
     image: "/media/products/travel-basics-kit/03.jpg",
+    icon: "heart",
+    facts: ["Shramik Naari Sangh", "Rural women", "A life of dignity"],
+    link: { label: "Discover Sa-Ni-Sa", href: "/our-story" },
   },
   {
-    title: "Kind to you, kind to the environment",
+    title: "Kind to you, kind to the earth",
+    lead: "Light on the planet, honest in every step.",
     content:
       "We strive to minimise our environmental footprint with recyclable packaging and sustainable practices — and we prioritise integrity and honesty, from how we source our ingredients to how our products are made.",
     image: "/media/products/aloe-vibe-shower-gel/02.jpg",
+    icon: "recycle",
+    facts: ["Recyclable packaging", "Sustainable practices", "Honest sourcing"],
+    link: { label: "Shop the collection", href: "/shop" },
   },
   {
     title: "Certified, tested, trusted",
+    lead: "Trust you can see on every pack.",
     content:
       "Every Puro product is certified Animal Cruelty-Free by PETA, dermatologically tested, non-toxic and crafted in a GMP-certified facility, so you can trust what goes on your skin.",
     image: "/media/brand/02.jpg",
+    icon: "badge",
+    facts: ["PETA cruelty-free", "Dermatologically tested", "GMP certified"],
+    link: { label: "Shop with confidence", href: "/shop" },
   },
 ];
 
@@ -230,12 +257,31 @@ export default async function Home() {
       contents: product.kitContents,
     }));
 
-  const mosaic = COLLECTIONS.filter((collection) => collection.slug !== "wellness").map((collection) => ({
-    collection,
-    count: products.filter((product) =>
-      product.categories.some((category) => collection.categorySlugs.includes(category.slug)),
-    ).length,
-  }));
+  const showcase: ShowcaseCollection[] = COLLECTIONS.filter((collection) => collection.slug !== "wellness").map(
+    (collection) => {
+      const inCollection = products.filter((product) =>
+        product.categories.some((category) => collection.categorySlugs.includes(category.slug)),
+      );
+      const ranked = [...inCollection].sort(
+        (a, b) => Number(b.isFeatured) - Number(a.isFeatured) || (b.rating?.count ?? 0) - (a.rating?.count ?? 0),
+      );
+      return {
+        slug: collection.slug,
+        name: collection.name,
+        title: collection.title,
+        description: collection.description,
+        image: collection.image,
+        count: inCollection.length,
+        products: ranked.slice(0, 3).map((product) => ({
+          id: product.id,
+          slug: product.slug,
+          name: product.name,
+          image: product.images[0]?.imageUrl ?? null,
+          price: product.variants[0] ? formatPrice(product.variants[0].price) : null,
+        })),
+      };
+    },
+  );
 
   const finderProducts: FinderProduct[] = products.map((product) => ({
     id: product.id,
@@ -247,18 +293,23 @@ export default async function Home() {
     concernSlugs: product.concerns.map((concern) => concern.slug),
   }));
 
-  const ritualSteps: RitualStep[] = RITUAL.flatMap((item) => {
+  const ritualSteps: RitualSceneStep[] = RITUAL.flatMap((item) => {
     const product = bySlug(products, item.slug);
     if (!product) return [];
     return [
       {
         step: item.step,
         note: item.note,
+        when: item.when,
+        duration: item.duration,
+        mood: item.mood,
         product: {
-          name: product.name,
+          id: product.id,
           slug: product.slug,
-          image: product.images[0]?.imageUrl ?? item.mood,
-          mood: item.mood,
+          name: product.name,
+          headline: product.headline,
+          images: product.images.slice(0, 1),
+          variants: product.variants.slice(0, 1),
         },
       },
     ];
@@ -391,35 +442,13 @@ export default async function Home() {
         </section>
       )}
 
-      {/* The Ritual — pinned image, steps scroll past */}
-      {ritualSteps.length > 0 && (
-        <section
-          id="ritual"
-          className="bg-noir scroll-mt-24 py-24 text-ivory sm:py-32"
-        >
-          <div className="container-site relative">
-            <Heading
-              index="04"
-              eyebrow="The Puro Ritual"
-              light
-              className="max-w-[720px]"
-            >
-              Four steps to <em>radiant</em> skin
-            </Heading>
-            <div className="mt-10 lg:mt-6">
-              <RitualScroll steps={ritualSteps} />
-            </div>
-          </div>
-        </section>
-      )}
-
       {/* Ingredients — specimen cards that turn over */}
       {ingredients.length > 0 && (
         <section id="ingredients" className="bg-pearl scroll-mt-24 py-24 sm:py-36 lg:pb-52">
           <GhostWord word="From the earth" className="top-[18%]" />
           <div className="container-site">
             <div className="mb-14 flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
-              <Heading index="05" eyebrow="From the earth">
+              <Heading index="04" eyebrow="From the earth">
                 Ingredients with <em>a story</em>
               </Heading>
               <Reveal>
@@ -433,62 +462,22 @@ export default async function Home() {
         </section>
       )}
 
-      {/* Collections — a mosaic */}
+      {/* The Ritual — a pinned, scroll-driven scene */}
+      {ritualSteps.length > 0 && <RitualScene steps={ritualSteps} />}
+
+      {/* Collections — a showcase */}
       <section className="bg-pearl-warm py-24 sm:py-36">
+        <GhostWord word="Collections" direction={-1} className="bottom-[2%]" />
         <div className="container-site">
           <div className="mb-12 flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
             <Heading index="06" eyebrow="Explore">
               Shop by <em>collection</em>
             </Heading>
-            <Link href="/shop" className="link-underline shrink-0 text-emerald">
-              Shop all <ArrowRight size={14} strokeWidth={1.25} />
-            </Link>
+            <Reveal>
+              <p className="body-copy max-w-[380px]">Four rituals for every part of you — choose one to see what&rsquo;s inside.</p>
+            </Reveal>
           </div>
-          <div className="grid grid-cols-2 gap-4 sm:gap-5 lg:h-[82svh] lg:min-h-[620px] lg:grid-cols-4 lg:grid-rows-2">
-            {mosaic.map(({ collection, count }, index) => (
-              <Link
-                key={collection.slug}
-                href={`/collections/${collection.slug}`}
-                data-cursor="Explore"
-                className={[
-                  "group relative block overflow-hidden rounded-[26px]",
-                  index === 0 ? "col-span-2 aspect-[4/3] lg:row-span-2 lg:aspect-auto" : "aspect-[3/4] lg:aspect-auto",
-                  index === 3 ? "col-span-2 aspect-[2/1] lg:col-span-2 lg:aspect-auto" : "",
-                ].join(" ")}
-              >
-                <ImageReveal className="h-full w-full" delay={index * 0.08}>
-                  <Image
-                    src={collection.image}
-                    alt={collection.title}
-                    fill
-                    sizes={index === 0 || index === 3 ? "(min-width: 1024px) 50vw, 100vw" : "(min-width: 1024px) 25vw, 50vw"}
-                    className="object-cover transition duration-[1800ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.07]"
-                  />
-                </ImageReveal>
-                <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/10 to-ink/10 transition duration-700 group-hover:from-ink/90" />
-                <span className="absolute left-5 top-5 rounded-full bg-ivory/90 px-3.5 py-1.5 text-[12px] font-medium uppercase tracking-[0.18em] text-ink backdrop-blur sm:left-6 sm:top-6">
-                  {count} {count === 1 ? "ritual" : "rituals"}
-                </span>
-                <div className="absolute inset-x-5 bottom-5 flex items-end justify-between gap-4 text-ivory sm:inset-x-7 sm:bottom-7">
-                  <div>
-                    <h3 className={`font-display leading-none ${index === 0 ? "text-[48px] sm:text-[72px]" : "text-[32px] sm:text-[44px]"}`}>
-                      {collection.name}
-                    </h3>
-                    <p
-                      className={`mt-3 max-w-[420px] text-[15px] leading-[1.7] text-ivory/80 ${
-                        index === 0 || index === 3 ? "max-sm:hidden" : "hidden"
-                      } lg:max-h-0 lg:overflow-hidden lg:opacity-0 lg:transition-all lg:duration-700 lg:group-hover:max-h-24 lg:group-hover:opacity-100`}
-                    >
-                      {collection.description}
-                    </p>
-                  </div>
-                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-ivory text-ink transition duration-500 group-hover:rotate-45 max-sm:h-10 max-sm:w-10">
-                    <ArrowUpRight size={18} strokeWidth={1.1} />
-                  </span>
-                </div>
-              </Link>
-            ))}
-          </div>
+          <CollectionShowcase collections={showcase} />
         </div>
       </section>
 
@@ -595,7 +584,7 @@ export default async function Home() {
           <Heading index="09" eyebrow="Why Puro" className="mb-14">
             Good to <em>know.</em>
           </Heading>
-          <KnowledgeSplit items={WHY_PURO} />
+          <KnowledgeTabs items={WHY_PURO} />
         </div>
       </section>
 

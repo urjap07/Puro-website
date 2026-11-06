@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -18,6 +18,7 @@ import {
 import { cartCount, useCart } from "@/lib/cart-store";
 import { COLLECTIONS } from "@/lib/collections";
 import type { Concern } from "@/db/queries/products";
+import SearchOverlay from "./SearchOverlay";
 
 const NAVIGATION = [
   { label: "Face", href: "/collections/face" },
@@ -121,17 +122,16 @@ export default function SiteHeader({
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [shopOpen, setShopOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [hovered, setHovered] = useState<string | null>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
   const items = useCart((state) => state.items);
   const openBag = useCart((state) => state.open);
   const count = cartCount(items);
 
-  // Compact frosted bar once scrolled; it stays in view the whole way down.
+  // Becomes a floating glass capsule once scrolled; stays in view the whole way down.
   useEffect(() => {
-    const onScroll = () => {
-      const y = window.scrollY;
-      setScrolled(y > 40);
-    };
+    const onScroll = () => setScrolled(window.scrollY > 40);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -140,16 +140,17 @@ export default function SiteHeader({
   useEffect(() => {
     setMenuOpen(false);
     setShopOpen(false);
+    setSearchOpen(false);
   }, [pathname]);
 
   useEffect(() => {
     if (!shopOpen) return;
-    const onKey = (event: KeyboardEvent) =>
-      event.key === "Escape" && setShopOpen(false);
+    const onKey = (event: KeyboardEvent) => event.key === "Escape" && setShopOpen(false);
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
   }, [shopOpen]);
 
+  const closeSearch = useCallback(() => setSearchOpen(false), []);
   const openShop = () => {
     clearTimeout(closeTimer.current);
     setShopOpen(true);
@@ -158,11 +159,17 @@ export default function SiteHeader({
     closeTimer.current = setTimeout(() => setShopOpen(false), 180);
   };
 
-  const overHero = OVERLAY_PAGES.includes(pathname) && !scrolled;
-  // Ivory text over the hero; forest text on the frosted bar.
+  const overHero = OVERLAY_PAGES.includes(pathname) && !scrolled && !shopOpen;
+  const capsule = scrolled || shopOpen;
+  // Ivory text over the hero; forest text on the glass capsule and plain bar.
   const light = overHero;
   const navText =
-    "group/roll font-sans text-[13px] font-medium uppercase tracking-[0.16em] 2xl:text-[14px]";
+    "group/roll relative z-10 flex items-center gap-1.5 rounded-full px-4 py-2.5 font-sans text-[13px] font-medium uppercase tracking-[0.16em] 2xl:px-5 2xl:text-[14px]";
+  const hoverPill = light ? "bg-ivory/15" : "bg-emerald/[0.08]";
+  const iconButton = clsx(
+    "flex h-11 w-11 items-center justify-center rounded-full border transition duration-300",
+    light ? "border-ivory/35 hover:border-ivory hover:bg-ivory hover:text-ink" : "border-emerald/15 hover:border-emerald hover:bg-emerald hover:text-ivory",
+  );
 
   return (
     <>
@@ -182,110 +189,121 @@ export default function SiteHeader({
         </div>
       </div>
 
-      <header
-        className={clsx(
-          "pointer-events-none sticky top-0 z-50 h-[96px] transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]",
-        )}
-        onMouseLeave={closeShopSoon}
-      >
+      <header className="pointer-events-none sticky top-0 z-50 h-[96px]" onMouseLeave={closeShopSoon}>
         <div
           className={clsx(
-            "pointer-events-auto relative w-full transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]",
-            scrolled || shopOpen
-              ? "h-[72px] border-b border-ink/[0.07] bg-ivory/80 shadow-[0_18px_40px_-32px_rgba(20,38,30,0.45)] backdrop-blur-2xl backdrop-saturate-150"
+            "pointer-events-auto relative mx-auto transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]",
+            capsule
+              ? "mt-3 h-[66px] w-[calc(100%-1.5rem)] max-w-[1360px] rounded-full border border-gold/30 bg-ivory/75 shadow-[0_24px_60px_-34px_rgba(20,38,30,0.6),inset_0_1px_0_rgba(255,255,255,0.75)] backdrop-blur-2xl backdrop-saturate-150"
               : overHero
-                ? "h-[96px] border-b border-ivory/15 bg-transparent"
-                : "h-[96px] border-b border-line bg-mist/90 backdrop-blur-md",
+                ? "mt-0 h-[96px] w-full border-b border-ivory/15 bg-transparent"
+                : "mt-0 h-[96px] w-full border-b border-line bg-mist/85 backdrop-blur-md",
           )}
         >
           <div
             className={clsx(
-              "container-site grid h-full grid-cols-[1fr_auto_1fr] items-center transition-colors duration-500",
-              light && !shopOpen ? "text-ivory" : "text-emerald",
+              "mx-auto grid h-full max-w-site grid-cols-[1fr_auto_1fr] items-center transition-[padding,color] duration-700",
+              capsule ? "px-3 sm:px-4" : "px-5 sm:px-8 lg:px-12",
+              light ? "text-ivory" : "text-emerald",
             )}
           >
             <div className="flex items-center">
-              <button type="button" className="lg:hidden" onClick={() => setMenuOpen(true)} aria-label="Open menu">
-                <Menu size={24} strokeWidth={1.1} />
+              <button type="button" className={clsx(iconButton, "lg:hidden")} onClick={() => setMenuOpen(true)} aria-label="Open menu">
+                <Menu size={20} strokeWidth={1.2} />
               </button>
-              <nav className="hidden items-center gap-8 lg:flex 2xl:gap-10">
+              <nav className="hidden items-center lg:flex" onMouseLeave={() => setHovered(null)}>
                 <button
                   type="button"
-                  className={clsx(navText, "flex items-center gap-1.5")}
+                  className={navText}
                   aria-expanded={shopOpen}
                   aria-haspopup="true"
-                  onMouseEnter={openShop}
+                  onMouseEnter={() => {
+                    openShop();
+                    setHovered("shop");
+                  }}
                   onClick={() => setShopOpen((open) => !open)}
                 >
+                  {(hovered === "shop" || shopOpen) && (
+                    <motion.span layoutId="nav-pill" className={clsx("absolute inset-0 -z-10 rounded-full", hoverPill)} transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }} />
+                  )}
                   <Roll>Shop</Roll>
-                  <ChevronDown
-                    size={14}
-                    strokeWidth={1.25}
-                    className={clsx("transition-transform duration-500", shopOpen && "rotate-180")}
-                  />
+                  <ChevronDown size={14} strokeWidth={1.25} className={clsx("transition-transform duration-500", shopOpen && "rotate-180")} />
                 </button>
                 {NAVIGATION.map((item) => (
                   <Link
                     key={item.href}
                     href={item.href}
-                    onMouseEnter={closeShopSoon}
+                    onMouseEnter={() => {
+                      closeShopSoon();
+                      setHovered(item.href);
+                    }}
                     aria-current={pathname === item.href ? "page" : undefined}
-                    className={clsx(navText, "relative")}
+                    className={navText}
                   >
+                    {hovered === item.href && (
+                      <motion.span layoutId="nav-pill" className={clsx("absolute inset-0 -z-10 rounded-full", hoverPill)} transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }} />
+                    )}
                     <Roll>{item.label}</Roll>
                     {pathname === item.href && (
-                      <span className="absolute -bottom-2 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-current" />
+                      <span className="absolute bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-gold" />
                     )}
                   </Link>
                 ))}
               </nav>
             </div>
 
-            <Link href="/" aria-label="Puro Body & Soul — home">
-              <Wordmark light={light && !shopOpen} compact={scrolled || shopOpen} />
+            <Link href="/" aria-label="Puro Body & Soul — home" className="px-2">
+              <Wordmark light={light} compact={capsule} />
             </Link>
 
-            <div className="flex items-center justify-end gap-6 2xl:gap-8">
+            <div className="flex items-center justify-end gap-2 sm:gap-3">
               <Link
                 href={OUR_STORY.href}
                 aria-current={pathname === OUR_STORY.href ? "page" : undefined}
                 className={clsx(
-                  navText,
-                  "hidden items-center gap-2 rounded-full border px-4 py-2 transition-colors duration-500 lg:flex 2xl:px-5",
-                  light && !shopOpen
+                  "group/roll hidden items-center gap-2 rounded-full border px-5 py-3 font-sans text-[13px] font-medium uppercase tracking-[0.16em] transition-colors duration-500 lg:flex 2xl:text-[14px]",
+                  light
                     ? "border-ivory/50 hover:border-ivory hover:bg-ivory hover:text-ink"
-                    : "border-emerald bg-emerald text-ivory hover:border-ink hover:bg-ink",
+                    : "border-transparent bg-emerald text-ivory shadow-[0_10px_24px_-14px_rgba(20,38,30,0.9)] hover:bg-ink",
                 )}
               >
                 <HeartHandshake size={15} strokeWidth={1.25} />
                 <Roll>{OUR_STORY.label}</Roll>
               </Link>
-              <Link href="/shop" aria-label="Search products" className="hidden transition-opacity hover:opacity-60 sm:block">
-                <Search size={20} strokeWidth={1.1} />
-              </Link>
+              <button type="button" onClick={() => setSearchOpen(true)} aria-label="Search products" className={iconButton}>
+                <Search size={18} strokeWidth={1.3} />
+              </button>
               <button
                 type="button"
                 onClick={openBag}
-                className={clsx(navText, "relative flex items-center gap-2")}
                 aria-label={`Open bag, ${count} item${count === 1 ? "" : "s"}`}
+                className={clsx(
+                  iconButton,
+                  "group/roll relative gap-2.5 lg:w-auto lg:pl-4 lg:pr-1.5",
+                )}
               >
-                <ShoppingBag size={20} strokeWidth={1.1} />
-                <span className="hidden lg:inline">
+                <ShoppingBag size={18} strokeWidth={1.3} />
+                <span className="hidden font-sans text-[13px] font-medium uppercase tracking-[0.16em] lg:inline 2xl:text-[14px]">
                   <Roll>Bag</Roll>
                 </span>
-                <span
+                <motion.span
+                  key={count}
+                  initial={{ scale: count > 0 ? 1.5 : 1 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: "spring", stiffness: 500, damping: 15 }}
                   className={clsx(
-                    "flex h-[18px] min-w-[18px] items-center justify-center rounded-full px-1 text-[10px] font-semibold tracking-normal tabular-nums",
-                    "max-lg:absolute max-lg:-right-2.5 max-lg:-top-2",
+                    "flex h-8 min-w-8 items-center justify-center rounded-full px-1.5 text-[11px] font-semibold tracking-normal tabular-nums",
+                    "max-lg:absolute max-lg:-right-1.5 max-lg:-top-1.5 max-lg:h-5 max-lg:min-w-5 max-lg:text-[10px]",
                     count === 0 && "max-lg:hidden",
-                    light && !shopOpen ? "bg-ivory text-ink" : "bg-emerald text-ivory",
+                    light ? "bg-ivory text-ink" : "bg-emerald text-ivory",
                   )}
                 >
                   {count}
-                </span>
+                </motion.span>
               </button>
             </div>
           </div>
+
 
 
           {/* Shop menu — a floating card */}
@@ -523,6 +541,7 @@ export default function SiteHeader({
           </motion.div>
         )}
       </AnimatePresence>
+      <SearchOverlay open={searchOpen} onClose={closeSearch} />
     </>
   );
 }

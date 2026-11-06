@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { ArrowUp } from "lucide-react";
+import { smoothScrollTo } from "@/components/layout/SmoothScroll";
 
 const R = 24;
 const C = 2 * Math.PI * R;
@@ -33,7 +34,7 @@ export default function ScrollProgress() {
         <motion.button
           type="button"
           aria-label="Back to top"
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          onClick={() => smoothScrollTo(0)}
           className="group fixed bottom-5 right-5 z-[80] flex h-[60px] w-[60px] items-center justify-center rounded-full bg-[#0d1c17]/85 text-ivory shadow-[0_20px_40px_-18px_rgba(0,0,0,0.6)] backdrop-blur-md sm:bottom-7 sm:right-7"
           initial={{ opacity: 0, scale: 0.6, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}

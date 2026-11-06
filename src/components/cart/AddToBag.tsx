@@ -7,9 +7,9 @@ import { useCart } from "@/lib/cart-store";
 import type { Product } from "@/db/queries/products";
 import { formatPrice } from "@/lib/format";
 
-type CartProduct = Pick<Product, "id" | "slug" | "name" | "images" | "variants">;
+export type CartProduct = Pick<Product, "id" | "slug" | "name" | "images" | "variants">;
 
-function toCartItem(product: CartProduct) {
+export function toCartItem(product: CartProduct) {
   const variant = product.variants[0];
   return {
     variantId: variant.id,

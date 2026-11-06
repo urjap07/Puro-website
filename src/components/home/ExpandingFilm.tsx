@@ -14,9 +14,10 @@ export default function ExpandingFilm() {
   const reduceMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
 
-  const insetY = useTransform(scrollYProgress, [0, 0.7], [24, 0]);
-  const insetX = useTransform(scrollYProgress, [0, 0.7], [34, 0]);
-  const round = useTransform(scrollYProgress, [0, 0.7], [220, 0]);
+  // Opens into a large framed panel rather than full-bleed, so it never runs into the footer.
+  const insetY = useTransform(scrollYProgress, [0, 0.7], [24, 4]);
+  const insetX = useTransform(scrollYProgress, [0, 0.7], [34, 2.5]);
+  const round = useTransform(scrollYProgress, [0, 0.7], [220, 32]);
   const clip = useMotionTemplate`inset(${insetY}% ${insetX}% round ${round}px)`;
   const filmScale = useTransform(scrollYProgress, [0, 0.7], [1.25, 1]);
   const leftX = useTransform(scrollYProgress, [0, 0.7], ["0vw", "-6vw"]);
@@ -27,8 +28,8 @@ export default function ExpandingFilm() {
 
   if (reduceMotion) {
     return (
-      <section className="relative flex min-h-[80svh] items-center justify-center overflow-hidden bg-emerald-deep text-center text-ivory">
-        <div className="container-site">
+      <section className="bg-pearl px-3 pb-28 pt-6 sm:px-6 sm:pb-36">
+        <div className="bg-noir flex min-h-[80svh] flex-col items-center justify-center rounded-[32px] px-5 text-center text-ivory">
           <h2 className="heading-xl">
             Your ritual <em>awaits.</em>
           </h2>
@@ -41,7 +42,7 @@ export default function ExpandingFilm() {
   }
 
   return (
-    <section ref={ref} className="bg-pearl h-[240svh]">
+    <section ref={ref} className="bg-pearl h-[calc(240svh+7rem)] pb-28 sm:h-[calc(240svh+9rem)] sm:pb-36">
       <div className="sticky top-0 h-[100svh] overflow-hidden">
         <motion.div className="absolute inset-0 overflow-hidden bg-emerald-deep" style={{ clipPath: clip }}>
           <motion.video
