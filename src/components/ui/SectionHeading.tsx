@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import type { ReactNode } from "react";
 import Reveal from "./Reveal";
+import MaskReveal from "./MaskReveal";
 
 interface SectionHeadingProps {
   eyebrow?: string;
@@ -30,15 +31,15 @@ export default function SectionHeading({
       )}
     >
       {eyebrow && (
-        <p className={clsx("eyebrow", light && "text-gold-soft")}>{eyebrow}</p>
+        <p className={clsx("eyebrow", light && "text-ivory/60")}>{eyebrow}</p>
       )}
       <h2
         className={clsx(
-          "heading-lg mt-5",
-          light ? "text-ivory" : "text-emerald"
+          "section-title heading-lg mt-5",
+          light ? "section-title-light text-ivory" : "text-emerald"
         )}
       >
-        {title}
+        <MaskReveal delay={0.1}>{title}</MaskReveal>
       </h2>
       {description && (
         <p

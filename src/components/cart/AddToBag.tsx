@@ -66,7 +66,7 @@ export function AddToBagPanel({ product }: { product: CartProduct }) {
           "Sold out"
         ) : (
           <>
-            Add to bag <span className="text-gold-soft">·</span>{" "}
+            Add to bag <span className="text-ivory/50">·</span>{" "}
             {formatPrice(variant.price * quantity)}
           </>
         )}
@@ -113,10 +113,8 @@ export function QuickAdd({
         setTimeout(() => setAdded(false), 1600);
       }}
       className={clsx(
-        "flex items-center justify-center gap-2 whitespace-nowrap rounded-full px-4 py-2.5 text-[11px] uppercase tracking-[0.18em] shadow-[0_10px_24px_-14px_rgba(18,59,48,0.9)] transition duration-300",
-        added
-          ? "bg-gold text-emerald-deep"
-          : "bg-emerald text-ivory hover:bg-gold hover:text-emerald-deep",
+        "flex items-center justify-center gap-2 whitespace-nowrap rounded-full px-4 py-3 text-[11px] font-medium uppercase tracking-[0.18em] transition duration-300",
+        added ? "bg-ink text-ivory" : "bg-emerald text-ivory hover:bg-ink",
         className
       )}
     >

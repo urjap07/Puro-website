@@ -9,6 +9,7 @@ import type { Concern, Product } from "@/db/queries/products";
 import { COLLECTIONS } from "@/lib/collections";
 import ProductCard from "@/components/product/ProductCard";
 import SortMenu, { type Sort } from "./SortMenu";
+import Jali from "@/components/ui/Jali";
 
 
 export interface GridPromo {
@@ -117,6 +118,7 @@ export default function ShopGrid({
         <div className="relative z-20 mb-10 rounded-2xl bg-emerald-deep p-6 text-ivory shadow-[0_30px_80px_-50px_rgba(11,42,34,0.7)] sm:p-8 lg:p-10">
           {/* Glows are clipped separately so the sort menu can overflow the panel */}
           <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl">
+            <Jali />
             <div className="absolute -right-32 -top-40 h-[380px] w-[380px] rounded-full bg-emerald-soft/60 blur-3xl" />
             <div className="absolute -bottom-40 -left-24 h-[340px] w-[340px] rounded-full bg-gold/10 blur-3xl" />
           </div>

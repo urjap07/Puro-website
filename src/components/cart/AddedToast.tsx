@@ -39,7 +39,7 @@ export default function AddedToast() {
             className="pointer-events-auto relative w-full max-w-[380px] overflow-hidden rounded-2xl border border-gold/30 bg-emerald-deep text-ivory shadow-[0_30px_70px_-25px_rgba(0,0,0,0.55)]"
           >
             <div className="flex items-start gap-4 p-4 pr-11">
-              <div className="relative h-[76px] w-[62px] shrink-0 overflow-hidden rounded-t-[40px] rounded-b-lg bg-parchment">
+              <div className="arch-cusped relative h-[80px] w-[62px] shrink-0 overflow-hidden bg-parchment">
                 {notice.item.image && (
                   <Image
                     src={notice.item.image}

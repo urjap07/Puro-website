@@ -1,23 +1,29 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Jost } from "next/font/google";
+import { Instrument_Serif, Manrope } from "next/font/google";
 import SiteHeader from "@/components/layout/SiteHeader";
 import SiteFooter from "@/components/layout/SiteFooter";
 import CartDrawer from "@/components/cart/CartDrawer";
 import AddedToast from "@/components/cart/AddedToast";
+import IntroCurtain from "@/components/layout/IntroCurtain";
+import SmoothScroll from "@/components/layout/SmoothScroll";
+import CursorLabel from "@/components/motion/CursorLabel";
+import ScrollProgress from "@/components/motion/ScrollProgress";
+import { INTRO_BOOT_SCRIPT } from "@/lib/intro";
 import { getConcerns, type Concern } from "@/db/queries/products";
 import "./globals.css";
 
-const display = Cormorant_Garamond({
+/** Editorial display serif for headlines and product names. */
+const display = Instrument_Serif({
   variable: "--font-display",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
+  weight: "400",
   style: ["normal", "italic"],
 });
 
-const sans = Jost({
+const sans = Manrope({
   variable: "--font-sans",
   subsets: ["latin"],
-  weight: ["300", "400", "500"],
+  weight: ["300", "400", "500", "600"],
 });
 
 export const metadata: Metadata = {
@@ -46,13 +52,19 @@ export default async function RootLayout({
   const concerns = await loadConcerns();
 
   return (
-    <html lang="en">
+    // The boot script sets data-intro on <html> before hydration.
+    <html lang="en" suppressHydrationWarning>
       <body className={`${display.variable} ${sans.variable}`}>
+        <script dangerouslySetInnerHTML={{ __html: INTRO_BOOT_SCRIPT }} />
+        <SmoothScroll />
+        <IntroCurtain />
         <SiteHeader concerns={concerns} />
         <main>{children}</main>
         <SiteFooter />
         <CartDrawer />
         <AddedToast />
+        <CursorLabel />
+        <ScrollProgress />
       </body>
     </html>
   );

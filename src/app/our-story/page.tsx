@@ -15,6 +15,8 @@ import {
 } from "lucide-react";
 import { SITE } from "@/lib/site";
 import Reveal from "@/components/ui/Reveal";
+import GildedArch from "@/components/ui/GildedArch";
+import Jali from "@/components/ui/Jali";
 import SectionHeading from "@/components/ui/SectionHeading";
 
 export const metadata: Metadata = {
@@ -69,14 +71,37 @@ const PILLARS: {
 ];
 
 const PROMISES: { icon: LucideIcon; title: string; text: string }[] = [
-  { icon: Rabbit, title: "PETA cruelty-free", text: "Vegan formulas that harness the power of nature." },
-  { icon: Leaf, title: "Non-toxic", text: "Free from toxins, crafted for your skin's health." },
-  { icon: BadgeCheck, title: "Dermatologically tested", text: "Safe and effective for every skin type." },
-  { icon: ShieldCheck, title: "GMP certified", text: "Made in a facility held to the highest standards." },
+  {
+    icon: Rabbit,
+    title: "PETA cruelty-free",
+    text: "Vegan formulas that harness the power of nature.",
+  },
+  {
+    icon: Leaf,
+    title: "Non-toxic",
+    text: "Free from toxins, crafted for your skin's health.",
+  },
+  {
+    icon: BadgeCheck,
+    title: "Dermatologically tested",
+    text: "Safe and effective for every skin type.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "GMP certified",
+    text: "Made in a facility held to the highest standards.",
+  },
 ];
 
 /** Verbs from the product taglines, e.g. "brighten it, flaunt it, naturally". */
-const TAGLINE_VERBS = ["Clarify", "Quench", "Brighten", "Detoxify", "Polish", "Cool"];
+const TAGLINE_VERBS = [
+  "Clarify",
+  "Quench",
+  "Brighten",
+  "Detoxify",
+  "Polish",
+  "Cool",
+];
 
 /** Amenity ranges, as listed on purobodysoul.com/hotel. */
 const AMENITY_RANGES = [
@@ -100,6 +125,7 @@ export default function OurStoryPage() {
     <>
       {/* Hero — emerald with an arch collage */}
       <section className="relative -mt-[96px] overflow-hidden bg-emerald-deep text-ivory">
+        <Jali />
         <div className="pointer-events-none absolute -left-40 top-20 h-[560px] w-[560px] rounded-full bg-gold/10 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-40 right-[-10%] h-[640px] w-[640px] rounded-full bg-emerald-soft/60 blur-3xl" />
         {/* Fine arch outlines echoing the palace-arch motif */}
@@ -136,7 +162,10 @@ export default function OurStoryPage() {
               on her own feet.
             </p>
             <div className="mt-10 flex flex-wrap items-center gap-6">
-              <Link href="/shop" className="btn-outline-light rounded-full px-9">
+              <Link
+                href="/shop"
+                className="btn-outline-light rounded-full px-9"
+              >
                 Shop the collection <ArrowRight size={15} strokeWidth={1.25} />
               </Link>
               <Link href="#sanisa" className="link-underline text-ivory">
@@ -166,7 +195,7 @@ export default function OurStoryPage() {
             delay={0.15}
             className="relative mx-auto h-[440px] w-full max-w-[520px] sm:h-[520px] lg:h-[560px]"
           >
-            <div className="absolute left-1/2 top-0 aspect-[3/4] w-[62%] -translate-x-1/2 overflow-hidden rounded-t-full ring-1 ring-gold/50 ring-offset-[8px] ring-offset-emerald-deep">
+            <GildedArch className="absolute left-1/2 top-0 aspect-[100/132] w-[62%] -translate-x-1/2">
               <Image
                 src="/media/products/good-cleanse-face-wash/04.jpg"
                 alt="Good Cleanse Face Wash beside a lit diya"
@@ -175,8 +204,8 @@ export default function OurStoryPage() {
                 sizes="(min-width: 1024px) 330px, 60vw"
                 className="object-cover"
               />
-            </div>
-            <div className="absolute bottom-2 left-0 aspect-[3/4] w-[36%] overflow-hidden rounded-t-full ring-1 ring-gold/50 ring-offset-[6px] ring-offset-emerald-deep shadow-[0_30px_60px_-20px_rgba(0,0,0,0.6)]">
+            </GildedArch>
+            <GildedArch className="absolute bottom-2 left-0 aspect-[100/132] w-[36%]">
               <Image
                 src="/media/products/glow-up-pithi-pack/04.jpg"
                 alt="Glow Up Pithi Pack with turmeric and rice bran oil"
@@ -184,8 +213,8 @@ export default function OurStoryPage() {
                 sizes="200px"
                 className="object-cover"
               />
-            </div>
-            <div className="absolute bottom-14 right-0 aspect-[3/4] w-[34%] overflow-hidden rounded-t-full ring-1 ring-gold/50 ring-offset-[6px] ring-offset-emerald-deep shadow-[0_30px_60px_-20px_rgba(0,0,0,0.6)]">
+            </GildedArch>
+            <GildedArch className="absolute bottom-14 right-0 aspect-[100/132] w-[34%]">
               <Image
                 src="/media/products/vita-clay-ubtan-pack/04.jpg"
                 alt="Vita Clay Ubtan Pack with flowers and clay"
@@ -193,7 +222,7 @@ export default function OurStoryPage() {
                 sizes="190px"
                 className="object-cover"
               />
-            </div>
+            </GildedArch>
             <span className="absolute -bottom-2 left-1/2 flex -translate-x-1/2 items-center gap-3 whitespace-nowrap rounded-full border border-gold/40 bg-emerald-deep/90 px-5 py-2.5 font-display text-[16px] italic text-gold-soft backdrop-blur">
               <span className="text-[8px] not-italic">◆</span> Age-old wisdom,
               modern care
@@ -244,6 +273,7 @@ export default function OurStoryPage() {
 
       {/* Philosophy pillars — photographs in palace arches on emerald */}
       <section className="relative overflow-hidden bg-emerald-deep py-24 text-ivory sm:py-32">
+        <Jali />
         <div className="pointer-events-none absolute -right-40 -top-40 h-[560px] w-[560px] rounded-full bg-emerald-soft/50 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-48 -left-40 h-[520px] w-[520px] rounded-full bg-gold/10 blur-3xl" />
         <div className="container-site relative">
@@ -264,7 +294,7 @@ export default function OurStoryPage() {
               return (
                 <Reveal key={pillar.title} delay={(index % 3) * 0.12}>
                   <div className="group text-center">
-                    <div className="relative mx-auto aspect-[4/5] w-full max-w-[320px] overflow-hidden rounded-t-full ring-1 ring-gold/40 ring-offset-[7px] ring-offset-emerald-deep transition duration-700 group-hover:ring-gold-soft">
+                    <GildedArch className="relative mx-auto aspect-[100/132] w-full max-w-[320px]">
                       <Image
                         src={pillar.image}
                         alt=""
@@ -273,7 +303,7 @@ export default function OurStoryPage() {
                         className="object-cover transition duration-[1600ms] group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-emerald-deep/70 via-transparent to-transparent" />
-                    </div>
+                    </GildedArch>
                     <span className="relative z-10 mx-auto -mt-7 flex h-14 w-14 items-center justify-center rounded-full border border-gold/60 bg-emerald-deep text-gold-soft transition group-hover:bg-gold-soft group-hover:text-emerald-deep">
                       <Icon size={21} strokeWidth={1.1} />
                     </span>
@@ -386,7 +416,7 @@ export default function OurStoryPage() {
         <div className="pointer-events-none absolute -bottom-40 right-0 h-[560px] w-[560px] rounded-full bg-emerald-soft/50 blur-3xl" />
         <div className="container-site relative grid items-center gap-16 lg:grid-cols-[1fr_1.1fr]">
           <Reveal>
-            <div className="relative mx-auto aspect-[3/4] w-full max-w-[420px] overflow-hidden rounded-t-full ring-1 ring-gold/40 ring-offset-[8px] ring-offset-emerald-deep">
+            <GildedArch className="relative mx-auto aspect-[100/132] w-full max-w-[420px]">
               <Image
                 src="/media/products/coco-silk-cold-pressed-virgin-coconut-oil/03.jpg"
                 alt="Coco Silk virgin coconut oil among fresh coconuts"
@@ -394,7 +424,7 @@ export default function OurStoryPage() {
                 sizes="420px"
                 className="object-cover"
               />
-            </div>
+            </GildedArch>
           </Reveal>
           <Reveal delay={0.1}>
             <p className="eyebrow text-gold-soft">The heart of Puro</p>
@@ -430,7 +460,9 @@ export default function OurStoryPage() {
           <p className="mx-auto mt-8 max-w-[1000px] font-display text-[30px] font-light leading-[1.35] text-emerald sm:text-[40px] lg:text-[48px]">
             {TAGLINE_VERBS.map((verb, index) => (
               <span key={verb}>
-                <em className={index % 2 ? "text-gold-deep" : undefined}>{verb} it.</em>{" "}
+                <em className={index % 2 ? "text-gold-deep" : undefined}>
+                  {verb} it.
+                </em>{" "}
               </span>
             ))}
           </p>
@@ -469,8 +501,12 @@ export default function OurStoryPage() {
                     <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-gold-soft/10 text-gold-soft ring-1 ring-gold-soft/40">
                       <Icon size={22} strokeWidth={1.1} />
                     </span>
-                    <h3 className="mt-6 font-display text-[24px] font-light">{promise.title}</h3>
-                    <p className="mt-2 text-[14px] leading-7 text-ivory/70">{promise.text}</p>
+                    <h3 className="mt-6 font-display text-[24px] font-light">
+                      {promise.title}
+                    </h3>
+                    <p className="mt-2 text-[14px] leading-7 text-ivory/70">
+                      {promise.text}
+                    </p>
                   </div>
                 </Reveal>
               );

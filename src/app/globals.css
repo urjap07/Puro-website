@@ -3,21 +3,43 @@
 @tailwind utilities;
 
 @layer base {
-  html {
-    scroll-behavior: smooth;
-  }
-
   body {
     @apply bg-mist font-sans text-ink antialiased;
-    font-weight: 350;
+    font-weight: 400;
+    font-size: 17px;
+  }
+
+  /* A fine film grain over the whole site, for a printed, tactile feel */
+  body::before {
+    content: "";
+    @apply pointer-events-none fixed inset-0 z-[300] opacity-[0.045] mix-blend-multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
   ::selection {
-    @apply bg-gold-soft text-emerald-deep;
+    @apply bg-emerald text-ivory;
   }
 
   :focus-visible {
-    @apply outline outline-1 outline-offset-4 outline-gold;
+    @apply outline outline-1 outline-offset-4 outline-emerald;
+  }
+
+  /* Lenis smooth scroll */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+
+  .lenis.lenis-stopped {
+    overflow: hidden;
   }
 }
 
@@ -27,59 +49,72 @@
   }
 
   .eyebrow {
-    @apply text-[10px] font-normal uppercase tracking-eyebrow text-gold-deep;
+    @apply font-sans text-[12px] font-medium uppercase tracking-[0.24em] text-stone;
   }
 
   .heading-xl {
-    @apply font-display text-[44px] font-light leading-[1.02] tracking-[-0.01em] sm:text-[64px] lg:text-[84px];
+    @apply font-display text-[52px] font-normal leading-[0.98] tracking-[-0.015em] sm:text-[76px] lg:text-[104px];
   }
 
   .heading-lg {
-    @apply font-display text-[36px] font-light leading-[1.08] sm:text-[46px] lg:text-[54px];
+    @apply font-display text-[44px] font-normal leading-[1.02] tracking-[-0.01em] sm:text-[60px] lg:text-[72px];
   }
 
   .heading-md {
-    @apply font-display text-[28px] font-light leading-[1.15] sm:text-[34px];
+    @apply font-display text-[30px] font-normal leading-[1.1] sm:text-[38px];
   }
 
   .body-copy {
-    @apply text-[15px] leading-[1.85] text-stone;
+    @apply text-[17px] leading-[1.8] text-stone;
   }
 
+  /* Buttons: a darker fill rises from below on hover */
   .btn {
-    @apply inline-flex items-center justify-center gap-3 px-8 py-4 text-[11px] font-normal uppercase tracking-[0.22em] transition-all duration-500;
+    @apply relative isolate inline-flex items-center justify-center gap-3 overflow-hidden px-8 py-4 text-[12px] font-medium uppercase tracking-[0.2em] transition-colors duration-500;
+  }
+
+  .btn::before {
+    content: "";
+    @apply pointer-events-none absolute inset-0 -z-10 origin-bottom scale-y-0 rounded-[inherit] transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)];
+  }
+
+  .btn:hover::before {
+    @apply scale-y-100;
   }
 
   .btn-primary {
-    @apply btn bg-emerald text-ivory hover:bg-emerald-deep;
+    @apply btn bg-emerald text-ivory before:bg-ink;
   }
 
   .btn-gold {
-    @apply btn bg-gold text-emerald-deep hover:bg-gold-soft;
+    @apply btn bg-ivory text-ink before:bg-parchment;
+  }
+
+  .btn-light {
+    @apply btn bg-ivory text-ink before:bg-parchment;
   }
 
   .btn-outline {
-    @apply btn border border-current hover:bg-emerald hover:text-ivory hover:border-emerald;
+    @apply btn border border-current before:bg-emerald hover:border-emerald hover:text-ivory;
   }
 
   .btn-outline-light {
-    @apply btn border border-ivory/60 text-ivory hover:border-gold hover:bg-gold hover:text-emerald-deep;
+    @apply btn border border-ivory/70 text-ivory before:bg-ivory hover:text-ink;
   }
 
   .link-underline {
-    @apply relative inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.22em];
+    @apply relative inline-flex items-center gap-2 text-[12px] font-medium uppercase tracking-[0.2em];
   }
 
   .link-underline::after {
     content: "";
-    @apply absolute -bottom-1.5 left-0 h-px w-full origin-left bg-current transition-transform duration-500;
+    @apply absolute -bottom-1.5 left-0 h-px w-full origin-right bg-current transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)];
   }
 
   .link-underline:hover::after {
-    @apply scale-x-50;
+    @apply origin-left scale-x-0;
   }
 
-  /* Thin gold rule with a centred diamond, echoing the packaging frames */
   .ornament {
     @apply flex items-center justify-center gap-3 text-gold;
   }
@@ -92,17 +127,122 @@
 }
 
 @layer utilities {
-  /* Soft gold + emerald light washes for light sections */
-  .glow-botanical {
-    background-image:
-      radial-gradient(ellipse 60% 50% at 0% 0%, rgba(180, 146, 90, 0.14), transparent 70%),
-      radial-gradient(ellipse 55% 55% at 100% 100%, rgba(31, 77, 63, 0.14), transparent 70%);
+  /*
+   * Retired "Palace Garden" utilities, kept as no-ops so pages not yet
+   * redesigned render plainly instead of breaking.
+   */
+  .arch-cusped,
+  .light-sweep {
+    @apply overflow-hidden;
   }
 
+  .bg-gilded {
+    background: transparent;
+  }
+
+  .text-outline {
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(251, 249, 245, 0.12);
+  }
+
+  .text-gilded,
+  .text-gilded-deep,
+  .jali,
+  .jali-light,
+  .glow-botanical,
   .glow-botanical-alt {
+    background-image: none;
+  }
+
+  /*
+   * Pearl: the premium light ground. Ivory with pools of champagne, blush and
+   * sage, like the inside of a shell. A soft glow drifts slowly across it.
+   */
+  .bg-pearl,
+  .bg-luxe {
+    @apply relative isolate;
+    overflow: clip;
+    background-color: #f8f4ee;
     background-image:
-      radial-gradient(ellipse 55% 55% at 100% 0%, rgba(31, 77, 63, 0.13), transparent 70%),
-      radial-gradient(ellipse 60% 50% at 0% 100%, rgba(180, 146, 90, 0.14), transparent 70%);
+      radial-gradient(48% 42% at 92% 4%, rgba(226, 204, 170, 0.55), transparent 70%),
+      radial-gradient(42% 46% at 4% 96%, rgba(196, 214, 198, 0.55), transparent 72%),
+      radial-gradient(38% 34% at 62% 62%, rgba(240, 214, 205, 0.45), transparent 70%),
+      linear-gradient(180deg, #fbf8f3 0%, #f4eee5 100%);
+  }
+
+  .bg-pearl-warm {
+    @apply relative isolate;
+    overflow: clip;
+    background-color: #f1e8dc;
+    background-image:
+      radial-gradient(50% 50% at 10% 10%, rgba(255, 250, 242, 0.9), transparent 70%),
+      radial-gradient(45% 50% at 95% 80%, rgba(214, 186, 150, 0.45), transparent 72%),
+      radial-gradient(40% 40% at 55% 45%, rgba(238, 208, 196, 0.4), transparent 70%),
+      linear-gradient(160deg, #f6efe6 0%, #ecdfcf 100%);
+  }
+
+  /*
+   * Forest noir: the premium dark ground. Near-black green with deep teal
+   * light from above, a warm brass glow from below and fine grain.
+   */
+  .bg-noir {
+    @apply relative isolate;
+    overflow: clip;
+    background-color: #0d1c17;
+    background-image:
+      radial-gradient(55% 45% at 18% 0%, rgba(46, 104, 90, 0.55), transparent 70%),
+      radial-gradient(45% 50% at 100% 100%, rgba(169, 138, 91, 0.28), transparent 70%),
+      radial-gradient(35% 35% at 70% 30%, rgba(30, 74, 66, 0.45), transparent 70%),
+      linear-gradient(165deg, #0f231d 0%, #0a1813 55%, #0d1f19 100%);
+  }
+
+  .bg-pearl::before,
+  .bg-luxe::before,
+  .bg-pearl-warm::before,
+  .bg-noir::before {
+    content: "";
+    @apply pointer-events-none absolute -z-10 h-[70vmax] w-[70vmax] rounded-full blur-[90px] motion-reduce:animate-none;
+    left: -10%;
+    top: 10%;
+    animation: drift 26s ease-in-out infinite alternate;
+  }
+
+  .bg-pearl::before,
+  .bg-luxe::before {
+    background: radial-gradient(circle, rgba(232, 210, 180, 0.45), transparent 65%);
+  }
+
+  .bg-pearl-warm::before {
+    background: radial-gradient(circle, rgba(255, 246, 234, 0.7), transparent 65%);
+  }
+
+  .bg-noir::before {
+    background: radial-gradient(circle, rgba(52, 120, 104, 0.35), transparent 65%);
+  }
+
+  .bg-noir::after {
+    content: "";
+    @apply pointer-events-none absolute inset-0 -z-10 opacity-[0.08] mix-blend-overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .rules {
+    @apply pointer-events-none absolute inset-0 -z-10 mx-auto max-w-site;
+  }
+
+  .rules::before {
+    content: "";
+    @apply absolute inset-y-0 left-5 right-5 sm:left-8 sm:right-8 lg:left-12 lg:right-12;
+    background-image: linear-gradient(to right, rgba(31, 58, 46, 0.07) 1px, transparent 1px);
+    background-size: 25% 100%;
+    border-right: 1px solid rgba(31, 58, 46, 0.07);
+  }
+
+  /* Soft film grain for dark panels */
+  .grain::after {
+    content: "";
+    @apply pointer-events-none absolute inset-0 opacity-[0.07] mix-blend-overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
   .no-scrollbar {
@@ -111,5 +251,45 @@
 
   .no-scrollbar::-webkit-scrollbar {
     display: none;
+  }
+}
+
+/* ---- First-visit intro (see IntroCurtain) ---- */
+html:not([data-intro="play"]) .intro-curtain {
+  display: none;
+}
+
+html[data-intro="play"] body {
+  overflow: hidden;
+}
+
+/* Failsafe: never let the curtain block the page if scripts stall */
+.intro-curtain {
+  animation: intro-failsafe 0.01s linear 7s forwards;
+}
+
+@keyframes intro-failsafe {
+  to {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+@keyframes scrollcue {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(200%);
+  }
+}
+
+@keyframes drift {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(70%, 35%, 0) scale(1.15);
   }
 }

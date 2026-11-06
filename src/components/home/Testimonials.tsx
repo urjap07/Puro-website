@@ -1,16 +1,21 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Star } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowLeft, ArrowRight, BadgeCheck, Star } from "lucide-react";
 import type { Review } from "@/db/queries/products";
-import Reveal from "@/components/ui/Reveal";
 
 interface TestimonialsProps {
   reviews: Review[];
   totalReviews: number;
   averageRating: number;
+  /** Lifestyle photograph for each reviewed product, by product slug. */
+  images: Record<string, string>;
 }
 
-export function Stars({ rating, size = 14 }: { rating: number; size?: number }) {
+export function Stars({ rating, size = 14, light = false }: { rating: number; size?: number; light?: boolean }) {
   return (
     <span className="inline-flex gap-1" aria-label={`${rating} out of 5 stars`}>
       {Array.from({ length: 5 }).map((_, index) => (
@@ -18,66 +23,182 @@ export function Stars({ rating, size = 14 }: { rating: number; size?: number }) 
           key={index}
           size={size}
           strokeWidth={1}
-          className={index < Math.round(rating) ? "fill-gold-soft text-gold-soft" : "text-ivory/40"}
+          className={
+            index < Math.round(rating)
+              ? light
+                ? "fill-gold-soft text-gold-soft"
+                : "fill-emerald text-emerald"
+              : light
+                ? "text-ivory/30"
+                : "text-line"
+          }
         />
       ))}
     </span>
   );
 }
 
-export default function Testimonials({ reviews, totalReviews, averageRating }: TestimonialsProps) {
+const ROTATE_MS = 8000;
+const EASE = [0.22, 1, 0.36, 1] as const;
+
+/**
+ * Dark editorial review spread: the reviewed product's photograph beside one
+ * large quote, rotating on a timer, over a slow ribbon of further reviews.
+ */
+export default function Testimonials({ reviews, totalReviews, averageRating, images }: TestimonialsProps) {
+  const [index, setIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
+
+  useEffect(() => {
+    if (paused || reviews.length < 2) return;
+    const timer = setTimeout(() => setIndex((i) => (i + 1) % reviews.length), ROTATE_MS);
+    return () => clearTimeout(timer);
+  }, [index, paused, reviews.length]);
+
   if (reviews.length === 0) return null;
+  const review = reviews[index];
+  const go = (step: number) => setIndex((i) => (i + step + reviews.length) % reviews.length);
+  const image = images[review.productSlug];
+  const ribbon = [...reviews, ...reviews];
 
   return (
-    <section className="relative overflow-hidden py-24 text-ivory sm:py-32">
-      <Image
-        src="/media/products/sheavibe-lotion/04.jpg"
-        alt=""
-        fill
-        sizes="100vw"
-        className="object-cover"
-      />
-      <div className="absolute inset-0 bg-emerald-deep/85" />
+    <section className="bg-noir pt-24 text-ivory sm:pt-32">
+      <div className="pointer-events-none absolute -right-48 top-0 h-[600px] w-[600px] rounded-full bg-emerald-soft/40 blur-[120px]" />
 
-      <div className="container-site relative">
-        <Reveal className="text-center">
-          <p className="eyebrow text-gold-soft">Loved by our customers</p>
-          <h2 className="heading-lg mt-5">
-            Kind words, <em className="text-gold-soft">real rituals</em>
-          </h2>
-          <div className="mt-6 flex items-center justify-center gap-3 text-[13px] text-ivory/70">
-            <Stars rating={averageRating} />
-            <span>
-              {averageRating.toFixed(1)} average from {totalReviews} reviews
-            </span>
+      <div
+        className="container-site relative"
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+      >
+        <div className="flex flex-col justify-between gap-6 border-b border-ivory/15 pb-8 sm:flex-row sm:items-end">
+          <div>
+            <p className="eyebrow text-ivory/60">Kind words</p>
+            <h2 className="heading-lg mt-5">
+              Loved, <em>ritually.</em>
+            </h2>
           </div>
-        </Reveal>
+          <div className="flex items-center gap-5">
+            <p className="font-display text-[64px] leading-none">{averageRating.toFixed(1)}</p>
+            <div>
+              <Stars rating={averageRating} light />
+              <p className="mt-1.5 text-[13px] text-ivory/60">from {totalReviews} verified reviews</p>
+            </div>
+          </div>
+        </div>
 
-        <div className="mt-16 grid gap-6 md:grid-cols-3">
-          {reviews.map((review, index) => (
-            <Reveal key={review.id} delay={index * 0.1}>
-              <figure className="flex h-full flex-col rounded-2xl border border-ivory/15 bg-ivory/[0.04] p-8 backdrop-blur-sm">
-                <Stars rating={review.rating} />
-                {review.title && (
-                  <p className="mt-6 font-display text-[22px] italic leading-snug text-ivory">
-                    &ldquo;{review.title}&rdquo;
-                  </p>
-                )}
-                <blockquote className="mt-4 flex-1 text-[14px] leading-[1.85] text-ivory/75">
-                  {review.comment}
-                </blockquote>
-                <figcaption className="mt-8 border-t border-ivory/15 pt-5 text-[12px]">
-                  <span className="text-ivory">{review.author}</span>
-                  <span className="text-ivory/50"> · Verified customer</span>
-                  <Link
-                    href={`/products/${review.productSlug}`}
-                    className="mt-1 block text-[10px] uppercase tracking-[0.22em] text-gold-soft hover:text-ivory"
-                  >
-                    {review.productName}
-                  </Link>
-                </figcaption>
-              </figure>
-            </Reveal>
+        <div className="grid items-center gap-10 py-14 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20 lg:py-20">
+          {/* Product photograph */}
+          <Link
+            href={`/products/${review.productSlug}`}
+            data-cursor="Shop"
+            className="relative mx-auto block aspect-[4/5] w-full max-w-[460px] overflow-hidden rounded-[22px] bg-emerald-soft"
+          >
+            <AnimatePresence initial={false}>
+              {image && (
+                <motion.div
+                  key={review.id}
+                  className="absolute inset-0"
+                  initial={{ clipPath: "inset(0 0 100% 0)", scale: 1.12 }}
+                  animate={{ clipPath: "inset(0 0 0% 0)", scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 1.1, ease: [0.77, 0, 0.18, 1] }}
+                >
+                  <Image src={image} alt={review.productName} fill sizes="(min-width: 1024px) 34vw, 90vw" className="object-cover" />
+                </motion.div>
+              )}
+            </AnimatePresence>
+            <span className="absolute bottom-4 left-4 z-10 rounded-full bg-ivory/90 px-4 py-2 text-[10px] font-medium uppercase tracking-[0.2em] text-ink backdrop-blur">
+              {review.productName}
+            </span>
+          </Link>
+
+          {/* Quote */}
+          <div className="relative">
+            <span aria-hidden="true" className="absolute -left-2 -top-24 font-display text-[220px] leading-none text-gold-soft/25 sm:-top-28">
+              &ldquo;
+            </span>
+            <div className="relative min-h-[360px] sm:min-h-[320px]">
+              <AnimatePresence mode="wait">
+                <motion.figure
+                  key={review.id}
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -16 }}
+                  transition={{ duration: 0.7, ease: EASE }}
+                >
+                  <Stars rating={review.rating} light />
+                  <blockquote className="mt-6 font-display text-[36px] italic leading-[1.08] sm:text-[52px] lg:text-[60px]">
+                    {review.title || (review.comment ?? "").split(".")[0]}
+                  </blockquote>
+                  <p className="mt-6 line-clamp-4 max-w-[600px] text-[16px] leading-[1.85] text-ivory/70">{review.comment}</p>
+                  <figcaption className="mt-8 flex items-center gap-4">
+                    <span className="flex h-11 w-11 items-center justify-center rounded-full bg-ivory/10 font-display text-[20px]">
+                      {review.author.charAt(0)}
+                    </span>
+                    <span>
+                      <span className="block text-[15px]">{review.author}</span>
+                      <span className="mt-0.5 flex items-center gap-1.5 text-[12px] uppercase tracking-[0.18em] text-ivory/50">
+                        <BadgeCheck size={13} strokeWidth={1.25} /> Verified customer
+                      </span>
+                    </span>
+                  </figcaption>
+                </motion.figure>
+              </AnimatePresence>
+            </div>
+
+            {reviews.length > 1 && (
+              <div className="mt-10 flex items-center gap-6">
+                <span className="font-display text-[22px] tabular-nums">
+                  {String(index + 1).padStart(2, "0")}
+                  <span className="text-ivory/40"> / {String(reviews.length).padStart(2, "0")}</span>
+                </span>
+                <span className="relative h-px flex-1 overflow-hidden bg-ivory/15">
+                  <motion.span
+                    key={`${index}-${paused}`}
+                    className="absolute inset-y-0 left-0 bg-ivory"
+                    initial={{ width: "0%" }}
+                    animate={{ width: paused ? "0%" : "100%" }}
+                    transition={{ duration: paused ? 0 : ROTATE_MS / 1000, ease: "linear" }}
+                  />
+                </span>
+                <div className="flex gap-2">
+                  {[-1, 1].map((step) => (
+                    <button
+                      key={step}
+                      type="button"
+                      aria-label={step < 0 ? "Previous review" : "Next review"}
+                      onClick={() => go(step)}
+                      className="flex h-12 w-12 items-center justify-center rounded-full border border-ivory/25 transition duration-300 hover:border-ivory hover:bg-ivory hover:text-ink"
+                    >
+                      {step < 0 ? <ArrowLeft size={17} strokeWidth={1.1} /> : <ArrowRight size={17} strokeWidth={1.1} />}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Ribbon of further reviews */}
+      <div className="relative overflow-hidden border-t border-ivory/10 py-8">
+        <div className="flex w-max animate-marquee-slow gap-4 motion-reduce:animate-none hover:[animation-play-state:paused]">
+          {ribbon.map((item, i) => (
+            <button
+              key={`${item.id}-${i}`}
+              type="button"
+              aria-hidden={i >= reviews.length}
+              tabIndex={i >= reviews.length ? -1 : undefined}
+              onClick={() => setIndex(i % reviews.length)}
+              className="flex w-[340px] shrink-0 flex-col rounded-[16px] border border-ivory/10 bg-ivory/[0.04] p-5 text-left transition hover:bg-ivory/[0.08]"
+            >
+              <Stars rating={item.rating} size={11} light />
+              <span className="mt-3 line-clamp-1 font-display text-[20px] italic">{item.title || item.productName}</span>
+              <span className="mt-1 line-clamp-2 text-[13px] leading-relaxed text-ivory/55">{item.comment}</span>
+              <span className="mt-3 text-[10px] uppercase tracking-[0.2em] text-ivory/45">
+                {item.author} · {item.productName}
+              </span>
+            </button>
           ))}
         </div>
       </div>

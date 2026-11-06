@@ -31,7 +31,7 @@ export default function NewsletterForm() {
         type="email"
         required
         placeholder="Your email address"
-        className="min-w-0 flex-1 bg-transparent py-4 text-[14px] text-ivory outline-none placeholder:text-ivory/40"
+        className="min-w-0 flex-1 bg-transparent py-4 text-[15px] text-ivory outline-none placeholder:text-ivory/40"
       />
       <button
         type="submit"

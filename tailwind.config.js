@@ -8,32 +8,37 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // "Botanical Heritage" — drawn from the Puro packaging and gift boxes
-        ivory: "#FAF7F0",
-        parchment: "#F2ECE0",
-        sand: "#E6DBC6",
-        line: "#CEDACE",
-        // Sage mist — light companion to the emerald, replaces flat cream
+        // "Quiet Luxury" — bone and linen grounds, forest green, a whisper of brass
+        ivory: "#FBF9F5",
+        parchment: "#EFE9DF",
+        sand: "#E4DACB",
+        line: "#DCD4C6",
+        // Page grounds (token kept as "mist" so every page follows)
         mist: {
-          DEFAULT: "#EBF0EA",
-          card: "#F5F8F3",
-          deep: "#DCE6DB",
+          DEFAULT: "#F5F1EA",
+          card: "#FAF8F4",
+          deep: "#ECE6DB",
         },
+        // Forest green, from the Puro packaging
         emerald: {
-          DEFAULT: "#123B30",
-          deep: "#0B2A22",
-          soft: "#1F4D3F",
+          DEFAULT: "#1F3A2E",
+          deep: "#14261E",
+          soft: "#2F5243",
         },
+        // Muted brass, used only for hairlines and small details
         gold: {
-          DEFAULT: "#B4925A",
-          soft: "#D9C49A",
-          deep: "#8E6F3E",
+          DEFAULT: "#A98A5B",
+          soft: "#D8C6A3",
+          deep: "#86693F",
         },
-        ink: "#1B231F",
-        stone: "#6B6E66",
+        saffron: "#C9A574",
+        peacock: "#2F5243",
+        ink: "#1B1C19",
+        stone: "#6F6A61",
       },
       fontFamily: {
         display: ["var(--font-display)", "Georgia", "serif"],
+        caps: ["var(--font-sans)", "Helvetica Neue", "Arial", "sans-serif"],
         sans: ["var(--font-sans)", "Helvetica Neue", "Arial", "sans-serif"],
       },
       letterSpacing: {
@@ -47,9 +52,25 @@ module.exports = {
           from: { transform: "translateX(0)" },
           to: { transform: "translateX(-50%)" },
         },
+        kenburns: {
+          from: { transform: "scale(1)" },
+          to: { transform: "scale(1.12)" },
+        },
+        shimmer: {
+          from: { backgroundPosition: "200% 50%" },
+          to: { backgroundPosition: "-200% 50%" },
+        },
+        sweep: {
+          "0%, 55%": { transform: "translateX(-130%) skewX(-18deg)" },
+          "100%": { transform: "translateX(230%) skewX(-18deg)" },
+        },
       },
       animation: {
         marquee: "marquee 40s linear infinite",
+        "marquee-slow": "marquee 70s linear infinite",
+        kenburns: "kenburns 24s ease-in-out infinite alternate",
+        shimmer: "shimmer 9s linear infinite",
+        sweep: "sweep 7s ease-in-out infinite",
       },
     },
   },

@@ -3,6 +3,8 @@ import Link from "next/link";
 import clsx from "clsx";
 import type { Product } from "@/db/queries/products";
 import Reveal from "@/components/ui/Reveal";
+import GildedArch from "@/components/ui/GildedArch";
+import Jali from "@/components/ui/Jali";
 
 export interface ListingLink {
   label: string;
@@ -35,6 +37,7 @@ export default function ListingHeader({
 
   return (
     <section className="relative overflow-hidden bg-emerald-deep text-ivory">
+      <Jali />
       <Image
         src={backdrop}
         alt=""
@@ -49,7 +52,10 @@ export default function ListingHeader({
 
       <div className="container-site relative grid items-center gap-12 py-16 sm:py-20 lg:grid-cols-[1.15fr_1fr] lg:py-24">
         <Reveal className="min-w-0">
-          <nav aria-label="Breadcrumb" className="text-[11px] uppercase tracking-[0.22em] text-ivory/55">
+          <nav
+            aria-label="Breadcrumb"
+            className="text-[11px] uppercase tracking-[0.22em] text-ivory/55"
+          >
             <Link href="/" className="hover:text-ivory">
               Home
             </Link>
@@ -84,7 +90,7 @@ export default function ListingHeader({
                     "whitespace-nowrap rounded-full border px-5 py-2.5 text-[13px] transition",
                     link.active
                       ? "border-gold-soft bg-gold-soft text-emerald-deep"
-                      : "border-ivory/25 text-ivory/85 hover:border-gold-soft hover:text-gold-soft"
+                      : "border-ivory/25 text-ivory/85 hover:border-gold-soft hover:text-gold-soft",
                   )}
                 >
                   {link.label}
@@ -100,19 +106,23 @@ export default function ListingHeader({
               <Reveal key={product.id} delay={0.15 + index * 0.15}>
                 <Link
                   href={`/products/${product.slug}`}
-                  className={clsx("group block w-[210px] xl:w-[230px]", index === 1 && "mt-16")}
+                  className={clsx(
+                    "group block w-[210px] xl:w-[230px]",
+                    index === 1 && "mt-16",
+                  )}
                 >
-                  <div className="relative aspect-[3/4] overflow-hidden rounded-t-full bg-parchment p-2.5 ring-1 ring-gold/40 ring-offset-[6px] ring-offset-emerald-deep transition duration-700 group-hover:ring-gold">
-                    <div className="relative h-full w-full overflow-hidden rounded-t-full bg-parchment">
-                      <Image
-                        src={product.images[0].imageUrl}
-                        alt={product.name}
-                        fill
-                        sizes="230px"
-                        className="object-cover mix-blend-multiply transition duration-[1400ms] group-hover:scale-105"
-                      />
-                    </div>
-                  </div>
+                  <GildedArch
+                    className="aspect-[100/132] w-full"
+                    innerClassName="bg-parchment"
+                  >
+                    <Image
+                      src={product.images[0].imageUrl}
+                      alt={product.name}
+                      fill
+                      sizes="230px"
+                      className="object-cover mix-blend-multiply transition duration-[1400ms] group-hover:scale-105"
+                    />
+                  </GildedArch>
                   <p className="mt-4 text-center font-display text-[18px] text-ivory/90 transition group-hover:text-gold-soft">
                     {product.name}
                   </p>

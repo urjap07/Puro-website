@@ -35,12 +35,25 @@ function connectionOptions(): mysql.PoolOptions {
   };
 }
 
-const pool = mysql.createPool({
-  ...connectionOptions(),
-  waitForConnections: true,
-  // Serverless functions each open their own pool; keep it small.
-  connectionLimit: process.env.VERCEL ? 3 : 10,
-  queueLimit: 0,
-});
+function createPool() {
+  return mysql.createPool({
+    ...connectionOptions(),
+    waitForConnections: true,
+    // Serverless functions each open their own pool; keep it small.
+    connectionLimit: process.env.VERCEL ? 3 : 10,
+    // Close connections that sit idle, so stale pools never pile up.
+    maxIdle: 2,
+    idleTimeout: 30_000,
+    queueLimit: 0,
+  });
+}
+
+/**
+ * Reuse one pool across hot reloads in development; otherwise every edit
+ * would open a fresh pool and eventually hit MySQL's connection limit.
+ */
+const globalForDb = globalThis as typeof globalThis & { __puroPool?: mysql.Pool };
+const pool = globalForDb.__puroPool ?? createPool();
+if (process.env.NODE_ENV !== "production") globalForDb.__puroPool = pool;
 
 export default pool;
