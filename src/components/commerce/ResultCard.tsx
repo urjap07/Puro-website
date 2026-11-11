@@ -12,6 +12,7 @@ import { flyToBasket } from "@/lib/flight-store";
 import { flightImage, toCartItem } from "@/components/cart/AddToBag";
 import WishButton from "@/components/cart/WishButton";
 import Price from "./Price";
+import QuickLookButton from "./QuickLookButton";
 import StarRating from "./StarRating";
 
 /** Add-to-bag button that becomes a quantity stepper once the product is in the bag. */
@@ -93,7 +94,18 @@ export function DeliveryLine({ price, className }: { price: number; className?: 
 }
 
 /** A marketplace result card, in grid or list layout. */
-export default function ResultCard({ product, layout = "grid", priority = false }: { product: Product; layout?: "grid" | "list"; priority?: boolean }) {
+export default function ResultCard({
+  product,
+  layout = "grid",
+  priority = false,
+  group,
+}: {
+  product: Product;
+  layout?: "grid" | "list";
+  priority?: boolean;
+  /** The products quick look can step through. */
+  group?: Product[];
+}) {
   const variant = product.variants[0];
   const href = `/products/${product.slug}`;
   const cutout = cutoutFor(product.slug);
@@ -111,6 +123,7 @@ export default function ResultCard({ product, layout = "grid", priority = false 
     >
       <div
         data-fly-source
+        data-quicklook={product.slug}
         className={clsx(
           "relative overflow-hidden rounded-[18px] bg-[radial-gradient(ellipse_75%_62%_at_50%_44%,#ffffff_0%,#f5efe5_58%,#e7ddcc_100%)]",
           list ? "aspect-square sm:w-[240px] sm:shrink-0" : "aspect-square",
@@ -132,11 +145,12 @@ export default function ResultCard({ product, layout = "grid", priority = false 
           )}
         </Link>
         {badge && (
-          <span className="pointer-events-none absolute left-3 top-3 rounded-full bg-noir px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-gold-soft">
+          <span className="pointer-events-none !absolute left-3 top-3 rounded-full bg-noir px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-gold-soft">
             {badge}
           </span>
         )}
         <WishButton product={product} className="absolute right-3 top-3" />
+        <QuickLookButton product={product} group={group} />
       </div>
 
       <div className={clsx("flex flex-1 flex-col", list ? "py-2 sm:pr-4" : "px-1.5 pb-1 pt-4")}>

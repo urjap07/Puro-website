@@ -12,9 +12,10 @@ import WishButton from "@/components/cart/WishButton";
 import Price from "./Price";
 import StarRating from "./StarRating";
 import { BagButton } from "./ResultCard";
+import QuickLookButton from "./QuickLookButton";
 
 /** A compact product tile for horizontal rows. */
-function RowTile({ product, rank }: { product: Product; rank?: number }) {
+function RowTile({ product, rank, group }: { product: Product; rank?: number; group: Product[] }) {
   const href = `/products/${product.slug}`;
   const cutout = cutoutFor(product.slug);
   const image = cutout ?? product.images[0]?.imageUrl;
@@ -24,6 +25,7 @@ function RowTile({ product, rank }: { product: Product; rank?: number }) {
     <article className="group flex w-[180px] shrink-0 snap-start flex-col sm:w-[214px]">
       <div
         data-fly-source
+        data-quicklook={product.slug}
         className="relative aspect-square overflow-hidden rounded-[20px] bg-[radial-gradient(ellipse_75%_62%_at_50%_44%,#ffffff_0%,#f5efe5_60%,#e7ddcc_100%)] ring-1 ring-ink/[0.05]"
       >
         <Link href={href} aria-label={product.name} data-cursor="View" className="absolute inset-0">
@@ -46,6 +48,7 @@ function RowTile({ product, rank }: { product: Product; rank?: number }) {
           </span>
         )}
         <WishButton product={product} className="absolute right-2.5 top-2.5 opacity-0 transition group-hover:opacity-100 [&[aria-pressed=true]]:opacity-100 max-lg:opacity-100" />
+        <QuickLookButton product={product} group={group} className="bottom-2.5 px-3 py-1.5 text-[10px]" />
       </div>
       <Link href={href} className="mt-3 line-clamp-2 font-display text-[18px] leading-[1.15] text-ink hover:text-emerald">
         {product.name}
@@ -107,7 +110,7 @@ export default function ProductRow({
         </button>
         <div ref={track} onScroll={update} data-lenis-prevent-wheel className="no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto pb-1 sm:gap-5">
           {products.map((product, index) => (
-            <RowTile key={product.id} product={product} rank={ranked ? index + 1 : undefined} />
+            <RowTile key={product.id} product={product} rank={ranked ? index + 1 : undefined} group={products} />
           ))}
         </div>
         <button type="button" aria-label={`Scroll ${title} forward`} disabled={edges.end} onClick={() => track.current?.scrollBy({ left: track.current.clientWidth * 0.8, behavior: "smooth" })} className={`${arrow} -right-3`}>

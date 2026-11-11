@@ -36,7 +36,7 @@ export default function AddedToast() {
   return (
     <div
       aria-live="polite"
-      className={clsx("pointer-events-none fixed inset-x-3 z-[85] flex justify-center sm:inset-x-auto sm:bottom-auto sm:right-6 sm:top-[96px]", onProduct ? "bottom-[88px]" : "bottom-3")}
+      className={clsx("pointer-events-none fixed inset-x-3 z-[97] flex justify-center sm:inset-x-auto sm:bottom-auto sm:right-6 sm:top-[96px]", onProduct ? "bottom-[88px]" : "bottom-3")}
     >
       <AnimatePresence>
         {notice && (

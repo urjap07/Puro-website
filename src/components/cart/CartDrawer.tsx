@@ -109,7 +109,7 @@ export default function CartDrawer() {
             role="dialog"
             aria-modal="true"
             aria-label="Your bag"
-            className="bg-pearl fixed inset-y-0 right-0 z-[90] flex w-full max-w-[460px] flex-col shadow-[-40px_0_80px_-40px_rgba(0,0,0,0.5)] sm:inset-y-3 sm:right-3 sm:rounded-[28px]"
+            className="bg-pearl !fixed inset-y-0 right-0 z-[90] flex w-full max-w-[460px] flex-col shadow-[-40px_0_80px_-40px_rgba(0,0,0,0.5)] sm:inset-y-3 sm:right-3 sm:rounded-[28px]"
             initial={{ x: "105%" }}
             animate={{ x: 0 }}
             exit={{ x: "105%" }}
@@ -242,13 +242,22 @@ export default function CartDrawer() {
                     <button type="button" disabled className="btn-primary mt-5 w-full cursor-not-allowed rounded-full opacity-60">
                       Checkout — coming soon
                     </button>
-                    <button
-                      type="button"
-                      onClick={close}
-                      className="mt-2 w-full py-2 text-[11px] uppercase tracking-[0.22em] text-emerald hover:text-ink"
-                    >
-                      Keep shopping
-                    </button>
+                    <div className="mt-2 flex gap-2">
+                      <Link
+                        href="/cart"
+                        onClick={close}
+                        className="flex-1 rounded-full border border-emerald/25 py-3 text-center text-[11px] font-medium uppercase tracking-[0.2em] text-emerald transition hover:border-emerald hover:bg-emerald hover:text-ivory"
+                      >
+                        View full bag
+                      </Link>
+                      <button
+                        type="button"
+                        onClick={close}
+                        className="flex-1 py-3 text-[11px] uppercase tracking-[0.22em] text-emerald hover:text-ink"
+                      >
+                        Keep shopping
+                      </button>
+                    </div>
                   </footer>
                 </>
               )

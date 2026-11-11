@@ -301,7 +301,7 @@ export default function ShopResults({
                   exit={{ opacity: 0, scale: 0.96 }}
                   transition={{ duration: 0.45, delay: Math.min(index, 8) * 0.03, ease: EASE }}
                 >
-                  <ResultCard product={product} layout={layout} priority={index < 4} />
+                  <ResultCard product={product} layout={layout} priority={index < 4} group={results} />
                 </motion.div>
               ))}
             </AnimatePresence>
