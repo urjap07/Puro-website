@@ -7,7 +7,7 @@ import { Check, Minus, Plus, ShoppingBag, Truck } from "lucide-react";
 import type { Product } from "@/db/queries/products";
 import { FREE_DELIVERY_THRESHOLD, useCart } from "@/lib/cart-store";
 import { cutoutFor } from "@/lib/cutouts";
-import { useDeliveryWindow } from "@/lib/delivery";
+import { INDIA_DAYS, useDeliveryEstimate } from "@/lib/delivery";
 import { flyToBasket } from "@/lib/flight-store";
 import { flightImage, toCartItem } from "@/components/cart/AddToBag";
 import WishButton from "@/components/cart/WishButton";
@@ -70,11 +70,16 @@ export function BagButton({ product, className }: { product: Product; className?
 
 /** Delivery promise line under a price. */
 export function DeliveryLine({ price, className }: { price: number; className?: string }) {
-  const when = useDeliveryWindow() ?? "in 4–7 days";
+  const { dates, freeDeliveryApplies } = useDeliveryEstimate();
+  const when = dates ?? `in ${INDIA_DAYS}`;
   return (
     <p className={clsx("flex items-start gap-1.5 text-[13px] leading-snug text-stone", className)}>
       <Truck size={14} strokeWidth={1.4} className="mt-0.5 shrink-0 text-emerald" />
-      {price >= FREE_DELIVERY_THRESHOLD ? (
+      {!freeDeliveryApplies ? (
+        <span>
+          Ships abroad · arrives <span className="text-emerald">{when}</span>
+        </span>
+      ) : price >= FREE_DELIVERY_THRESHOLD ? (
         <span>
           <strong className="font-semibold text-emerald">FREE delivery</strong> {when}
         </span>

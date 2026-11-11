@@ -1,7 +1,7 @@
 import { BadgeCheck, FlaskConical, HandHeart, Rabbit, Truck } from "lucide-react";
 
 const PROMISES = [
-  { icon: Truck, title: "Free delivery over ₹500", text: "Delivered in 4–7 days" },
+  { icon: Truck, title: "Free delivery over ₹500", text: "Across India in 4–10 days" },
   { icon: Rabbit, title: "Cruelty-free", text: "PETA certified" },
   { icon: FlaskConical, title: "Dermatologically tested", text: "Gentle on every skin" },
   { icon: BadgeCheck, title: "GMP certified", text: "Made with care" },

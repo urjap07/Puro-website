@@ -8,6 +8,7 @@ import clsx from "clsx";
 import { Heart, Minus, Plus, ShoppingBag, Truck, X } from "lucide-react";
 import { FREE_DELIVERY_THRESHOLD, cartCount, cartSubtotal, useCart } from "@/lib/cart-store";
 import { useWishlist } from "@/lib/wishlist-store";
+import { destinationLabel, useDeliveryEstimate } from "@/lib/delivery";
 import { cutoutFor } from "@/lib/cutouts";
 import { formatPrice } from "@/lib/format";
 
@@ -28,6 +29,20 @@ function Thumb({ slug, image, name }: { slug: string; image: string | null; name
 
 /** Free-delivery progress, shown at the top of the bag. */
 function DeliveryBar({ subtotal }: { subtotal: number }) {
+  const { destination, zone, dates, freeDeliveryApplies } = useDeliveryEstimate();
+  if (!freeDeliveryApplies && destination && zone) {
+    return (
+      <div className="mx-6 mt-5 rounded-[18px] border border-emerald/10 bg-ivory/80 p-4 text-[14px] text-ink">
+        <p className="flex items-center gap-2.5">
+          <Truck size={17} strokeWidth={1.3} className="text-emerald" />
+          <span>
+            Shipping to <strong className="font-semibold">{destinationLabel(destination)}</strong> · arrives {dates}
+          </span>
+        </p>
+        <p className="mt-1.5 pl-[27px] text-[13px] text-stone">International shipping is charged at checkout.</p>
+      </div>
+    );
+  }
   const remaining = Math.max(0, FREE_DELIVERY_THRESHOLD - subtotal);
   const progress = Math.min(1, subtotal / FREE_DELIVERY_THRESHOLD);
   return (
@@ -60,6 +75,7 @@ export default function CartDrawer() {
   const unsave = useWishlist((state) => state.remove);
   const subtotal = cartSubtotal(items);
   const count = cartCount(items);
+  const { freeDeliveryApplies } = useDeliveryEstimate();
 
   useEffect(() => {
     useCart.persist.rehydrate();
@@ -215,7 +231,7 @@ export default function CartDrawer() {
                       <div className="flex justify-between">
                         <span>Delivery</span>
                         <span className="text-ink">
-                          {subtotal >= FREE_DELIVERY_THRESHOLD ? "Free" : `Free over ${formatPrice(FREE_DELIVERY_THRESHOLD)}`}
+                          {!freeDeliveryApplies ? "At checkout" : subtotal >= FREE_DELIVERY_THRESHOLD ? "Free" : `Free over ${formatPrice(FREE_DELIVERY_THRESHOLD)}`}
                         </span>
                       </div>
                     </div>

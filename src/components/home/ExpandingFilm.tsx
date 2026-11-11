@@ -27,7 +27,7 @@ export default function ExpandingFilm() {
               Your ritual <em className="text-gold-soft">awaits.</em>
             </h2>
             <p className="mt-4 max-w-[440px] text-[16px] leading-[1.75] text-ivory/80">
-              Botanical care delivered to your door in 4–7 days — free on orders over ₹500.
+              Botanical care delivered to your door across India and the world — free in India on orders over ₹500.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link

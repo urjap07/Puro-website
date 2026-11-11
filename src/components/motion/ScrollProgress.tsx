@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import clsx from "clsx";
 import { AnimatePresence, motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { ArrowUp } from "lucide-react";
 import { smoothScrollTo } from "@/components/layout/SmoothScroll";
@@ -16,6 +18,8 @@ export default function ScrollProgress() {
   const percent = useTransform(progress, (v) => `${Math.round(v * 100)}`);
   const [visible, setVisible] = useState(false);
   const [label, setLabel] = useState("0");
+  // Product pages have a sticky buy bar on phones; sit above it.
+  const onProduct = usePathname().startsWith("/products/");
 
   useEffect(() => {
     const onScroll = () => setVisible(window.scrollY > 500);
@@ -35,7 +39,7 @@ export default function ScrollProgress() {
           type="button"
           aria-label="Back to top"
           onClick={() => smoothScrollTo(0)}
-          className="group fixed bottom-5 right-5 z-[80] flex h-[60px] w-[60px] items-center justify-center rounded-full bg-[#07303b]/85 text-ivory shadow-[0_20px_40px_-18px_rgba(0,0,0,0.6)] backdrop-blur-md sm:bottom-7 sm:right-7"
+          className={clsx("group fixed right-5 z-[80] flex h-[60px] w-[60px] items-center justify-center rounded-full bg-[#07303b]/85 text-ivory shadow-[0_20px_40px_-18px_rgba(0,0,0,0.6)] backdrop-blur-md sm:right-7 lg:bottom-7", onProduct ? "bottom-[96px]" : "bottom-5 sm:bottom-7")}
           initial={{ opacity: 0, scale: 0.6, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.6, y: 20 }}

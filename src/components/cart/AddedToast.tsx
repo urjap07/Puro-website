@@ -1,11 +1,14 @@
 "use client";
 
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
+import clsx from "clsx";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { Check, ShoppingBag, Truck, X } from "lucide-react";
 import { FREE_DELIVERY_THRESHOLD, cartCount, cartSubtotal, useCart } from "@/lib/cart-store";
 import { cutoutFor } from "@/lib/cutouts";
+import { useDeliveryEstimate } from "@/lib/delivery";
 import { formatPrice } from "@/lib/format";
 
 const DISMISS_AFTER_MS = 4500;
@@ -19,6 +22,8 @@ export default function AddedToast() {
   const count = cartCount(items);
   const subtotal = cartSubtotal(items);
   const remaining = Math.max(0, FREE_DELIVERY_THRESHOLD - subtotal);
+  const onProduct = usePathname().startsWith("/products/");
+  const { freeDeliveryApplies } = useDeliveryEstimate();
 
   useEffect(() => {
     if (!notice) return;
@@ -31,7 +36,7 @@ export default function AddedToast() {
   return (
     <div
       aria-live="polite"
-      className="pointer-events-none fixed inset-x-3 bottom-3 z-[85] flex justify-center sm:inset-x-auto sm:bottom-auto sm:right-6 sm:top-[96px]"
+      className={clsx("pointer-events-none fixed inset-x-3 z-[85] flex justify-center sm:inset-x-auto sm:bottom-auto sm:right-6 sm:top-[96px]", onProduct ? "bottom-[88px]" : "bottom-3")}
     >
       <AnimatePresence>
         {notice && (
@@ -65,6 +70,7 @@ export default function AddedToast() {
               </button>
             </div>
 
+            {freeDeliveryApplies && (
             <div className="mx-4 rounded-[14px] bg-mist px-3.5 py-2.5">
               <p className="flex items-center gap-2 text-[13px] text-ink">
                 <Truck size={15} strokeWidth={1.4} className="text-emerald" />
@@ -85,6 +91,7 @@ export default function AddedToast() {
                 />
               </div>
             </div>
+            )}
 
             <div className="flex gap-2.5 p-4">
               <button

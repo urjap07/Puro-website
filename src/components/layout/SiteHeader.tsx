@@ -27,7 +27,8 @@ const QUICK_LINKS = [
 
 const ANNOUNCEMENTS = [
   "Free delivery on orders over ₹500",
-  "Delivered in 4–7 days across India",
+  "Maharashtra in 4–7 days · rest of India in 7–10",
+  "We ship worldwide in 12–14 days",
   "Cruelty-free · PETA certified",
   "Every purchase empowers a woman",
   "Dermatologically tested",

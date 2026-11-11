@@ -45,7 +45,7 @@ const SLIDES: HeroSlide[] = [
     eyebrow: "Puro Body & Soul · Ethical inside out",
     title: "Rituals rooted in nature, made for the modern you.",
     accent: "nature,",
-    text: "Botanical skin, body and hair care with turmeric, saffron and aloe — delivered in 4–7 days, free over ₹500.",
+    text: "Botanical skin, body and hair care with turmeric, saffron and aloe — delivered across India, free over ₹500.",
     cta: { label: "Shop all rituals", href: "/shop" },
     image: "/media/video/hero-wide-poster.jpg",
     video: "/media/video/hero-wide.mp4",

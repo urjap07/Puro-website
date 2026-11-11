@@ -25,7 +25,7 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
             Shop <em>all rituals</em>
           </>
         }
-        description="Botanical care for face, body and hair — rooted in age-old wisdom, delivered in 4–7 days, free over ₹500."
+        description="Botanical care for face, body and hair — rooted in age-old wisdom, delivered across India and abroad, free in India over ₹500."
         image="/media/products/glow-up-pithi-pack/04.jpg"
         links={COLLECTIONS.map((collection) => ({ label: collection.title, href: `/collections/${collection.slug}` }))}
       />
