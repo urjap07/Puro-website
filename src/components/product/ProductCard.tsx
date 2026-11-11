@@ -32,7 +32,7 @@ export default function ProductCard({ product, priority = false, index, tone = "
 
   return (
     <article className="group relative flex h-full flex-col">
-      <div className="relative aspect-[4/5] overflow-hidden rounded-[22px] bg-[radial-gradient(ellipse_75%_60%_at_50%_42%,#ffffff_0%,#f6f1e8_55%,#e9e0d1_100%)] shadow-[0_30px_60px_-40px_rgba(20,38,30,0.55)]">
+      <div data-fly-source className="relative aspect-[4/5] overflow-hidden rounded-[22px] bg-[radial-gradient(ellipse_75%_60%_at_50%_42%,#ffffff_0%,#f6f1e8_55%,#e9e0d1_100%)] shadow-[0_30px_60px_-40px_rgba(6,48,58,0.55)]">
         <Link href={href} className="absolute inset-0" aria-label={product.name} data-cursor="View">
           {/* Plinth shadow */}
           <span className="absolute bottom-[9%] left-1/2 h-[7%] w-[56%] -translate-x-1/2 rounded-[50%] bg-ink/[0.12] blur-md transition duration-700 group-hover:w-[48%] group-hover:opacity-60" />

@@ -76,7 +76,7 @@ export default function CollectionShowcase({ collections }: { collections: Showc
       </div>
 
       {/* Showcase panel */}
-      <div className="bg-noir mt-10 overflow-hidden rounded-[32px] text-ivory shadow-[0_60px_120px_-60px_rgba(13,28,23,0.9)] lg:grid lg:min-h-[600px] lg:grid-cols-[1.05fr_0.95fr]">
+      <div className="bg-noir mt-10 overflow-hidden rounded-[32px] text-ivory shadow-[0_60px_120px_-60px_rgba(5,38,47,0.9)] lg:grid lg:min-h-[600px] lg:grid-cols-[1.05fr_0.95fr]">
         <Link
           href={`/collections/${current.slug}`}
           data-cursor="Explore"

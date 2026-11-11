@@ -58,19 +58,26 @@ export default function RitualScene({ steps }: { steps: RitualSceneStep[] }) {
     <section
       ref={ref}
       id="ritual"
-      className="relative bg-[#0b1813] text-ivory"
+      className="bg-pearl relative scroll-mt-28 px-3 text-ivory sm:px-5 lg:px-8"
       style={{ height: reduceMotion ? "auto" : `${100 + total * STEP_VH}svh` }}
     >
-      <div className={clsx("overflow-hidden", reduceMotion ? "relative" : "sticky top-0 h-screen h-[100dvh]")}>
+      <div
+        className={clsx(
+          "relative mx-auto max-w-[1520px] overflow-hidden rounded-[28px] bg-[#06262f] shadow-[0_40px_80px_-50px_rgba(5,38,47,0.9)] ring-1 ring-gold/20",
+          reduceMotion
+            ? "my-6"
+            : "sticky top-[140px] h-[calc(100dvh-152px)] lg:top-[92px] lg:h-[calc(100dvh-108px)]",
+        )}
+      >
         {/* Ambient wash: each photo, heavily blurred, glowing behind the scene */}
         {steps.map((item, index) => (
           <div key={item.mood} aria-hidden="true" className={clsx("absolute inset-0", FADE, shown(index))}>
             <Image src={item.mood} alt="" fill sizes="40vw" className="scale-125 object-cover opacity-45 blur-[70px] saturate-150" />
           </div>
         ))}
-        <div className="absolute inset-0 bg-[radial-gradient(90%_80%_at_30%_50%,rgba(11,24,19,0.2)_0%,rgba(11,24,19,0.75)_60%,rgba(11,24,19,0.95)_100%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(90%_80%_at_30%_50%,rgba(6,38,47,0.2)_0%,rgba(6,38,47,0.75)_60%,rgba(6,38,47,0.95)_100%)]" />
 
-        <div className="container-site relative flex h-full flex-col pb-[2.5vh] pt-[84px] sm:pt-[90px]">
+        <div className="container-site relative flex h-full flex-col pb-[2.5vh] pt-[1.5vh]">
           {/* Title row */}
           <div className="flex items-start justify-between gap-6 pt-[2vh]">
             <div>

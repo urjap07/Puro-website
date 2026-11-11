@@ -4,6 +4,7 @@ import SiteHeader from "@/components/layout/SiteHeader";
 import SiteFooter from "@/components/layout/SiteFooter";
 import CartDrawer from "@/components/cart/CartDrawer";
 import AddedToast from "@/components/cart/AddedToast";
+import FlightLayer from "@/components/cart/FlightLayer";
 import IntroCurtain from "@/components/layout/IntroCurtain";
 import SmoothScroll from "@/components/layout/SmoothScroll";
 import CursorLabel from "@/components/motion/CursorLabel";
@@ -63,6 +64,7 @@ export default async function RootLayout({
         <SiteFooter />
         <CartDrawer />
         <AddedToast />
+        <FlightLayer />
         <CursorLabel />
         <ScrollProgress />
       </body>

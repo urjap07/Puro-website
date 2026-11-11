@@ -14,7 +14,9 @@ export interface CartItem {
   quantity: number;
 }
 
-/** The most recent add, shown in the "Added to your bag" toast. */
+export type BagView = "bag" | "saved";
+
+/** The most recent add, shown in the "Added to your bag" pop-up. */
 export interface AddedNotice {
   item: CartItem;
   quantity: number;
@@ -24,9 +26,11 @@ export interface AddedNotice {
 interface CartState {
   items: CartItem[];
   isOpen: boolean;
+  view: BagView;
   lastAdded: AddedNotice | null;
   dismissNotice: () => void;
-  open: () => void;
+  open: (view?: BagView) => void;
+  setView: (view: BagView) => void;
   close: () => void;
   add: (item: Omit<CartItem, "quantity">, quantity?: number) => void;
   setQuantity: (variantId: number, quantity: number) => void;
@@ -40,9 +44,11 @@ export const useCart = create<CartState>()(
     (set) => ({
       items: [],
       isOpen: false,
+      view: "bag",
       lastAdded: null,
       dismissNotice: () => set({ lastAdded: null }),
-      open: () => set({ isOpen: true, lastAdded: null }),
+      open: (view = "bag") => set({ isOpen: true, view, lastAdded: null }),
+      setView: (view) => set({ view }),
       close: () => set({ isOpen: false }),
 
       add: (item, quantity = 1) =>
@@ -97,3 +103,6 @@ export function cartCount(items: CartItem[]) {
 export function cartSubtotal(items: CartItem[]) {
   return items.reduce((total, item) => total + item.price * item.quantity, 0);
 }
+
+/** Orders at or above this subtotal ship free. */
+export const FREE_DELIVERY_THRESHOLD = 500;

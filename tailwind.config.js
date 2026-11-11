@@ -19,20 +19,21 @@ module.exports = {
           card: "#FAF8F4",
           deep: "#ECE6DB",
         },
-        // Forest green, from the Puro packaging
+        // Royal peacock, from the peacock on the Puro gift boxes.
+        // (Token kept as "emerald" so every component follows.)
         emerald: {
-          DEFAULT: "#1F3A2E",
-          deep: "#14261E",
-          soft: "#2F5243",
+          DEFAULT: "#0C6670",
+          deep: "#08323D",
+          soft: "#13868C",
         },
-        // Muted brass, used only for hairlines and small details
+        // Champagne gold
         gold: {
-          DEFAULT: "#A98A5B",
-          soft: "#D8C6A3",
-          deep: "#86693F",
+          DEFAULT: "#C59A55",
+          soft: "#E8D2A2",
+          deep: "#9A7139",
         },
         saffron: "#C9A574",
-        peacock: "#2F5243",
+        peacock: "#13868C",
         ink: "#1B1C19",
         stone: "#6F6A61",
       },

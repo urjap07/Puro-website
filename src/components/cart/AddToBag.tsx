@@ -6,6 +6,13 @@ import { Check, Minus, Plus, ShoppingBag } from "lucide-react";
 import { useCart } from "@/lib/cart-store";
 import type { Product } from "@/db/queries/products";
 import { formatPrice } from "@/lib/format";
+import { flyToBasket } from "@/lib/flight-store";
+import { cutoutFor } from "@/lib/cutouts";
+
+/** Image used when a product flies into the basket. */
+export function flightImage(product: Pick<Product, "slug" | "images">) {
+  return cutoutFor(product.slug) ?? product.images[0]?.imageUrl ?? null;
+}
 
 export type CartProduct = Pick<Product, "id" | "slug" | "name" | "images" | "variants">;
 
@@ -59,7 +66,10 @@ export function AddToBagPanel({ product }: { product: CartProduct }) {
       <button
         type="button"
         disabled={soldOut}
-        onClick={() => add(toCartItem(product), quantity)}
+        onClick={(event) => {
+          add(toCartItem(product), quantity);
+          flyToBasket(event.currentTarget, flightImage(product));
+        }}
         className="btn-primary h-[54px] flex-1 disabled:cursor-not-allowed disabled:opacity-50"
       >
         {soldOut ? (
@@ -109,6 +119,7 @@ export function QuickAdd({
       onClick={(event) => {
         event.preventDefault();
         add(toCartItem(product));
+        flyToBasket(event.currentTarget, flightImage(product));
         setAdded(true);
         setTimeout(() => setAdded(false), 1600);
       }}

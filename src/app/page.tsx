@@ -10,19 +10,21 @@ import {
 } from "@/db/queries/products";
 import { COLLECTIONS } from "@/lib/collections";
 import { formatPrice } from "@/lib/format";
-import Hero from "@/components/home/Hero";
-import TrustMarquee from "@/components/home/TrustMarquee";
+import HeroCarousel, { type HeroSlide } from "@/components/commerce/HeroCarousel";
+import CategoryCards, { type CategoryCard } from "@/components/commerce/CategoryCards";
+import ProductRow, { RecentlyViewedRow } from "@/components/commerce/ProductRow";
+import ApothecaryCounter from "@/components/commerce/ApothecaryCounter";
+import ShelfRow from "@/components/store/ShelfRow";
+import PendantLamp from "@/components/store/PendantLamp";
+import { cutoutFor } from "@/lib/cutouts";
+import Module from "@/components/commerce/Module";
+import PromiseStrip from "@/components/commerce/PromiseStrip";
 import Testimonials from "@/components/home/Testimonials";
 import RitualScene, { type RitualSceneStep } from "@/components/home/RitualScene";
-import Reveal from "@/components/ui/Reveal";
-import MaskReveal from "@/components/ui/MaskReveal";
 import ScrollWords from "@/components/motion/ScrollWords";
 import ImageReveal from "@/components/motion/ImageReveal";
 import Parallax from "@/components/motion/Parallax";
 import Counter from "@/components/motion/Counter";
-import GhostWord from "@/components/motion/GhostWord";
-import DrawLine from "@/components/motion/DrawLine";
-import FloatImage from "@/components/motion/FloatImage";
 import RotatingSeal from "@/components/ui/RotatingSeal";
 import ConcernFinder, { type FinderProduct } from "@/components/home/ConcernFinder";
 import IngredientCards from "@/components/home/IngredientCards";
@@ -37,6 +39,44 @@ export const dynamic = "force-dynamic";
 
 const PHILOSOPHY =
   "Botanical care made the slow way — the turmeric, saffron and clay our grandmothers trusted, refined for modern skin and made to give back.";
+
+const SLIDES: HeroSlide[] = [
+  {
+    eyebrow: "Puro Body & Soul · Ethical inside out",
+    title: "Rituals rooted in nature, made for the modern you.",
+    accent: "nature,",
+    text: "Botanical skin, body and hair care with turmeric, saffron and aloe — delivered in 4–7 days, free over ₹500.",
+    cta: { label: "Shop all rituals", href: "/shop" },
+    image: "/media/video/hero-wide-poster.jpg",
+    video: "/media/video/hero-wide.mp4",
+  },
+  {
+    eyebrow: "Bestseller · Glow Up Pithi Pack",
+    title: "The bridal glow, in a tube.",
+    accent: "bridal glow,",
+    text: "Turmeric, saffron and rice bran oil — the age-old Pithi ritual, ready in twenty unhurried minutes.",
+    cta: { label: "Shop the Pithi Pack", href: "/products/glow-up-pithi-pack" },
+    image: "/media/products/glow-up-pithi-pack/04.jpg",
+    position: "50% 40%",
+  },
+  {
+    eyebrow: "The Gift Edit",
+    title: "Gifts they will treasure.",
+    accent: "treasure.",
+    text: "Keepsake boxes inspired by palace gardens and the grace of the peacock — for weddings, festivals and every celebration.",
+    cta: { label: "Explore gift sets", href: "/collections/gifting" },
+    image: "/media/products/radiant-glow-luxurious-kit/02.jpg",
+  },
+  {
+    eyebrow: "The heart of Puro",
+    title: "Every purchase empowers a woman.",
+    accent: "empowers",
+    text: "Puro is a division of Shramik Naari Sangh. Your ritual helps a rural woman live a life of dignity.",
+    cta: { label: "Read our story", href: "/our-story" },
+    image: "/media/products/good-cleanse-face-wash/04.jpg",
+    position: "50% 60%",
+  },
+];
 
 const WEEKEND_EDIT = [
   {
@@ -161,45 +201,6 @@ function bySlug(products: Product[], slug: string) {
   return products.find((product) => product.slug === slug);
 }
 
-/** Small label + large serif title used across the homepage. */
-function Heading({
-  eyebrow,
-  index,
-  children,
-  light = false,
-  className,
-}: {
-  eyebrow: string;
-  /** Chapter number shown before the label, e.g. "01". */
-  index?: string;
-  children: React.ReactNode;
-  light?: boolean;
-  className?: string;
-}) {
-  return (
-    <div className={className}>
-      <Reveal>
-        <p
-          className={`flex items-center gap-4 ${light ? "eyebrow text-ivory/60" : "eyebrow"}`}
-        >
-          {index && (
-            <span className="font-display text-[16px] normal-case italic tracking-normal">
-              ({index})
-            </span>
-          )}
-          <span>{eyebrow}</span>
-          <DrawLine className="w-16 opacity-50 sm:w-24" />
-        </p>
-      </Reveal>
-      <h2
-        className={`heading-lg mt-5 ${light ? "text-ivory" : "text-emerald"}`}
-      >
-        <MaskReveal delay={0.05}>{children}</MaskReveal>
-      </h2>
-    </div>
-  );
-}
-
 export default async function Home() {
   const [products, concerns, ingredients, reviews] = await Promise.all([
     getActiveProducts(),
@@ -315,278 +316,301 @@ export default async function Home() {
     ];
   });
 
+  // ---- Marketplace data ----
+  const inCollection = (slug: string) => {
+    const collection = COLLECTIONS.find((item) => item.slug === slug);
+    return collection
+      ? products.filter((product) => product.categories.some((category) => collection.categorySlugs.includes(category.slug)))
+      : [];
+  };
+  const byReviews = (list: Product[]) => [...list].sort((a, b) => (b.rating?.count ?? 0) - (a.rating?.count ?? 0));
+  const tile = (product: Product) => ({
+    label: product.name,
+    href: `/products/${product.slug}`,
+    image: cutoutFor(product.slug) ?? product.images[0]?.imageUrl ?? "/media/brand/02.jpg",
+    cutout: Boolean(cutoutFor(product.slug)),
+  });
+  const underFiveHundred = products.filter((product) => (product.variants[0]?.price ?? 0) < 500);
+  const topRated = [...products]
+    .filter((product) => product.rating)
+    .sort((a, b) => b.rating!.value - a.rating!.value || b.rating!.count - a.rating!.count);
+  const cards: CategoryCard[] = [
+    { title: "Glow-up face rituals", href: "/collections/face", cta: "Shop face care", tiles: byReviews(inCollection("face")).slice(0, 4).map(tile) },
+    { title: "Body, polished & nourished", href: "/collections/body", cta: "Shop body care", tiles: byReviews(inCollection("body")).slice(0, 4).map(tile) },
+    { title: "Hair & scalp, rooted in oils", href: "/collections/hair", cta: "Shop hair care", tiles: byReviews(inCollection("hair")).slice(0, 4).map(tile) },
+    {
+      title: "Gifts they'll treasure",
+      note: "Keepsake boxes, ready to give",
+      href: "/collections/gifting",
+      cta: "Explore gift sets",
+      image: "/media/products/hydro-glow-essentials/02.jpg",
+      dark: true,
+    },
+  ];
+  const counterProducts = byReviews(products.filter((product) => cutoutFor(product.slug))).slice(0, 12);
+
   return (
     <>
-      <Hero />
-      <TrustMarquee />
-
+      {/* ---- Marketplace front ---- */}
+      <HeroCarousel slides={SLIDES} />
       <div className="bg-pearl">
-
-        {/* Philosophy — layered photographs, a turning seal, words that light up */}
-      <section className="container-site relative py-24 sm:py-36">
-        <div className="grid items-center gap-16 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20 xl:gap-28">
-          <div className="relative mx-auto w-full max-w-[540px] pb-[12%] lg:mx-0">
-            <ImageReveal className="aspect-[4/5] w-[80%] rounded-[26px]">
-              <Image
-                src="/media/products/glow-up-pithi-pack/04.jpg"
-                alt="Glow Up Pithi Pack with turmeric and rose clay"
-                fill
-                sizes="(min-width: 1024px) 36vw, 80vw"
-                className="object-cover"
-              />
-            </ImageReveal>
-            <FloatImage
-              src="/media/products/vita-clay-ubtan-pack/06.jpg"
-              className="bottom-0 right-0 aspect-[4/5] w-[46%] ring-[6px] ring-mist"
-              speed={50}
-              rotate={3}
-            />
-            <RotatingSeal
-              text="Ethical inside out · Rooted in age-old wisdom · "
-              className="absolute right-[4%] top-[6%] w-[30%] max-w-[150px] text-[44px] sm:text-[56px]"
-            />
-          </div>
-
-          <div>
-            <Reveal>
-              <p className="eyebrow flex items-center gap-4">
-                <span className="font-display text-[16px] normal-case italic tracking-normal">(00)</span>
-                Our philosophy <DrawLine className="w-20 opacity-50" />
-              </p>
-            </Reveal>
-            <ScrollWords
-              text={PHILOSOPHY}
-              className="mt-8 font-display text-[34px] leading-[1.1] text-emerald sm:text-[44px] xl:text-[52px]"
-            />
-            <div className="mt-12 grid grid-cols-3 gap-4 border-t border-line pt-8 sm:gap-6">
-              {[
-                { icon: Leaf, title: "Botanical", text: "Turmeric, saffron, aloe and clays." },
-                { icon: Rabbit, title: "Cruelty-free", text: "PETA certified and non-toxic." },
-                { icon: HeartHandshake, title: "Gives back", text: "Every purchase supports a woman." },
-              ].map(({ icon: Icon, title, text }, index) => (
-                <Reveal key={title} delay={index * 0.1}>
-                  <span className="flex h-11 w-11 items-center justify-center rounded-full border border-emerald/20 text-emerald">
-                    <Icon size={18} strokeWidth={1.1} />
-                  </span>
-                  <p className="mt-4 font-display text-[19px] leading-tight text-emerald sm:text-[22px]">{title}</p>
-                  <p className="mt-1 text-[13px] leading-relaxed text-stone sm:text-[14px]">{text}</p>
-                </Reveal>
-              ))}
-            </div>
-            <Reveal className="mt-10">
-              <Link href="/our-story" className="btn-primary rounded-full px-9">
-                Read our story <ArrowRight size={15} strokeWidth={1.25} />
-              </Link>
-            </Reveal>
-          </div>
+        <div className="container-site relative z-10 -mt-[110px] space-y-6 pb-16 sm:-mt-[130px] sm:space-y-8 sm:pb-20">
+          <CategoryCards cards={cards} />
+          <ProductRow title="Bestsellers" note="Most-loved rituals, ranked by reviews" href="/search?sort=bestsellers" products={byReviews(products).slice(0, 12)} ranked />
+          <RecentlyViewedRow products={products} />
+          <ApothecaryCounter products={counterProducts} prints={["/media/products/terra-tress-hair-scalp-oil/05.jpg", "/media/products/vita-clay-ubtan-pack/06.jpg"]} />
+          <ProductRow title="Top rated by customers" note="Five-star rituals our customers swear by" href="/search?sort=rating" products={topRated.slice(0, 12)} />
+          {underFiveHundred.length > 0 && (
+            <ProductRow title="Little luxuries under ₹500" note="Easy treats and thoughtful add-ons" href="/search?price=0-500" products={underFiveHundred} />
+          )}
         </div>
-      </section>
-
       </div>
 
-      {/* The Signatures — a product stage */}
-      {signatures.length > 0 && (
-        <section className="bg-noir py-24 text-ivory sm:py-32">
-          <GhostWord word="Signatures" light className="top-[4%]" />
-          <div className="container-site">
-            <div className="mb-12 flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
-              <Heading index="01" eyebrow="The Signatures" light>
-                Our most <em>loved</em> rituals
-              </Heading>
-              <Link href="/shop" className="btn-outline-light shrink-0 self-start rounded-full px-8 sm:self-auto">
-                Shop all <ArrowRight size={14} strokeWidth={1.25} />
-              </Link>
-            </div>
-            <SignatureStage products={signatures} />
-          </div>
-        </section>
-      )}
-
-      {/* The Weekend Edit — cards that stack as you scroll */}
-      <section className="bg-pearl pb-24 pt-24 sm:pt-36">
+      {/* ---- Walk the aisles ---- */}
+      <section className="relative isolate overflow-hidden bg-[radial-gradient(80%_70%_at_50%_0%,#13707a_0%,#0b4654_45%,#07303b_100%)] py-20 text-ivory sm:py-28">
+        <div className="grain absolute inset-0 -z-10" />
+        <PendantLamp className="left-[12%] top-0 hidden sm:flex" cord={50} />
+        <PendantLamp className="right-[14%] top-0 hidden lg:flex" cord={80} />
         <div className="container-site">
-          <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
-            <Heading index="02" eyebrow="The Weekend Edit">
-              Detoxify, polish, soothe. <em>Glow.</em>
-            </Heading>
-            <Reveal>
-              <p className="body-copy max-w-[400px]">
-                Three weekend rituals — one for each evening — that turn twenty minutes into a moment that is
-                entirely yours.
-              </p>
-            </Reveal>
+          <div className="mx-auto max-w-[640px] text-center">
+            <p className="eyebrow text-gold-soft">Walk the aisles</p>
+            <h2 className="mt-4 font-display text-[44px] leading-[1] sm:text-[64px]">
+              Take something <em className="text-gold-soft">off the shelf.</em>
+            </h2>
+            <p className="mt-4 text-[16px] text-ivory/75">Browse our rituals the way you would in store — tap + to drop one in your bag.</p>
           </div>
-          <WeekendStack items={weekend} />
+          <div className="mt-14 space-y-10 sm:space-y-14">
+            <ShelfRow title="Face care" note={`${inCollection("face").length} rituals`} products={inCollection("face")} />
+            <ShelfRow title="Body care" note={`${inCollection("body").length} rituals`} products={inCollection("body")} />
+            <ShelfRow title="Hair & scalp" note={`${inCollection("hair").length} rituals`} products={inCollection("hair")} />
+          </div>
         </div>
       </section>
 
-      {/* The Gift Edit — a fan of keepsake boxes */}
-      {giftFan.length > 0 && (
-        <section className="bg-noir py-24 text-ivory sm:py-36">
-          <GhostWord word="Gifting" light direction={-1} className="bottom-[2%]" />
-          <div className="pointer-events-none absolute right-[-10%] top-[-20%] h-[60vmax] w-[60vmax] rounded-full bg-[radial-gradient(circle,rgba(201,163,101,0.22),transparent_60%)]" />
-          <div className="container-site">
-            <div className="mb-16 flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
-              <Heading index="03" eyebrow="The Gift Edit" light>
-                Give the gift of <em>a ritual.</em>
-              </Heading>
-              <Reveal>
-                <p className="max-w-[440px] text-[17px] leading-[1.8] text-ivory/70">
-                  Keepsake boxes inspired by palace gardens and the grace of the peacock — ready to give for
-                  weddings, festivals and the people who matter most.
-                </p>
-              </Reveal>
-            </div>
-            <GiftFan gifts={giftFan} />
-          </div>
-        </section>
-      )}
+      <div className="bg-pearl">
+        <div className="container-site py-16 sm:py-20">
+          <ProductRow title="Gift sets for every celebration" note="Keepsake boxes, beautifully packed" href="/collections/gifting" products={inCollection("gifting")} />
+        </div>
+      </div>
 
-      {/* Ingredients — specimen cards that turn over */}
-      {ingredients.length > 0 && (
-        <section id="ingredients" className="bg-pearl scroll-mt-24 py-24 sm:py-36 lg:pb-52">
-          <GhostWord word="From the earth" className="top-[18%]" />
-          <div className="container-site">
-            <div className="mb-14 flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
-              <Heading index="04" eyebrow="From the earth">
-                Ingredients with <em>a story</em>
-              </Heading>
-              <Reveal>
-                <p className="body-copy max-w-[380px]">
-                  Familiar botanicals, thoughtfully sourced. Hover or tap a card to turn it over.
-                </p>
-              </Reveal>
+      {/* ---- The Puro story, in marketplace modules ---- */}
+      <div className="bg-pearl space-y-6 pb-6 sm:space-y-8 sm:pb-8">
+        <PromiseStrip />
+
+        {/* Our philosophy */}
+        <Module
+          title={
+            <>
+              Botanical care, <em className="text-emerald">made the slow way</em>
+            </>
+          }
+          note="Our philosophy"
+          link={{ label: "Read our story", href: "/our-story" }}
+        >
+          <div className="grid items-center gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-14">
+            <div className="relative">
+              <ImageReveal className="aspect-[4/3] rounded-[22px] lg:aspect-[4/5]">
+                <Image
+                  src="/media/products/glow-up-pithi-pack/04.jpg"
+                  alt="Glow Up Pithi Pack with turmeric and rose clay"
+                  fill
+                  sizes="(min-width: 1024px) 34vw, 100vw"
+                  className="object-cover"
+                />
+              </ImageReveal>
+              <RotatingSeal
+                text="Ethical inside out · Rooted in age-old wisdom · "
+                className="absolute -bottom-6 -right-3 w-[120px] text-[40px] sm:w-[140px] sm:text-[48px]"
+              />
             </div>
-            <IngredientCards ingredients={ingredients} />
+            <div>
+              <ScrollWords text={PHILOSOPHY} className="font-display text-[28px] leading-[1.15] text-emerald sm:text-[38px] xl:text-[44px]" />
+              <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-3">
+                {[
+                  { icon: Leaf, title: "Botanical", text: "Turmeric, saffron, aloe and clays." },
+                  { icon: Rabbit, title: "Cruelty-free", text: "PETA certified and non-toxic." },
+                  { icon: HeartHandshake, title: "Gives back", text: "Every purchase supports a woman." },
+                ].map(({ icon: Icon, title, text }) => (
+                  <div key={title} className="flex items-start gap-3 rounded-[18px] bg-mist p-4">
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-ivory text-emerald ring-1 ring-emerald/15">
+                      <Icon size={18} strokeWidth={1.3} />
+                    </span>
+                    <span>
+                      <span className="block font-display text-[20px] leading-tight text-ink">{title}</span>
+                      <span className="mt-0.5 block text-[13px] leading-relaxed text-stone">{text}</span>
+                    </span>
+                  </div>
+                ))}
+              </div>
+              <Link href="/our-story" className="btn-primary mt-8 rounded-full px-9">
+                Read our story <ArrowRight size={15} strokeWidth={1.25} />
+              </Link>
+            </div>
           </div>
-        </section>
-      )}
+        </Module>
+
+        {/* The Signatures */}
+        {signatures.length > 0 && (
+          <Module
+            tone="dark"
+            title={
+              <>
+                Our most <em className="text-gold-soft">loved</em> rituals
+              </>
+            }
+            note="The Signatures — tap any product to bring it to the stage."
+            link={{ label: "Shop all", href: "/shop" }}
+          >
+            <SignatureStage products={signatures} />
+          </Module>
+        )}
+
+        {/* The Weekend Edit */}
+        <Module
+          title={
+            <>
+              The Weekend Edit: detoxify, polish, soothe. <em className="text-emerald">Glow.</em>
+            </>
+          }
+          note="Three weekend rituals — one for each evening — that turn twenty minutes into a moment that is entirely yours."
+        >
+          <div className="-mt-[100px] sm:-mt-[110px]">
+            <WeekendStack items={weekend} />
+          </div>
+        </Module>
+
+        {/* The Gift Edit */}
+        {giftFan.length > 0 && (
+          <Module
+            tone="dark"
+            title={
+              <>
+                Give the gift of <em className="text-gold-soft">a ritual</em>
+              </>
+            }
+            note="Keepsake boxes inspired by palace gardens and the grace of the peacock — ready for weddings, festivals and the people who matter most."
+            link={{ label: "All gift sets", href: "/collections/gifting" }}
+          >
+            <GiftFan gifts={giftFan} />
+          </Module>
+        )}
+
+        {/* Ingredients */}
+        {ingredients.length > 0 && (
+          <Module
+            id="ingredients"
+            title={
+              <>
+                Ingredients with <em className="text-emerald">a story</em>
+              </>
+            }
+            note="Familiar botanicals, thoughtfully sourced. Hover or tap a card to turn it over."
+          >
+            <div className="lg:pb-16">
+              <IngredientCards ingredients={ingredients} />
+            </div>
+          </Module>
+        )}
+      </div>
 
       {/* The Ritual — a pinned, scroll-driven scene */}
       {ritualSteps.length > 0 && <RitualScene steps={ritualSteps} />}
 
-      {/* Collections — a showcase */}
-      <section className="bg-pearl-warm py-24 sm:py-36">
-        <GhostWord word="Collections" direction={-1} className="bottom-[2%]" />
-        <div className="container-site">
-          <div className="mb-12 flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
-            <Heading index="06" eyebrow="Explore">
-              Shop by <em>collection</em>
-            </Heading>
-            <Reveal>
-              <p className="body-copy max-w-[380px]">Four rituals for every part of you — choose one to see what&rsquo;s inside.</p>
-            </Reveal>
-          </div>
+      <div className="bg-pearl space-y-6 py-6 sm:space-y-8 sm:py-8">
+        {/* Collections */}
+        <Module
+          title={
+            <>
+              Shop by <em className="text-emerald">collection</em>
+            </>
+          }
+          note="Four rituals for every part of you — choose one to see what's inside."
+          link={{ label: "Shop all", href: "/shop" }}
+        >
           <CollectionShowcase collections={showcase} />
-        </div>
-      </section>
+        </Module>
 
-      {/* Banner — Sa-Ni-Sa, with numbers that count up */}
-      <section
-        id="story"
-        className="relative scroll-mt-24 overflow-hidden text-ivory"
-      >
-        <Parallax strength={12}>
-          <Image
-            src="/media/products/good-cleanse-face-wash/04.jpg"
-            alt="Good Cleanse Face Wash beside a lit diya"
-            fill
-            sizes="100vw"
-            className="object-cover object-[50%_60%]"
-          />
-        </Parallax>
-        <div className="absolute inset-0 bg-ink/60" />
-        <div className="container-site relative flex min-h-[88svh] flex-col justify-center py-24 text-center">
-          <Heading
-            index="07"
-            eyebrow="The heart of Puro"
-            light
-            className="mx-auto max-w-[900px]"
-          >
-            Every purchase <em>empowers a woman.</em>
-          </Heading>
-          <Reveal>
-            <p className="mx-auto mt-7 max-w-[600px] text-[17px] leading-[1.85] text-ivory/80">
-              Puro Body &amp; Soul is a division of Shramik Naari Sangh —
-              Sa-Ni-Sa — a charitable organisation. For every product you buy,
-              you help a rural woman stand on her own feet and live a life of
-              dignity.
-            </p>
-          </Reveal>
-          <div className="mx-auto mt-14 grid w-full max-w-[1080px] grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
-            {[
-              {
-                value: <Counter to={products.length} />,
-                label: "Botanical formulas",
-              },
-              {
-                value: <Counter to={totalReviews} />,
-                label: "Customer reviews",
-              },
-              {
-                value: <Counter to={averageRating} decimals={1} />,
-                label: "Average rating",
-              },
-              { value: <Counter to={100} suffix="%" />, label: "Cruelty-free" },
-            ].map((stat) => (
-              <div
-                key={stat.label}
-                className="rounded-[22px] border border-ivory/15 bg-ivory/[0.07] px-4 py-8 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-md sm:py-10"
-              >
-                <p className="font-display text-[56px] leading-none sm:text-[76px]">
-                  {stat.value}
+        {/* Sa-Ni-Sa */}
+        <section id="story" className="container-site scroll-mt-28">
+          <div className="relative isolate overflow-hidden rounded-[28px] text-ivory shadow-[0_40px_80px_-50px_rgba(5,38,47,0.9)]">
+            <Parallax strength={12}>
+              <Image
+                src="/media/products/good-cleanse-face-wash/04.jpg"
+                alt="Good Cleanse Face Wash beside a lit diya"
+                fill
+                sizes="100vw"
+                className="object-cover object-[50%_60%]"
+              />
+            </Parallax>
+            <div className="absolute inset-0 bg-gradient-to-r from-[#062a34]/95 via-[#062a34]/75 to-[#062a34]/40" />
+            <div className="relative grid gap-10 p-6 sm:p-10 lg:grid-cols-[1fr_1.05fr] lg:items-center lg:p-14">
+              <div>
+                <p className="eyebrow text-gold-soft">The heart of Puro</p>
+                <h2 className="mt-3 font-display text-[36px] leading-[1.02] sm:text-[52px]">
+                  Every purchase <em className="text-gold-soft">empowers a woman.</em>
+                </h2>
+                <p className="mt-5 max-w-[520px] text-[16px] leading-[1.8] text-ivory/80">
+                  Puro Body &amp; Soul is a division of Shramik Naari Sangh — Sa-Ni-Sa — a charitable organisation. For
+                  every product you buy, you help a rural woman stand on her own feet and live a life of dignity.
                 </p>
-                <p className="mt-4 text-[12px] font-medium uppercase tracking-[0.22em] text-ivory/70">
-                  {stat.label}
-                </p>
+                <Link href="/our-story" className="btn-light mt-8 rounded-full px-9">
+                  Meet Sa-Ni-Sa <ArrowRight size={15} strokeWidth={1.25} />
+                </Link>
               </div>
-            ))}
-          </div>
-          <Reveal className="mt-14">
-            <Link
-              href="/our-story"
-              className="btn-outline-light rounded-full px-9"
-            >
-              Read our story <ArrowRight size={15} strokeWidth={1.25} />
-            </Link>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* Concerns — find your match */}
-      {concerns.length > 0 && (
-        <section className="bg-pearl py-24 sm:py-36">
-          <GhostWord word="Your match" direction={-1} className="top-[6%]" />
-          <div className="container-site">
-            <Heading index="08" eyebrow="Find your match" className="mb-12">
-              What does your skin <em>need?</em>
-            </Heading>
-            <ConcernFinder concerns={concerns} products={finderProducts} />
+              <div className="grid grid-cols-2 gap-3 sm:gap-4">
+                {[
+                  { value: <Counter to={products.length} />, label: "Botanical formulas" },
+                  { value: <Counter to={totalReviews} />, label: "Customer reviews" },
+                  { value: <Counter to={averageRating} decimals={1} />, label: "Average rating" },
+                  { value: <Counter to={100} suffix="%" />, label: "Cruelty-free" },
+                ].map((stat) => (
+                  <div
+                    key={stat.label}
+                    className="rounded-[22px] border border-ivory/15 bg-ivory/[0.08] px-4 py-7 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-md sm:py-9"
+                  >
+                    <p className="font-display text-[48px] leading-none sm:text-[64px]">{stat.value}</p>
+                    <p className="mt-3 text-[12px] font-medium uppercase tracking-[0.2em] text-ivory/70">{stat.label}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </section>
-      )}
 
-      {/* Testimonials — dark editorial spread */}
-      <Testimonials
-        reviews={reviews}
-        totalReviews={totalReviews}
-        averageRating={averageRating}
-        images={reviewImages}
-      />
+        {/* Find your match */}
+        {concerns.length > 0 && (
+          <Module
+            title={
+              <>
+                Find your match: what does your skin <em className="text-emerald">need?</em>
+              </>
+            }
+            note="Choose skin or hair, pick a concern, and we'll build your ritual."
+          >
+            <ConcernFinder concerns={concerns} products={finderProducts} />
+          </Module>
+        )}
 
-      {/* Why Puro */}
-      <section
-        id="why-puro"
-        className="bg-pearl-warm scroll-mt-24 py-24 sm:py-36"
-      >
-        <GhostWord word="Good to know" className="top-[4%]" />
-        <div className="container-site">
-          <Heading index="09" eyebrow="Why Puro" className="mb-14">
-            Good to <em>know.</em>
-          </Heading>
+        {/* Reviews */}
+        <section className="container-site">
+          <div className="overflow-hidden rounded-[28px] shadow-[0_40px_80px_-50px_rgba(5,38,47,0.9)] ring-1 ring-gold/20">
+            <Testimonials reviews={reviews} totalReviews={totalReviews} averageRating={averageRating} images={reviewImages} />
+          </div>
+        </section>
+
+        {/* Good to know */}
+        <Module
+          id="why-puro"
+          title={
+            <>
+              Good to <em className="text-emerald">know</em>
+            </>
+          }
+          note="What goes into every Puro ritual — and what we stand for."
+        >
           <KnowledgeTabs items={WHY_PURO} />
-        </div>
-      </section>
+        </Module>
+      </div>
 
       {/* Closing — film opens to fill the screen */}
       <ExpandingFilm />

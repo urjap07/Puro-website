@@ -102,7 +102,7 @@ export default function KnowledgeTabs({ items }: { items: KnowledgeItem[] }) {
       </ol>
 
       {/* The page */}
-      <div className="relative overflow-hidden rounded-[32px] bg-ivory shadow-[0_60px_120px_-60px_rgba(20,38,30,0.55)] ring-1 ring-ink/5">
+      <div className="relative overflow-hidden rounded-[32px] bg-ivory shadow-[0_60px_120px_-60px_rgba(6,48,58,0.55)] ring-1 ring-ink/5">
         <div className="relative aspect-[16/10] overflow-hidden bg-sand">
           <AnimatePresence initial={false}>
             <motion.div

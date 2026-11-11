@@ -124,7 +124,7 @@ export default function OurStoryPage() {
   return (
     <>
       {/* Hero — emerald with an arch collage */}
-      <section className="relative -mt-[96px] overflow-hidden bg-emerald-deep text-ivory">
+      <section className="relative overflow-hidden bg-emerald-deep text-ivory">
         <Jali />
         <div className="pointer-events-none absolute -left-40 top-20 h-[560px] w-[560px] rounded-full bg-gold/10 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-40 right-[-10%] h-[640px] w-[640px] rounded-full bg-emerald-soft/60 blur-3xl" />

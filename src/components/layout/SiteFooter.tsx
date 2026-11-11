@@ -127,10 +127,10 @@ export default function SiteFooter() {
           <div className="absolute left-0 top-0 h-[78%] w-[58%] overflow-hidden rounded-[28px] shadow-[0_40px_80px_-40px_rgba(0,0,0,0.8)]">
             <Image src={MOSAIC[0]} alt="" fill sizes="280px" className="object-cover" />
           </div>
-          <div className="absolute bottom-0 right-0 h-[62%] w-[48%] overflow-hidden rounded-[28px] shadow-[0_40px_80px_-40px_rgba(0,0,0,0.8)] ring-[6px] ring-[#0d1c17]">
+          <div className="absolute bottom-0 right-0 h-[62%] w-[48%] overflow-hidden rounded-[28px] shadow-[0_40px_80px_-40px_rgba(0,0,0,0.8)] ring-[6px] ring-[#07303b]">
             <Image src={MOSAIC[1]} alt="" fill sizes="240px" className="object-cover" />
           </div>
-          <div className="absolute right-[8%] top-[4%] h-[30%] w-[26%] overflow-hidden rounded-full shadow-[0_30px_60px_-30px_rgba(0,0,0,0.8)] ring-[5px] ring-[#0d1c17]">
+          <div className="absolute right-[8%] top-[4%] h-[30%] w-[26%] overflow-hidden rounded-full shadow-[0_30px_60px_-30px_rgba(0,0,0,0.8)] ring-[5px] ring-[#07303b]">
             <Image src={MOSAIC[2]} alt="" fill sizes="130px" className="object-cover" />
           </div>
           <RotatingSeal

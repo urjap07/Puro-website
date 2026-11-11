@@ -35,7 +35,7 @@ export default function ScrollProgress() {
           type="button"
           aria-label="Back to top"
           onClick={() => smoothScrollTo(0)}
-          className="group fixed bottom-5 right-5 z-[80] flex h-[60px] w-[60px] items-center justify-center rounded-full bg-[#0d1c17]/85 text-ivory shadow-[0_20px_40px_-18px_rgba(0,0,0,0.6)] backdrop-blur-md sm:bottom-7 sm:right-7"
+          className="group fixed bottom-5 right-5 z-[80] flex h-[60px] w-[60px] items-center justify-center rounded-full bg-[#07303b]/85 text-ivory shadow-[0_20px_40px_-18px_rgba(0,0,0,0.6)] backdrop-blur-md sm:bottom-7 sm:right-7"
           initial={{ opacity: 0, scale: 0.6, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.6, y: 20 }}

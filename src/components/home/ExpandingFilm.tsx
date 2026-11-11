@@ -1,53 +1,14 @@
-"use client";
-
-import { useRef } from "react";
 import Link from "next/link";
-import { motion, useMotionTemplate, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
-/**
- * Closing scene: a small window of film opens to fill the screen as you
- * scroll, while the headline parts around it and turns to ivory.
- */
+/** Closing banner: the hero film in a framed card with a last call to shop. */
 export default function ExpandingFilm() {
-  const ref = useRef<HTMLElement>(null);
-  const reduceMotion = useReducedMotion();
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
-
-  // Opens into a large framed panel rather than full-bleed, so it never runs into the footer.
-  const insetY = useTransform(scrollYProgress, [0, 0.7], [24, 4]);
-  const insetX = useTransform(scrollYProgress, [0, 0.7], [34, 2.5]);
-  const round = useTransform(scrollYProgress, [0, 0.7], [220, 32]);
-  const clip = useMotionTemplate`inset(${insetY}% ${insetX}% round ${round}px)`;
-  const filmScale = useTransform(scrollYProgress, [0, 0.7], [1.25, 1]);
-  const leftX = useTransform(scrollYProgress, [0, 0.7], ["0vw", "-6vw"]);
-  const rightX = useTransform(scrollYProgress, [0, 0.7], ["0vw", "6vw"]);
-  const color = useTransform(scrollYProgress, [0.25, 0.5], ["#1F3A2E", "#FBF9F5"]);
-  const ctaOpacity = useTransform(scrollYProgress, [0.65, 0.85], [0, 1]);
-  const ctaY = useTransform(scrollYProgress, [0.65, 0.85], [24, 0]);
-
-  if (reduceMotion) {
-    return (
-      <section className="bg-pearl px-3 pb-28 pt-6 sm:px-6 sm:pb-36">
-        <div className="bg-noir flex min-h-[80svh] flex-col items-center justify-center rounded-[32px] px-5 text-center text-ivory">
-          <h2 className="heading-xl">
-            Your ritual <em>awaits.</em>
-          </h2>
-          <Link href="/shop" className="btn-light mt-10 rounded-full px-9">
-            Shop the collection <ArrowRight size={15} strokeWidth={1.25} />
-          </Link>
-        </div>
-      </section>
-    );
-  }
-
   return (
-    <section ref={ref} className="bg-pearl h-[calc(240svh+7rem)] pb-28 sm:h-[calc(240svh+9rem)] sm:pb-36">
-      <div className="sticky top-0 h-[100svh] overflow-hidden">
-        <motion.div className="absolute inset-0 overflow-hidden bg-emerald-deep" style={{ clipPath: clip }}>
-          <motion.video
-            className="absolute inset-0 h-full w-full object-cover"
-            style={{ scale: filmScale }}
+    <section className="bg-pearl pb-12 sm:pb-16">
+      <div className="container-site">
+        <div className="relative isolate flex min-h-[420px] items-center overflow-hidden rounded-[28px] text-ivory shadow-[0_40px_80px_-50px_rgba(5,38,47,0.9)] ring-1 ring-gold/20 sm:min-h-[480px]">
+          <video
+            className="absolute inset-0 -z-10 h-full w-full object-cover motion-reduce:hidden"
             autoPlay
             muted
             loop
@@ -57,33 +18,29 @@ export default function ExpandingFilm() {
             aria-hidden="true"
           >
             <source src="/media/video/hero-wide.mp4" type="video/mp4" />
-          </motion.video>
-          <div className="absolute inset-0 bg-ink/35" />
-        </motion.div>
-
-        <div className="relative z-10 flex h-full flex-col items-center justify-center px-5 text-center">
-          <motion.p className="eyebrow mb-6" style={{ color }}>
-            Begin today
-          </motion.p>
-          <motion.h2
-            className="font-display text-[15vw] leading-[0.9] tracking-[-0.02em] sm:text-[11vw] lg:text-[9vw]"
-            style={{ color }}
-          >
-            <motion.span className="block" style={{ x: leftX }}>
-              Your ritual
-            </motion.span>
-            <motion.span className="block italic" style={{ x: rightX }}>
-              awaits.
-            </motion.span>
-          </motion.h2>
-          <motion.div className="mt-12 flex flex-wrap justify-center gap-4" style={{ opacity: ctaOpacity, y: ctaY }}>
-            <Link href="/shop" className="btn-light rounded-full px-9">
-              Shop the collection <ArrowRight size={15} strokeWidth={1.25} />
-            </Link>
-            <Link href="/collections/gifting" className="btn-outline-light rounded-full px-9">
-              Gift sets
-            </Link>
-          </motion.div>
+          </video>
+          <div className="absolute inset-0 -z-10 bg-[url('/media/video/hero-wide-poster.jpg')] bg-cover bg-center motion-safe:hidden" />
+          <div className="absolute inset-0 -z-10 bg-gradient-to-r from-[#062a34]/95 via-[#062a34]/70 to-[#062a34]/20" />
+          <div className="max-w-[640px] p-8 sm:p-12 lg:p-16">
+            <p className="eyebrow text-gold-soft">Begin today</p>
+            <h2 className="mt-3 font-display text-[48px] leading-[0.98] sm:text-[72px]">
+              Your ritual <em className="text-gold-soft">awaits.</em>
+            </h2>
+            <p className="mt-4 max-w-[440px] text-[16px] leading-[1.75] text-ivory/80">
+              Botanical care delivered to your door in 4–7 days — free on orders over ₹500.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link
+                href="/shop"
+                className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#f1e2bd] via-[#d9b97a] to-[#c59a55] px-8 py-4 text-[12px] font-semibold uppercase tracking-[0.18em] text-ink transition hover:brightness-105"
+              >
+                Shop the collection <ArrowRight size={15} strokeWidth={1.6} />
+              </Link>
+              <Link href="/collections/gifting" className="btn-outline-light rounded-full px-8">
+                Gift sets
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </section>

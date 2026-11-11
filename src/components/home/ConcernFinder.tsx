@@ -9,7 +9,8 @@ import { ArrowRight, Check, ShoppingBag, Sparkles } from "lucide-react";
 import type { Concern, Product } from "@/db/queries/products";
 import { formatPrice } from "@/lib/format";
 import { useCart } from "@/lib/cart-store";
-import { toCartItem } from "@/components/cart/AddToBag";
+import { flightImage, toCartItem } from "@/components/cart/AddToBag";
+import { flyToBasket } from "@/lib/flight-store";
 
 export type FinderProduct = Pick<Product, "id" | "slug" | "name" | "headline" | "images" | "variants"> & {
   concernSlugs: string[];
@@ -77,8 +78,13 @@ export default function ConcernFinder({ concerns, products }: { concerns: Concer
     setType(next);
     choose(concerns.find((concern) => concern.type === next)?.slug ?? "");
   };
-  const addRitual = () => {
-    matches.forEach((product) => product.variants[0] && add(toCartItem(product)));
+  const addRitual = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const button = event.currentTarget;
+    matches.forEach((product, index) => {
+      if (!product.variants[0]) return;
+      add(toCartItem(product));
+      setTimeout(() => flyToBasket(button, flightImage(product)), index * 140);
+    });
     setAdded(true);
     setTimeout(() => setAdded(false), 2400);
   };
@@ -151,7 +157,7 @@ export default function ConcernFinder({ concerns, products }: { concerns: Concer
                       className={clsx(
                         "flex w-full items-center gap-3 rounded-full border p-1.5 pr-4 text-left transition duration-500",
                         selected
-                          ? "border-emerald bg-emerald text-ivory shadow-[0_16px_34px_-20px_rgba(20,38,30,0.9)]"
+                          ? "border-emerald bg-emerald text-ivory shadow-[0_16px_34px_-20px_rgba(6,48,58,0.9)]"
                           : "border-ink/10 bg-ivory/70 text-emerald hover:border-emerald/40 hover:bg-ivory",
                       )}
                     >
@@ -171,7 +177,7 @@ export default function ConcernFinder({ concerns, products }: { concerns: Concer
       {/* Your ritual */}
       <div className="lg:sticky lg:top-28 lg:self-start">
         <StepLabel n={3}>Your ritual</StepLabel>
-        <div className="bg-noir mt-5 rounded-[30px] p-6 text-ivory shadow-[0_50px_100px_-50px_rgba(13,28,23,0.9)] sm:p-8">
+        <div className="bg-noir mt-5 rounded-[30px] p-6 text-ivory shadow-[0_50px_100px_-50px_rgba(5,38,47,0.9)] sm:p-8">
           <AnimatePresence mode="wait">
             <motion.div
               key={current?.slug ?? "none"}
