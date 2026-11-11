@@ -12,9 +12,9 @@ const PROMISES = [
 export default function PromiseStrip() {
   return (
     <section className="container-site">
-      <ul className="grid grid-cols-2 gap-3 rounded-[28px] bg-ivory p-4 shadow-[0_30px_60px_-46px_rgba(6,48,58,0.6)] ring-1 ring-ink/[0.06] sm:grid-cols-3 sm:p-5 lg:grid-cols-5">
+      <ul className="no-scrollbar flex snap-x gap-2 overflow-x-auto rounded-[28px] bg-ivory p-3 shadow-[0_30px_60px_-46px_rgba(6,48,58,0.6)] ring-1 ring-ink/[0.06] sm:grid sm:grid-cols-3 sm:gap-3 sm:overflow-visible sm:p-5 lg:grid-cols-5">
         {PROMISES.map(({ icon: Icon, title, text }) => (
-          <li key={title} className="flex items-center gap-3 rounded-[18px] p-3 transition hover:bg-mist">
+          <li key={title} className="flex w-[230px] shrink-0 snap-start items-center gap-3 rounded-[18px] p-3 transition hover:bg-mist sm:w-auto">
             <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#e6f3f2] to-[#cfe6e4] text-emerald">
               <Icon size={21} strokeWidth={1.3} />
             </span>

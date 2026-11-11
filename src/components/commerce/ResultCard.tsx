@@ -86,7 +86,11 @@ export function DeliveryLine({ price, className }: { price: number; className?: 
         </span>
       ) : (
         <span>
-          Delivery {when} · <span className="text-emerald">free over ₹500</span>
+          Delivery {when}
+          <span className="hidden sm:inline">
+            {" "}
+            · <span className="text-emerald">free over ₹500</span>
+          </span>
         </span>
       )}
     </p>

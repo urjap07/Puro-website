@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
@@ -71,6 +72,9 @@ export default function ShopResults({
   const [filters, setFilters] = useState<ResultFilters>(initial);
   const [layout, setLayout] = useState<"grid" | "list">("grid");
   const [sheet, setSheet] = useState(false);
+  // The sheet is portalled to <body>, which only exists in the browser.
+  const [portalReady, setPortalReady] = useState(false);
+  useEffect(() => setPortalReady(true), []);
 
   // A new search from the header arrives as new props; local filter clicks don't refetch.
   const initialKey = JSON.stringify(initial);
@@ -317,7 +321,9 @@ export default function ShopResults({
         )}
       </div>
 
-      {/* Phone filter sheet */}
+      {/* Phone filter sheet — rendered at page level so it covers the sticky header */}
+      {portalReady &&
+        createPortal(
       <AnimatePresence>
         {sheet && (
           <>
@@ -343,7 +349,9 @@ export default function ShopResults({
             </motion.div>
           </>
         )}
-      </AnimatePresence>
+      </AnimatePresence>,
+          document.body,
+        )}
     </div>
   );
 }

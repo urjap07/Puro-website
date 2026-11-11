@@ -132,7 +132,7 @@ export default function RitualScene({ steps }: { steps: RitualSceneStep[] }) {
           </div>
 
           {/* Stage */}
-          <div className="grid min-h-0 flex-1 items-center gap-[2.5vh] py-[2vh] md:grid-cols-[0.8fr_1.2fr] md:gap-10 lg:gap-16">
+          <div className="grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)] items-center gap-[2.5vh] py-[2vh] md:grid-cols-[0.8fr_1.2fr] md:gap-10 lg:gap-16">
             {/* Photograph, shown whole in a tall frame */}
             <div className="relative mx-auto aspect-[4/5] h-[28dvh] max-h-full overflow-hidden rounded-[24px] shadow-[0_50px_100px_-40px_rgba(0,0,0,0.9)] ring-1 ring-ivory/15 max-md:[@media(max-height:720px)]:h-[22dvh] md:h-[min(58dvh,640px)] md:rounded-[28px]">
               {steps.map((item, index) => (
@@ -153,7 +153,7 @@ export default function RitualScene({ steps }: { steps: RitualSceneStep[] }) {
             </div>
 
             {/* Words + product */}
-            <div className="relative grid min-h-0 items-center">
+            <div className="relative grid min-h-0 min-w-0 grid-cols-[minmax(0,1fr)] items-center">
               {steps.map((item, index) => {
                 const variant = item.product.variants[0];
                 const isActive = index === active;

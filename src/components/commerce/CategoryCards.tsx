@@ -17,12 +17,13 @@ export interface CategoryCard {
 /** Marketplace-style category cards: a title, a 2×2 of products, a link. */
 export default function CategoryCards({ cards }: { cards: CategoryCard[] }) {
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 xl:grid-cols-4">
+    // On phones the cards sit side by side and swipe instead of stacking into a very long column.
+    <div className="no-scrollbar -mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-5 sm:overflow-visible sm:px-0 sm:pb-0 xl:grid-cols-4">
       {cards.map((card) => (
         <article
           key={card.title}
           className={clsx(
-            "group/card flex flex-col rounded-[26px] p-5 shadow-[0_30px_60px_-40px_rgba(6,48,58,0.6)] ring-1 transition duration-500 hover:-translate-y-1 hover:shadow-[0_40px_70px_-36px_rgba(6,48,58,0.7)]",
+            "group/card flex w-[82%] shrink-0 snap-center flex-col rounded-[26px] p-5 sm:w-auto shadow-[0_30px_60px_-40px_rgba(6,48,58,0.6)] ring-1 transition duration-500 hover:-translate-y-1 hover:shadow-[0_40px_70px_-36px_rgba(6,48,58,0.7)]",
             card.dark ? "bg-noir text-ivory ring-gold/25" : "bg-ivory ring-ink/[0.06]",
           )}
         >

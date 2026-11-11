@@ -336,14 +336,15 @@ export default function CartPage({ products }: { products: Product[] }) {
                                   <Plus size={14} strokeWidth={1.6} />
                                 </button>
                               </div>
-                              <span className="h-4 w-px bg-ink/15" />
-                              <button type="button" onClick={() => deleteItem(item)} className={linkAction}>
-                                Delete
-                              </button>
-                              <span className="h-4 w-px bg-ink/15" />
-                              <button type="button" onClick={() => saveForLater(item)} className={linkAction}>
-                                Save for later
-                              </button>
+                              <span className="flex items-center gap-4">
+                                <button type="button" onClick={() => deleteItem(item)} className={linkAction}>
+                                  Delete
+                                </button>
+                                <span className="h-4 w-px bg-ink/15" />
+                                <button type="button" onClick={() => saveForLater(item)} className={linkAction}>
+                                  Save for later
+                                </button>
+                              </span>
                             </div>
                           </div>
                         </motion.li>
