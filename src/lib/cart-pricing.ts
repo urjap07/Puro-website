@@ -1,5 +1,7 @@
 import type { RowDataPacket } from "mysql2";
 import pool from "@/lib/db";
+import { hasDatabase } from "@/lib/data-source";
+import { SNAPSHOT } from "@/db/snapshot";
 
 /**
  * Server-side bag pricing. The browser keeps a copy of the bag for speed, but
@@ -86,7 +88,27 @@ export async function quoteCart(request: QuoteRequestLine[]): Promise<CartQuote>
 
   const ids = [...wanted.keys()];
   const rows = new Map<number, VariantRow>();
-  if (ids.length) {
+  if (ids.length && !hasDatabase()) {
+    // No database configured: price from the bundled catalogue snapshot.
+    for (const product of SNAPSHOT.products) {
+      for (const variant of product.variants) {
+        if (!ids.includes(variant.id)) continue;
+        rows.set(variant.id, {
+          variant_id: variant.id,
+          product_id: product.id,
+          slug: product.slug,
+          name: product.name,
+          variant_name: variant.name,
+          price: String(variant.price),
+          compare_at_price: variant.compareAtPrice === null ? null : String(variant.compareAtPrice),
+          stock_quantity: variant.stockQuantity,
+          variant_active: 1,
+          product_active: 1,
+          image_url: product.images[0]?.imageUrl ?? null,
+        } as VariantRow);
+      }
+    }
+  } else if (ids.length) {
     const [found] = await pool.query<VariantRow[]>(
       `
         SELECT

@@ -1,0 +1,19 @@
+# Netlify build settings. Netlify detects Next.js and adds its Next.js
+# runtime (@netlify/plugin-nextjs) automatically: pages and API routes run
+# as Netlify Functions, images go through Netlify's Image CDN.
+#
+# Environment variables (set in Netlify: Site configuration → Environment variables):
+#   DATABASE_URL          mysql://USER:PASSWORD@HOST:PORT/DATABASE   (or DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME)
+#   DB_SSL                true   (most hosted MySQL providers require TLS)
+#   DB_SSL_CA             optional: the provider's CA certificate, if it gives you one
+#   NEXT_PUBLIC_SITE_URL  https://your-domain   (canonical URLs, sitemap, structured data)
+# The database must be reachable during the build too: the sitemap and a few
+# pages are pre-rendered from it.
+
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "22"
+  NEXT_TELEMETRY_DISABLED = "1"

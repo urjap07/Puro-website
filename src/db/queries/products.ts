@@ -1,6 +1,8 @@
 import { cache } from "react";
 import { RowDataPacket } from "mysql2";
 import pool from "@/lib/db";
+import { hasDatabase } from "@/lib/data-source";
+import { SNAPSHOT } from "@/db/snapshot";
 
 /* --------------------------------
    Database row types
@@ -365,6 +367,7 @@ async function attachProductRelations(
 --------------------------------- */
 
 export const getActiveProducts = cache(async (): Promise<Product[]> => {
+    if (!hasDatabase()) return SNAPSHOT.products;
     const [products] = await pool.query<ProductRow[]>(
         `
       SELECT
@@ -410,6 +413,7 @@ export const getActiveProducts = cache(async (): Promise<Product[]> => {
 export const getProductBySlug = cache(async (
     slug: string
 ): Promise<Product | null> => {
+    if (!hasDatabase()) return SNAPSHOT.products.find((product) => product.slug === slug) ?? null;
     const [products] = await pool.query<ProductRow[]>(
         `
       SELECT
@@ -487,6 +491,7 @@ interface IngredientRow extends RowDataPacket {
 }
 
 export const getConcerns = cache(async (): Promise<Concern[]> => {
+    if (!hasDatabase()) return SNAPSHOT.concerns;
     const [concerns] = await pool.query<(Concern & RowDataPacket)[]>(
         `SELECT id, name, slug, description, type FROM concerns ORDER BY id ASC`
     );
@@ -501,6 +506,7 @@ export const getConcerns = cache(async (): Promise<Concern[]> => {
 });
 
 export const getIngredients = cache(async (): Promise<Ingredient[]> => {
+    if (!hasDatabase()) return SNAPSHOT.ingredients;
     const [ingredients] = await pool.query<IngredientRow[]>(
         `SELECT id, name, slug, benefits, image_url FROM ingredients ORDER BY id ASC`
     );
@@ -577,6 +583,7 @@ const REVIEW_SELECT = `
 
 export const getProductReviews = cache(
     async (productId: number): Promise<Review[]> => {
+        if (!hasDatabase()) return SNAPSHOT.reviews.filter((review) => review.productId === productId);
         const [rows] = await pool.query<ReviewRow[]>(
             `${REVIEW_SELECT} AND r.product_id = ? ORDER BY r.created_at DESC`,
             [productId]
@@ -585,9 +592,22 @@ export const getProductReviews = cache(
     }
 );
 
+/** Every approved review, newest first (used to export the catalogue snapshot). */
+export const getAllReviews = cache(async (): Promise<Review[]> => {
+    if (!hasDatabase()) return SNAPSHOT.reviews;
+    const [rows] = await pool.query<ReviewRow[]>(`${REVIEW_SELECT} ORDER BY r.created_at DESC, r.id DESC`);
+    return rows.map(toReview);
+});
+
 /** Highest-rated, most detailed reviews for testimonials. */
 export const getFeaturedReviews = cache(
     async (limit = 6): Promise<Review[]> => {
+        if (!hasDatabase()) {
+            return SNAPSHOT.reviews
+                .filter((review) => review.rating === 5)
+                .sort((a, b) => (b.comment?.length ?? 0) - (a.comment?.length ?? 0))
+                .slice(0, limit);
+        }
         const [rows] = await pool.query<ReviewRow[]>(
             `${REVIEW_SELECT} AND r.rating = 5 ORDER BY CHAR_LENGTH(r.comment) DESC LIMIT ?`,
             [limit]

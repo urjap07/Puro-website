@@ -35,12 +35,16 @@ function connectionOptions(): mysql.PoolOptions {
   };
 }
 
+/** Running as serverless functions (Vercel, or Netlify, whose functions run on AWS Lambda)? */
+const SERVERLESS = Boolean(process.env.VERCEL || process.env.NETLIFY || process.env.AWS_LAMBDA_FUNCTION_NAME);
+
 function createPool() {
   return mysql.createPool({
     ...connectionOptions(),
     waitForConnections: true,
-    // Serverless functions each open their own pool; keep it small.
-    connectionLimit: process.env.VERCEL ? 3 : 10,
+    // Serverless functions each open their own pool; keep it small so the
+    // database's connection limit isn't exhausted. DB_POOL_SIZE overrides.
+    connectionLimit: Number(process.env.DB_POOL_SIZE) || (SERVERLESS ? 3 : 10),
     // Close connections that sit idle, so stale pools never pile up.
     maxIdle: 2,
     idleTimeout: 30_000,

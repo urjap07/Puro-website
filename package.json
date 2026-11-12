@@ -9,6 +9,7 @@
     "lint": "eslint",
     "db:seed": "node scripts/seed-catalogue.mjs",
     "db:ingredients": "node scripts/link-ingredients.mjs",
+    "db:snapshot": "node scripts/export-snapshot.mjs",
     "images": "node scripts/optimize-images.mjs"
   },
   "dependencies": {

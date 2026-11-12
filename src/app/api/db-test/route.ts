@@ -4,7 +4,14 @@ import pool from "@/lib/db";
 
 export const runtime = "nodejs";
 
+/**
+ * Development-only connection check. In production it answers 404, so the
+ * database name, user, version and tables are never exposed publicly.
+ */
 export async function GET() {
+  if (process.env.NODE_ENV === "production") {
+    return NextResponse.json({ success: false, message: "Not found" }, { status: 404 });
+  }
   try {
     const [connection] = await pool.query(
       `SELECT
