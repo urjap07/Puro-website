@@ -17,3 +17,9 @@
 [build.environment]
   NODE_VERSION = "22"
   NEXT_TELEMETRY_DISABLED = "1"
+
+# Use Netlify's Next.js runtime explicitly (pinned in devDependencies). It
+# turns the .next build into Netlify Functions; without it Netlify would
+# publish the raw .next folder and show its "Page not found" page.
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
