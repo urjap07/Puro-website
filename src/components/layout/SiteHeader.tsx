@@ -6,7 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import { AnimatePresence, motion, useAnimationControls } from "framer-motion";
-import { ArrowUpRight, ChevronDown, Heart, Menu, Search, ShoppingBag, X } from "lucide-react";
+import { ArrowUpRight, ChevronDown, Heart, Menu, Search, ShoppingBag, UserRound, X } from "lucide-react";
 import { useFlights } from "@/lib/flight-store";
 import { cartCount, useCart } from "@/lib/cart-store";
 import { useWishlist } from "@/lib/wishlist-store";
@@ -251,10 +251,13 @@ export default function SiteHeader({ concerns = [] }: { concerns?: Concern[] }) 
             <button type="button" onClick={() => setSearchOpen(true)} aria-label="Search" className={clsx(iconButton, "hidden sm:flex")}>
               <Search size={19} strokeWidth={1.3} />
             </button>
-            <button type="button" onClick={() => openBag("saved")} aria-label={`Wishlist, ${savedCount} saved`} className={iconButton}>
-              <Heart size={19} strokeWidth={1.3} className={savedCount ? "fill-current" : ""} />
+            <Link href="/account" aria-label="Your account" className={clsx(iconButton, "hidden sm:flex")}>
+              <UserRound size={19} strokeWidth={1.3} />
+            </Link>
+            <Link href="/wishlist" aria-label={`Wishlist, ${savedCount} saved`} className={iconButton}>
+              <Heart size={19} strokeWidth={1.3} className={savedCount ? "fill-rose-600 text-rose-600" : ""} />
               {savedCount > 0 && <span className={badge}>{savedCount}</span>}
-            </button>
+            </Link>
             <motion.button
               type="button"
               data-bag-target

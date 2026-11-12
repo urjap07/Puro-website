@@ -6,7 +6,9 @@ import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import clsx from "clsx";
 import { Heart, Minus, Plus, ShoppingBag, Truck, X } from "lucide-react";
-import { FREE_DELIVERY_THRESHOLD, cartCount, cartSubtotal, useCart } from "@/lib/cart-store";
+import { FREE_DELIVERY_THRESHOLD, useCart } from "@/lib/cart-store";
+import { useCartQuote, useCartQuoteSync } from "@/lib/cart-quote";
+import { BagNotices, LineFlag, PriceCheckStatus, useBagTotals, useLineMax } from "./BagCheck";
 import { useWishlist } from "@/lib/wishlist-store";
 import { destinationLabel, useDeliveryEstimate } from "@/lib/delivery";
 import { cutoutFor } from "@/lib/cutouts";
@@ -70,13 +72,47 @@ function DeliveryBar({ subtotal }: { subtotal: number }) {
   );
 }
 
+/** "+" that stops at what's in stock. */
+function IncreaseButton({
+  variantId,
+  quantity,
+  name,
+  onIncrease,
+  children,
+}: {
+  variantId: number;
+  quantity: number;
+  name: string;
+  onIncrease: () => void;
+  children: React.ReactNode;
+}) {
+  const max = useLineMax(variantId);
+  return (
+    <button
+      type="button"
+      disabled={quantity >= max}
+      className="flex h-full w-10 items-center justify-center text-emerald hover:text-ink disabled:cursor-not-allowed disabled:opacity-30"
+      onClick={onIncrease}
+      aria-label={`Increase quantity of ${name}`}
+    >
+      {children}
+    </button>
+  );
+}
+
 export default function CartDrawer() {
   const { items, isOpen, view, setView, close, setQuantity, remove, add } = useCart();
   const saved = useWishlist((state) => state.items);
   const unsave = useWishlist((state) => state.remove);
-  const subtotal = cartSubtotal(items);
-  const count = cartCount(items);
+  const { subtotal, count } = useBagTotals(items);
   const { freeDeliveryApplies } = useDeliveryEstimate();
+  const refreshQuote = useCartQuote((state) => state.refresh);
+
+  // Prices, stock and totals are always confirmed by the server.
+  useCartQuoteSync();
+  useEffect(() => {
+    if (isOpen) refreshQuote();
+  }, [isOpen, refreshQuote]);
 
   useEffect(() => {
     useCart.persist.rehydrate();
@@ -161,6 +197,7 @@ export default function CartDrawer() {
               ) : (
                 <>
                   <DeliveryBar subtotal={subtotal} />
+                  <BagNotices className="mx-5 mt-3" />
                   <ul data-lenis-prevent className="mt-3 flex-1 space-y-3 overflow-y-auto px-5 py-2">
                     <AnimatePresence initial={false}>
                       {items.map((item) => (
@@ -191,6 +228,9 @@ export default function CartDrawer() {
                               {formatPrice(item.price)}
                               {item.variantName !== "Gift box" && ` · ${item.variantName}`}
                             </p>
+                            <div className="mt-1.5">
+                              <LineFlag variantId={item.variantId} />
+                            </div>
                             <div className="mt-auto flex items-center justify-between pr-1 pt-3">
                               <div className="flex h-10 items-center rounded-full bg-white/50 shadow-[inset_0_1px_0_rgba(255,255,255,0.95),inset_0_0_0_1px_rgba(255,255,255,0.6),0_6px_14px_-10px_rgba(14,39,42,0.5)] backdrop-blur-md">
                                 <button
@@ -202,14 +242,9 @@ export default function CartDrawer() {
                                   <Minus size={13} strokeWidth={1.4} />
                                 </button>
                                 <span className="w-6 text-center text-[14px] tabular-nums">{item.quantity}</span>
-                                <button
-                                  type="button"
-                                  className="flex h-full w-10 items-center justify-center text-emerald hover:text-ink"
-                                  onClick={() => setQuantity(item.variantId, item.quantity + 1)}
-                                  aria-label={`Increase quantity of ${item.name}`}
-                                >
+                                <IncreaseButton variantId={item.variantId} quantity={item.quantity} name={item.name} onIncrease={() => setQuantity(item.variantId, item.quantity + 1)}>
                                   <Plus size={13} strokeWidth={1.4} />
-                                </button>
+                                </IncreaseButton>
                               </div>
                               <button
                                 type="button"
@@ -242,6 +277,7 @@ export default function CartDrawer() {
                       <span className="text-[12px] font-medium uppercase tracking-[0.22em] text-stone">Total</span>
                       <span className="font-display text-[32px] leading-none text-midnight">{formatPrice(subtotal)}</span>
                     </div>
+                    <PriceCheckStatus className="mt-2 justify-end" />
                     <button type="button" disabled className="btn-primary mt-5 w-full cursor-not-allowed opacity-70">
                       Checkout — coming soon
                     </button>
@@ -314,6 +350,11 @@ export default function CartDrawer() {
                     );
                   })}
                 </AnimatePresence>
+                <li className="pt-1 text-center">
+                  <Link href="/wishlist" onClick={close} className="btn-glass !px-6 !py-3 !text-[11px]">
+                    <Heart size={14} strokeWidth={1.6} /> View full wishlist
+                  </Link>
+                </li>
               </ul>
             )}
           </motion.aside>

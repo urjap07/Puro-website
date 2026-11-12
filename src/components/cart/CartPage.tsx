@@ -7,7 +7,9 @@ import { AnimatePresence, motion } from "framer-motion";
 import clsx from "clsx";
 import { ChevronRight, Gift, HandHeart, Heart, Lock, MapPin, Minus, Plus, Rabbit, ShoppingBag, Trash2, Truck, Undo2 } from "lucide-react";
 import type { Product } from "@/db/queries/products";
-import { type CartItem, FREE_DELIVERY_THRESHOLD, cartCount, cartSubtotal, useCart } from "@/lib/cart-store";
+import { type CartItem, FREE_DELIVERY_THRESHOLD, useCart } from "@/lib/cart-store";
+import { useCartQuote } from "@/lib/cart-quote";
+import { BagNotices, PriceCheckStatus, useBagTotals } from "./BagCheck";
 import { type SavedItem, useWishlist } from "@/lib/wishlist-store";
 import { INDIA_DAYS, destinationLabel, useDeliveryEstimate } from "@/lib/delivery";
 import { cutoutFor } from "@/lib/cutouts";
@@ -70,8 +72,10 @@ export default function CartPage({ products }: { products: Product[] }) {
   const { destination, dates, zone, freeDeliveryApplies } = useDeliveryEstimate();
   const [undo, setUndo] = useState<{ item: CartItem; savedForLater: boolean } | null>(null);
 
-  const count = cartCount(items);
-  const subtotal = cartSubtotal(items);
+  // Totals confirmed by the server (the bag drawer keeps them in sync).
+  const { count, subtotal } = useBagTotals(items);
+  const refreshQuote = useCartQuote((state) => state.refresh);
+  useEffect(() => refreshQuote(), [refreshQuote]);
   const remaining = Math.max(0, FREE_DELIVERY_THRESHOLD - subtotal);
   const variants = useMemo(() => new Map(products.flatMap((p) => p.variants.map((v) => [v.id, { product: p, variant: v }] as const))), [products]);
 
@@ -178,6 +182,7 @@ export default function CartPage({ products }: { products: Product[] }) {
                   <dd className="font-display text-[30px] leading-none text-midnight">{formatPrice(subtotal)}</dd>
                 </div>
               </dl>
+              {items.length > 0 && <PriceCheckStatus className="mt-2 justify-end" />}
 
               <button type="button" disabled className="btn-iris mt-5 h-12 w-full cursor-not-allowed !gap-2 !py-0 !font-semibold !tracking-[0.16em] opacity-75">
                 <Lock size={15} strokeWidth={1.6} /> Checkout — coming soon
@@ -275,6 +280,8 @@ export default function CartPage({ products }: { products: Product[] }) {
                   </Link>
                 </div>
               ) : (
+                <>
+                <BagNotices className="mt-5" />
                 <ul>
                   <AnimatePresence initial={false}>
                     {items.map((item) => {
@@ -355,6 +362,7 @@ export default function CartPage({ products }: { products: Product[] }) {
                     })}
                   </AnimatePresence>
                 </ul>
+                </>
               )}
 
               {ready && items.length > 0 && (

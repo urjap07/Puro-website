@@ -36,7 +36,7 @@ export default function WishButton({ product, className }: { product: WishProduc
       }}
       className={twMerge(clsx(
         "relative flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-white/80 to-white/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.95),inset_0_0_0_1px_rgba(255,255,255,0.6),0_8px_18px_-10px_rgba(14,39,42,0.5)] backdrop-blur-xl backdrop-saturate-[1.8] transition duration-300 hover:scale-110",
-        saved ? "text-blush-deep" : "text-graphite/75 hover:text-blush-deep",
+        saved ? "text-rose-600" : "text-graphite/75 hover:text-rose-600",
         className,
       ))}
     >
@@ -47,7 +47,7 @@ export default function WishButton({ product, className }: { product: WishProduc
         {saved && (
           <motion.span
             key="burst"
-            className="pointer-events-none absolute inset-0 rounded-full ring-2 ring-blush"
+            className="pointer-events-none absolute inset-0 rounded-full ring-2 ring-rose-400"
             initial={{ scale: 0.6, opacity: 0.9 }}
             animate={{ scale: 1.8, opacity: 0 }}
             exit={{ opacity: 0 }}

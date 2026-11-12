@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronRight, HeartHandshake, X } from "lucide-react";
+import { ChevronRight, Heart, HeartHandshake, UserRound, X } from "lucide-react";
 import type { Concern } from "@/db/queries/products";
 import { COLLECTIONS } from "@/lib/collections";
 import { SITE } from "@/lib/site";
@@ -108,6 +108,21 @@ export default function AllMenu({ open, onClose, concerns }: { open: boolean; on
               ))}
 
               <div className="mx-3 mt-4 h-px bg-gradient-to-r from-transparent via-midnight/15 to-transparent" />
+              <p className={heading}>Your PURO</p>
+              <Link href="/account" onClick={onClose} className={row}>
+                <span className="flex items-center gap-2">
+                  <UserRound size={17} strokeWidth={1.3} className="text-aqua-deep" /> Your account
+                </span>
+                <ChevronRight size={16} strokeWidth={1.3} className="text-stone" />
+              </Link>
+              <Link href="/wishlist" onClick={onClose} className={row}>
+                <span className="flex items-center gap-2">
+                  <Heart size={17} strokeWidth={1.3} className="text-quartz-deep" /> Wishlist
+                </span>
+                <ChevronRight size={16} strokeWidth={1.3} className="text-stone" />
+              </Link>
+
+              <div className="mx-6 mt-4 h-px bg-ink/10" />
               <p className={heading}>The PURO world</p>
               <Link href="/our-story" onClick={onClose} className={`${row} font-medium !text-midnight`}>
                 <span className="flex items-center gap-2">
