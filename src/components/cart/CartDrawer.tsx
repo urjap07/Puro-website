@@ -11,13 +11,14 @@ import { useWishlist } from "@/lib/wishlist-store";
 import { destinationLabel, useDeliveryEstimate } from "@/lib/delivery";
 import { cutoutFor } from "@/lib/cutouts";
 import { formatPrice } from "@/lib/format";
+import { PROGRESS_FILL, PROGRESS_TRACK, WELL_SHADOW, wellTint } from "./wellTint";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 function Thumb({ slug, image, name }: { slug: string; image: string | null; name: string }) {
   const cutout = cutoutFor(slug);
   return (
-    <span className="relative block h-[104px] w-[86px] shrink-0 overflow-hidden rounded-[16px] bg-[radial-gradient(ellipse_80%_65%_at_50%_45%,#ffffff_0%,#f3ece1_60%,#e6dccb_100%)]">
+    <span className={clsx("relative block h-[104px] w-[86px] shrink-0 overflow-hidden rounded-[18px]", wellTint(slug), WELL_SHADOW)}>
       {cutout ? (
         <Image src={cutout} alt={name} fill sizes="86px" className="object-contain p-2.5" />
       ) : (
@@ -32,9 +33,9 @@ function DeliveryBar({ subtotal }: { subtotal: number }) {
   const { destination, zone, dates, freeDeliveryApplies } = useDeliveryEstimate();
   if (!freeDeliveryApplies && destination && zone) {
     return (
-      <div className="mx-6 mt-5 rounded-[18px] border border-emerald/10 bg-ivory/80 p-4 text-[14px] text-ink">
+      <div className="glass tint-aqua mx-5 mt-5 rounded-[22px] p-4 text-[14px] text-ink">
         <p className="flex items-center gap-2.5">
-          <Truck size={17} strokeWidth={1.3} className="text-emerald" />
+          <Truck size={17} strokeWidth={1.3} className="text-aqua-deep" />
           <span>
             Shipping to <strong className="font-semibold">{destinationLabel(destination)}</strong> · arrives {dates}
           </span>
@@ -46,20 +47,20 @@ function DeliveryBar({ subtotal }: { subtotal: number }) {
   const remaining = Math.max(0, FREE_DELIVERY_THRESHOLD - subtotal);
   const progress = Math.min(1, subtotal / FREE_DELIVERY_THRESHOLD);
   return (
-    <div className="mx-6 mt-5 rounded-[18px] border border-emerald/10 bg-ivory/80 p-4">
+    <div className="glass tint-saffron mx-5 mt-5 rounded-[22px] p-4">
       <p className="flex items-center gap-2.5 text-[14px] text-ink">
-        <Truck size={17} strokeWidth={1.3} className="text-emerald" />
+        <Truck size={17} strokeWidth={1.3} className="text-saffron-deep" />
         {remaining > 0 ? (
           <span>
-            You&rsquo;re <strong className="font-semibold text-emerald">{formatPrice(remaining)}</strong> away from free delivery
+            You&rsquo;re <strong className="font-semibold text-midnight">{formatPrice(remaining)}</strong> away from free delivery
           </span>
         ) : (
-          <span className="font-medium text-emerald">You&rsquo;ve unlocked free delivery</span>
+          <span className="font-medium text-midnight">You&rsquo;ve unlocked free delivery</span>
         )}
       </p>
-      <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-emerald/10">
+      <div className={clsx("mt-3 h-2 overflow-hidden rounded-full", PROGRESS_TRACK)}>
         <motion.div
-          className="h-full rounded-full bg-gradient-to-r from-emerald via-gold to-gold-soft"
+          className={clsx("h-full rounded-full shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]", PROGRESS_FILL)}
           initial={false}
           animate={{ width: `${progress * 100}%` }}
           transition={{ duration: 0.8, ease: EASE }}
@@ -98,7 +99,7 @@ export default function CartDrawer() {
       {isOpen && (
         <>
           <motion.div
-            className="fixed inset-0 z-[80] bg-ink/45 backdrop-blur-[3px]"
+            className="fixed inset-0 z-[80] bg-[radial-gradient(90%_70%_at_100%_50%,rgba(14,39,42,0.45),rgba(14,39,42,0.25))] backdrop-blur-[6px] backdrop-saturate-150"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -109,26 +110,26 @@ export default function CartDrawer() {
             role="dialog"
             aria-modal="true"
             aria-label="Your bag"
-            className="bg-pearl !fixed inset-y-0 right-0 z-[90] flex w-full max-w-[460px] flex-col shadow-[-40px_0_80px_-40px_rgba(0,0,0,0.5)] sm:inset-y-3 sm:right-3 sm:rounded-[28px]"
+            className="glass-strong !fixed inset-y-2 right-2 left-2 z-[90] flex flex-col overflow-hidden rounded-[28px] sm:inset-y-3 sm:left-auto sm:right-3 sm:w-[calc(100%-24px)] sm:max-w-[460px] sm:rounded-[32px]"
             initial={{ x: "105%" }}
             animate={{ x: 0 }}
             exit={{ x: "105%" }}
             transition={{ duration: 0.6, ease: EASE }}
           >
-            <header className="flex items-center justify-between px-6 pt-6">
-              <div className="relative grid grid-cols-2 rounded-full border border-emerald/15 bg-ivory/70 p-1">
+            <header className="flex items-center justify-between gap-3 px-5 pt-5 sm:px-6 sm:pt-6">
+              <div className="relative grid grid-cols-2 rounded-full bg-white/40 p-1 shadow-[inset_0_1px_2px_rgba(14,39,42,0.12),inset_0_0_0_1px_rgba(255,255,255,0.6)]">
                 {(["bag", "saved"] as const).map((tab) => (
                   <button
                     key={tab}
                     type="button"
                     onClick={() => setView(tab)}
                     className={clsx(
-                      "relative z-10 flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-[12px] font-medium uppercase tracking-[0.18em] transition-colors duration-500",
-                      view === tab ? "text-ivory" : "text-emerald",
+                      "relative z-10 flex items-center justify-center gap-2 rounded-full px-4 py-2.5 text-[12px] font-medium uppercase tracking-[0.18em] transition-colors duration-500 sm:px-5",
+                      view === tab ? "text-midnight-deep" : "text-midnight/80 hover:text-midnight",
                     )}
                   >
                     {view === tab && (
-                      <motion.span layoutId="bag-tab" className="absolute inset-0 -z-10 rounded-full bg-emerald" transition={{ duration: 0.45, ease: EASE }} />
+                      <motion.span layoutId="bag-tab" className="absolute inset-0 -z-10 rounded-full bg-[linear-gradient(180deg,rgba(255,255,255,0.55),rgba(255,255,255,0)_55%),linear-gradient(110deg,#f6e3c8_0%,#f2c9c4_30%,#d9c8ec_62%,#bfe2e3_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.95),0_8px_18px_-10px_rgba(125,104,168,0.6)]" transition={{ duration: 0.45, ease: EASE }} />
                     )}
                     {tab === "bag" ? <ShoppingBag size={14} strokeWidth={1.5} /> : <Heart size={14} strokeWidth={1.5} />}
                     {tab === "bag" ? `Bag (${count})` : `Saved (${saved.length})`}
@@ -139,17 +140,19 @@ export default function CartDrawer() {
                 type="button"
                 onClick={close}
                 aria-label="Close"
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-ink/15 text-ink transition hover:bg-ink hover:text-ivory"
+                className="btn-glass h-11 w-11 shrink-0 !p-0"
               >
-                <X size={18} strokeWidth={1.2} />
+                <X size={18} strokeWidth={1.3} />
               </button>
             </header>
 
             {view === "bag" ? (
               items.length === 0 ? (
                 <div className="flex flex-1 flex-col items-center justify-center px-10 text-center">
-                  <ShoppingBag size={34} strokeWidth={0.9} className="text-emerald/50" />
-                  <p className="mt-6 font-display text-[34px] leading-tight text-emerald">Your basket is empty</p>
+                  <span className="glass tint-quartz flex h-20 w-20 items-center justify-center rounded-full">
+                    <ShoppingBag size={30} strokeWidth={1} className="text-quartz-deep" />
+                  </span>
+                  <p className="mt-7 font-display text-[34px] leading-tight text-midnight">Your basket is empty</p>
                   <p className="mt-3 text-[15px] leading-7 text-stone">Wander the shelves and pick a ritual or two.</p>
                   <Link href="/shop" onClick={close} className="btn-primary mt-8 rounded-full px-9">
                     Browse the shelves
@@ -158,7 +161,7 @@ export default function CartDrawer() {
               ) : (
                 <>
                   <DeliveryBar subtotal={subtotal} />
-                  <ul data-lenis-prevent className="mt-2 flex-1 overflow-y-auto px-6">
+                  <ul data-lenis-prevent className="mt-3 flex-1 space-y-3 overflow-y-auto px-5 py-2">
                     <AnimatePresence initial={false}>
                       {items.map((item) => (
                         <motion.li
@@ -168,7 +171,7 @@ export default function CartDrawer() {
                           animate={{ opacity: 1, x: 0 }}
                           exit={{ opacity: 0, x: -30, height: 0 }}
                           transition={{ duration: 0.4, ease: EASE }}
-                          className="flex gap-4 border-b border-ink/10 py-5"
+                          className="glass flex gap-4 rounded-[24px] p-3"
                         >
                           <Link href={`/products/${item.slug}`} onClick={close}>
                             <Thumb slug={item.slug} image={item.image} name={item.name} />
@@ -178,7 +181,7 @@ export default function CartDrawer() {
                               <Link
                                 href={`/products/${item.slug}`}
                                 onClick={close}
-                                className="font-display text-[21px] leading-[1.1] text-ink hover:text-emerald"
+                                className="font-display text-[21px] leading-[1.1] text-ink transition hover:text-midnight-soft"
                               >
                                 {item.name}
                               </Link>
@@ -188,8 +191,8 @@ export default function CartDrawer() {
                               {formatPrice(item.price)}
                               {item.variantName !== "Gift box" && ` · ${item.variantName}`}
                             </p>
-                            <div className="mt-auto flex items-center justify-between pt-3">
-                              <div className="flex h-10 items-center rounded-full border border-ink/15 bg-ivory/70">
+                            <div className="mt-auto flex items-center justify-between pr-1 pt-3">
+                              <div className="flex h-10 items-center rounded-full bg-white/50 shadow-[inset_0_1px_0_rgba(255,255,255,0.95),inset_0_0_0_1px_rgba(255,255,255,0.6),0_6px_14px_-10px_rgba(14,39,42,0.5)] backdrop-blur-md">
                                 <button
                                   type="button"
                                   className="flex h-full w-10 items-center justify-center text-emerald hover:text-ink"
@@ -211,7 +214,7 @@ export default function CartDrawer() {
                               <button
                                 type="button"
                                 onClick={() => remove(item.variantId)}
-                                className="text-[11px] uppercase tracking-[0.2em] text-stone underline-offset-4 hover:text-emerald hover:underline"
+                                className="rounded-full px-2 py-1 text-[11px] uppercase tracking-[0.2em] text-stone underline-offset-4 hover:text-midnight hover:underline"
                               >
                                 Remove
                               </button>
@@ -222,7 +225,7 @@ export default function CartDrawer() {
                     </AnimatePresence>
                   </ul>
 
-                  <footer className="border-t border-ink/10 px-6 pb-6 pt-5">
+                  <footer className="glass tint-champagne m-3 mt-2 rounded-[26px] px-5 pb-5 pt-5">
                     <div className="space-y-1.5 text-[14px] text-stone">
                       <div className="flex justify-between">
                         <span>Subtotal</span>
@@ -235,25 +238,25 @@ export default function CartDrawer() {
                         </span>
                       </div>
                     </div>
-                    <div className="mt-4 flex items-baseline justify-between border-t border-ink/10 pt-4">
+                    <div className="mt-4 flex items-baseline justify-between border-t border-white/70 pt-4">
                       <span className="text-[12px] font-medium uppercase tracking-[0.22em] text-stone">Total</span>
-                      <span className="font-display text-[32px] leading-none text-emerald">{formatPrice(subtotal)}</span>
+                      <span className="font-display text-[32px] leading-none text-midnight">{formatPrice(subtotal)}</span>
                     </div>
-                    <button type="button" disabled className="btn-primary mt-5 w-full cursor-not-allowed rounded-full opacity-60">
+                    <button type="button" disabled className="btn-primary mt-5 w-full cursor-not-allowed opacity-70">
                       Checkout — coming soon
                     </button>
                     <div className="mt-2 flex gap-2">
                       <Link
                         href="/cart"
                         onClick={close}
-                        className="flex-1 rounded-full border border-emerald/25 py-3 text-center text-[11px] font-medium uppercase tracking-[0.2em] text-emerald transition hover:border-emerald hover:bg-emerald hover:text-ivory"
+                        className="btn-glass flex-1 !px-4 !py-3 !text-[11px]"
                       >
                         View full bag
                       </Link>
                       <button
                         type="button"
                         onClick={close}
-                        className="flex-1 py-3 text-[11px] uppercase tracking-[0.22em] text-emerald hover:text-ink"
+                        className="flex-1 rounded-full py-3 text-[11px] font-medium uppercase tracking-[0.2em] text-midnight transition hover:bg-white/40"
                       >
                         Keep shopping
                       </button>
@@ -263,12 +266,14 @@ export default function CartDrawer() {
               )
             ) : saved.length === 0 ? (
               <div className="flex flex-1 flex-col items-center justify-center px-10 text-center">
-                <Heart size={34} strokeWidth={0.9} className="text-emerald/50" />
-                <p className="mt-6 font-display text-[34px] leading-tight text-emerald">Nothing saved yet</p>
+                <span className="glass tint-lilac flex h-20 w-20 items-center justify-center rounded-full">
+                  <Heart size={30} strokeWidth={1} className="text-lilac-deep" />
+                </span>
+                <p className="mt-7 font-display text-[34px] leading-tight text-midnight">Nothing saved yet</p>
                 <p className="mt-3 text-[15px] leading-7 text-stone">Tap the heart on any product to keep it here for later.</p>
               </div>
             ) : (
-              <ul data-lenis-prevent className="mt-4 flex-1 overflow-y-auto px-6 pb-6">
+              <ul data-lenis-prevent className="mt-4 flex-1 space-y-3 overflow-y-auto px-5 pb-5">
                 <AnimatePresence initial={false}>
                   {saved.map((item) => {
                     const inBag = items.some((bagItem) => bagItem.variantId === item.variantId);
@@ -278,17 +283,17 @@ export default function CartDrawer() {
                         layout
                         exit={{ opacity: 0, x: -30, height: 0 }}
                         transition={{ duration: 0.4, ease: EASE }}
-                        className="flex gap-4 border-b border-ink/10 py-5"
+                        className="glass flex gap-4 rounded-[24px] p-3"
                       >
                         <Link href={`/products/${item.slug}`} onClick={close}>
                           <Thumb slug={item.slug} image={item.image} name={item.name} />
                         </Link>
                         <div className="flex min-w-0 flex-1 flex-col">
                           <div className="flex items-start justify-between gap-3">
-                            <Link href={`/products/${item.slug}`} onClick={close} className="font-display text-[21px] leading-[1.1] text-ink hover:text-emerald">
+                            <Link href={`/products/${item.slug}`} onClick={close} className="font-display text-[21px] leading-[1.1] text-ink transition hover:text-midnight-soft">
                               {item.name}
                             </Link>
-                            <button type="button" aria-label={`Remove ${item.name} from saved`} onClick={() => unsave(item.productId)} className="text-rose-700">
+                            <button type="button" aria-label={`Remove ${item.name} from saved`} onClick={() => unsave(item.productId)} className="mr-1 mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-quartz-deep transition hover:bg-white/50">
                               <Heart size={18} strokeWidth={1.4} className="fill-current" />
                             </button>
                           </div>
@@ -298,8 +303,8 @@ export default function CartDrawer() {
                             disabled={inBag}
                             onClick={() => add({ ...item })}
                             className={clsx(
-                              "mt-auto flex items-center justify-center gap-2 self-start rounded-full px-5 py-2.5 text-[11px] font-medium uppercase tracking-[0.18em] transition",
-                              inBag ? "bg-emerald/10 text-emerald" : "bg-emerald text-ivory hover:bg-ink",
+                              "mt-auto self-start !gap-2 !px-5 !py-2.5 !text-[11px] !tracking-[0.18em]",
+                              inBag ? "btn-glass cursor-default" : "btn-iris",
                             )}
                           >
                             <ShoppingBag size={13} strokeWidth={1.5} /> {inBag ? "In your bag" : "Move to bag"}

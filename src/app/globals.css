@@ -4,9 +4,10 @@
 
 @layer base {
   body {
-    @apply bg-mist font-sans text-ink antialiased;
+    @apply font-sans text-graphite antialiased;
+    background-color: #faf8f5;
     font-weight: 400;
-    font-size: 17px;
+    font-size: 16px;
   }
 
   /* A fine film grain over the whole site, for a printed, tactile feel */
@@ -49,57 +50,294 @@
   }
 
   .eyebrow {
-    @apply font-sans text-[12px] font-medium uppercase tracking-[0.24em] text-stone;
+    @apply font-sans text-[11px] font-medium uppercase tracking-[0.28em] text-stone;
+  }
+
+  /* Small numbered section label: "01 — The Atelier" */
+  .label {
+    @apply inline-flex items-center gap-3 font-sans text-[11px] font-medium uppercase tracking-[0.32em];
+  }
+
+  .label::before {
+    content: "";
+    @apply h-px w-8 bg-current opacity-50;
   }
 
   .heading-xl {
-    @apply font-display text-[52px] font-normal leading-[0.98] tracking-[-0.015em] sm:text-[76px] lg:text-[104px];
+    @apply font-display text-[56px] font-light leading-[0.95] tracking-[-0.02em] sm:text-[84px] lg:text-[112px];
   }
 
   .heading-lg {
-    @apply font-display text-[44px] font-normal leading-[1.02] tracking-[-0.01em] sm:text-[60px] lg:text-[72px];
+    @apply font-display text-[46px] font-light leading-[1] tracking-[-0.015em] sm:text-[64px] lg:text-[80px];
   }
 
   .heading-md {
-    @apply font-display text-[30px] font-normal leading-[1.1] sm:text-[38px];
+    @apply font-display text-[32px] font-normal leading-[1.08] sm:text-[42px];
   }
 
   .body-copy {
     @apply text-[17px] leading-[1.8] text-stone;
   }
 
-  /* Buttons: a darker fill rises from below on hover */
+  /*
+   * Buttons are liquid: a glossy fill, a bright rim of light along the top
+   * edge and a sheen that slides across on hover. (::before = sheen.)
+   */
   .btn {
-    @apply relative isolate inline-flex items-center justify-center gap-3 overflow-hidden px-8 py-4 text-[12px] font-medium uppercase tracking-[0.2em] transition-colors duration-500;
+    @apply relative isolate inline-flex items-center justify-center gap-3 overflow-hidden rounded-full px-8 py-4 text-[12px] font-medium uppercase tracking-[0.2em] transition-[transform,box-shadow,background-color,color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] active:scale-[0.97];
   }
 
   .btn::before {
     content: "";
-    @apply pointer-events-none absolute inset-0 -z-10 origin-bottom scale-y-0 rounded-[inherit] transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)];
+    @apply pointer-events-none absolute inset-y-0 -left-full -z-10 w-full -skew-x-12 bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)];
   }
 
   .btn:hover::before {
-    @apply scale-y-100;
+    transform: translateX(220%) skewX(-12deg);
   }
 
   .btn-primary {
-    @apply btn bg-emerald text-ivory before:bg-ink;
+    @apply btn text-ivory;
+    background: linear-gradient(180deg, #2b5a5f 0%, #173c40 55%, #10302f 100%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.35),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.25),
+      0 14px 30px -14px rgba(14, 39, 42, 0.7);
   }
 
+  .btn-primary:hover {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.45),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.25),
+      0 20px 36px -14px rgba(14, 39, 42, 0.8);
+  }
+
+  .btn-champagne,
   .btn-gold {
-    @apply btn bg-ivory text-ink before:bg-parchment;
+    @apply btn text-midnight-deep;
+    background: linear-gradient(180deg, #f3eadb 0%, #dccbab 50%, #cbb68f 100%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.9),
+      inset 0 -1px 0 rgba(122, 101, 68, 0.35),
+      0 14px 30px -14px rgba(122, 101, 68, 0.75);
   }
 
-  .btn-light {
-    @apply btn bg-ivory text-ink before:bg-parchment;
+  /* Clear glass button for light grounds */
+  .btn-light,
+  .btn-glass {
+    @apply btn text-midnight;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.3));
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    backdrop-filter: blur(16px) saturate(180%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.95),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.55),
+      0 12px 28px -16px rgba(14, 39, 42, 0.45);
+  }
+
+  /* Clear glass button for dark grounds */
+  .btn-outline-light,
+  .btn-glass-dark {
+    @apply btn text-ivory;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.04));
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    backdrop-filter: blur(16px) saturate(160%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.35),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.18),
+      0 12px 28px -16px rgba(0, 0, 0, 0.6);
   }
 
   .btn-outline {
-    @apply btn border border-current before:bg-emerald hover:border-emerald hover:text-ivory;
+    @apply btn border border-current hover:bg-midnight hover:text-ivory;
   }
 
-  .btn-outline-light {
-    @apply btn border border-ivory/70 text-ivory before:bg-ivory hover:text-ink;
+  /* ================================================================
+   * LIQUID GLASS
+   * ----------------------------------------------------------------
+   *   .glass         clear glass on light grounds (cards, panels)
+   *   .glass-strong  frosted, more opaque (menus, drawers, forms)
+   *   .glass-dark    smoked glass on dark grounds and imagery
+   *   .glass-liquid  adds real edge refraction in Chromium browsers
+   *
+   * Each surface has a bright rim of light (::after, a gradient border)
+   * and a soft specular sheen near the top-left (::before). Don't put
+   * Tailwind before:/after: utilities on the same element.
+   * ================================================================ */
+  .glass,
+  .glass-strong,
+  .glass-dark {
+    position: relative;
+    isolation: isolate;
+    -webkit-backdrop-filter: blur(22px) saturate(180%);
+    backdrop-filter: blur(22px) saturate(180%);
+  }
+
+  .glass {
+    /* Tintable: add .tint-quartz / .tint-saffron / .tint-lilac … to colour the glass */
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.6) 0%, var(--glass-tint, rgba(255, 255, 255, 0.24)) 100%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.9),
+      inset 0 0 24px rgba(255, 255, 255, 0.18),
+      0 24px 48px -28px rgba(14, 39, 42, 0.38),
+      0 2px 8px -4px rgba(14, 39, 42, 0.1);
+  }
+
+  .glass-strong {
+    background: linear-gradient(135deg, rgba(251, 250, 247, 0.86) 0%, rgba(246, 244, 239, 0.7) 100%);
+    -webkit-backdrop-filter: blur(30px) saturate(190%);
+    backdrop-filter: blur(30px) saturate(190%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 1),
+      0 30px 60px -30px rgba(14, 39, 42, 0.45),
+      0 2px 10px -4px rgba(14, 39, 42, 0.12);
+  }
+
+  .glass-dark {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, var(--glass-tint-dark, rgba(12, 34, 37, 0.42)) 100%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.22),
+      inset 0 0 24px rgba(255, 255, 255, 0.04),
+      0 30px 60px -30px rgba(0, 0, 0, 0.7);
+  }
+
+  /* Rim of light: a gradient hairline that catches light at the corners */
+  .glass::after,
+  .glass-strong::after,
+  .glass-dark::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    padding: 1px;
+    border-radius: inherit;
+    pointer-events: none;
+    /* Pearlescent: the rim catches champagne, rose, lilac and aqua light */
+    background: linear-gradient(
+      140deg,
+      rgba(255, 255, 255, 0.98) 0%,
+      rgba(243, 201, 166, 0.55) 22%,
+      rgba(255, 255, 255, 0.1) 45%,
+      rgba(205, 189, 230, 0.45) 72%,
+      rgba(184, 222, 224, 0.7) 100%
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+  }
+
+  .glass-dark::after {
+    background: linear-gradient(
+      140deg,
+      rgba(255, 255, 255, 0.5) 0%,
+      rgba(233, 195, 198, 0.25) 30%,
+      rgba(255, 255, 255, 0.04) 55%,
+      rgba(233, 181, 90, 0.4) 100%
+    );
+  }
+
+  /* Specular sheen */
+  .glass::before,
+  .glass-strong::before,
+  .glass-dark::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    background: radial-gradient(120% 70% at 12% 0%, rgba(255, 255, 255, 0.5), transparent 55%);
+    opacity: 0.7;
+  }
+
+  .glass-dark::before {
+    background: radial-gradient(120% 70% at 12% 0%, rgba(255, 255, 255, 0.14), transparent 55%);
+    opacity: 1;
+  }
+
+  /* Hoverable glass lifts slightly and the sheen brightens */
+  .glass-hover {
+    transition:
+      transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .glass-hover:hover {
+    transform: translateY(-4px);
+  }
+
+  .glass-hover:hover::before {
+    opacity: 1;
+  }
+
+  /* Glass tints — light grounds (.glass) and dark grounds (.glass-dark) */
+  .tint-quartz {
+    --glass-tint: rgba(233, 195, 198, 0.5);
+    --glass-tint-dark: rgba(180, 112, 124, 0.38);
+  }
+  .tint-apricot {
+    --glass-tint: rgba(243, 201, 166, 0.5);
+    --glass-tint-dark: rgba(194, 122, 74, 0.36);
+  }
+  .tint-saffron {
+    --glass-tint: rgba(233, 181, 90, 0.38);
+    --glass-tint-dark: rgba(168, 111, 20, 0.36);
+  }
+  .tint-lilac {
+    --glass-tint: rgba(205, 189, 230, 0.55);
+    --glass-tint-dark: rgba(125, 104, 168, 0.4);
+  }
+  .tint-sage {
+    --glass-tint: rgba(185, 205, 176, 0.5);
+    --glass-tint-dark: rgba(94, 127, 85, 0.38);
+  }
+  .tint-aqua {
+    --glass-tint: rgba(184, 222, 224, 0.55);
+    --glass-tint-dark: rgba(63, 133, 137, 0.38);
+  }
+  .tint-terracotta {
+    --glass-tint: rgba(221, 165, 132, 0.45);
+    --glass-tint-dark: rgba(156, 86, 52, 0.38);
+  }
+  .tint-champagne {
+    --glass-tint: rgba(216, 198, 160, 0.5);
+    --glass-tint-dark: rgba(122, 101, 68, 0.4);
+  }
+  .tint-plum {
+    --glass-tint: rgba(110, 74, 99, 0.25);
+    --glass-tint-dark: rgba(74, 44, 66, 0.55);
+  }
+
+  /* Pearlescent, multi-colour liquid button for signature moments */
+  .btn-iris {
+    @apply btn text-midnight-deep;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0) 55%),
+      linear-gradient(110deg, #f6e3c8 0%, #f2c9c4 30%, #d9c8ec 62%, #bfe2e3 100%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.95),
+      inset 0 -1px 0 rgba(125, 104, 168, 0.25),
+      0 14px 32px -14px rgba(125, 104, 168, 0.55);
+  }
+
+  /* Iridescent text accent for headline italics */
+  .text-iris {
+    background: linear-gradient(100deg, #c27a4a 0%, #b4707c 35%, #7d68a8 70%, #3f8589 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .text-iris-light {
+    background: linear-gradient(100deg, #f8e3b8 0%, #f6cfd2 35%, #ddd0f0 68%, #c6eaeb 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
 
   .link-underline {
@@ -155,45 +393,44 @@
   }
 
   /*
-   * Pearl: the premium light ground. Ivory with pools of champagne, blush and
-   * sage, like the inside of a shell. A soft glow drifts slowly across it.
+   * Luxury Pearl: the primary light ground. Pearl with faint pools of
+   * champagne, muted rose and platinum, like light through frosted glass.
    */
   .bg-pearl,
   .bg-luxe {
     @apply relative isolate;
     overflow: clip;
-    background-color: #f8f4ee;
+    /* Translucent, so the ambient liquid light behind the page shows through the glass */
+    background-color: rgba(248, 247, 244, 0.35);
     background-image:
-      radial-gradient(48% 42% at 92% 4%, rgba(232, 210, 162, 0.55), transparent 70%),
-      radial-gradient(42% 46% at 4% 96%, rgba(170, 222, 220, 0.45), transparent 72%),
-      radial-gradient(38% 34% at 62% 62%, rgba(240, 214, 205, 0.45), transparent 70%),
-      linear-gradient(180deg, #fbf8f3 0%, #f4eee5 100%);
+      radial-gradient(48% 42% at 92% 4%, rgba(216, 198, 160, 0.18), transparent 70%),
+      radial-gradient(38% 34% at 62% 62%, rgba(185, 165, 172, 0.12), transparent 70%);
   }
 
   .bg-pearl-warm {
     @apply relative isolate;
     overflow: clip;
-    background-color: #f1e8dc;
+    background-color: #f1ede5;
     background-image:
-      radial-gradient(50% 50% at 10% 10%, rgba(255, 250, 242, 0.9), transparent 70%),
-      radial-gradient(45% 50% at 95% 80%, rgba(214, 186, 150, 0.45), transparent 72%),
-      radial-gradient(40% 40% at 55% 45%, rgba(238, 208, 196, 0.4), transparent 70%),
-      linear-gradient(160deg, #f6efe6 0%, #ecdfcf 100%);
+      radial-gradient(50% 50% at 10% 10%, rgba(255, 253, 249, 0.9), transparent 70%),
+      radial-gradient(45% 50% at 95% 80%, rgba(216, 198, 160, 0.4), transparent 72%),
+      radial-gradient(40% 40% at 55% 45%, rgba(185, 165, 172, 0.22), transparent 70%),
+      linear-gradient(160deg, #f6f3ee 0%, #ebe5da 100%);
   }
 
   /*
-   * Forest noir: the premium dark ground. Near-black green with deep teal
-   * light from above, a warm brass glow from below and fine grain.
+   * Midnight: the premium dark ground. Midnight teal lit softly from above,
+   * a champagne glow from below and fine grain.
    */
   .bg-noir {
     @apply relative isolate;
     overflow: clip;
-    background-color: #07303b;
+    background-color: #173c40;
     background-image:
-      radial-gradient(55% 45% at 18% 0%, rgba(26, 150, 156, 0.55), transparent 70%),
-      radial-gradient(45% 50% at 100% 100%, rgba(197, 154, 85, 0.32), transparent 70%),
-      radial-gradient(35% 35% at 70% 30%, rgba(14, 110, 122, 0.45), transparent 70%),
-      linear-gradient(165deg, #0a3a47 0%, #062a34 55%, #08323d 100%);
+      radial-gradient(55% 45% at 18% 0%, rgba(78, 128, 130, 0.45), transparent 70%),
+      radial-gradient(45% 50% at 100% 100%, rgba(216, 198, 160, 0.16), transparent 70%),
+      radial-gradient(35% 35% at 70% 30%, rgba(43, 90, 95, 0.4), transparent 70%),
+      linear-gradient(165deg, #1b4448 0%, #122f33 55%, #0e272a 100%);
   }
 
   .bg-pearl::before,
@@ -209,7 +446,7 @@
 
   .bg-pearl::before,
   .bg-luxe::before {
-    background: radial-gradient(circle, rgba(232, 210, 180, 0.45), transparent 65%);
+    background: radial-gradient(circle, rgba(216, 198, 160, 0.22), transparent 65%);
   }
 
   .bg-pearl-warm::before {
@@ -217,7 +454,7 @@
   }
 
   .bg-noir::before {
-    background: radial-gradient(circle, rgba(32, 170, 172, 0.35), transparent 65%);
+    background: radial-gradient(circle, rgba(90, 140, 140, 0.22), transparent 65%);
   }
 
   .bg-noir::after {
@@ -254,25 +491,74 @@
   }
 }
 
-/* ---- First-visit intro (see IntroCurtain) ---- */
-html:not([data-intro="play"]) .intro-curtain {
-  display: none;
+/* ---- Liquid refraction (Chromium supports SVG filters on the backdrop) ---- */
+html[data-liquid] .glass-liquid {
+  -webkit-backdrop-filter: url(#liquid-glass) blur(18px) saturate(180%);
+  backdrop-filter: url(#liquid-glass) blur(18px) saturate(180%);
 }
 
-html[data-intro="play"] body {
-  overflow: hidden;
-}
-
-/* Failsafe: never let the curtain block the page if scripts stall */
-.intro-curtain {
-  animation: intro-failsafe 0.01s linear 7s forwards;
-}
-
-@keyframes intro-failsafe {
+/* ---- Ambient liquid light behind the whole site (see LiquidBackdrop) ---- */
+@keyframes liquid-drift-a {
+  from {
+    transform: translate3d(-6%, -4%, 0) scale(1);
+  }
   to {
-    visibility: hidden;
+    transform: translate3d(8%, 6%, 0) scale(1.15);
+  }
+}
+
+@keyframes liquid-drift-b {
+  from {
+    transform: translate3d(5%, 3%, 0) scale(1.1);
+  }
+  to {
+    transform: translate3d(-7%, -6%, 0) scale(0.95);
+  }
+}
+
+/* ---- Homepage opening (see CinematicHero) ---- */
+
+/* Site chrome dims while the opening plays, but stays usable. */
+[data-site-chrome] > * {
+  transition: opacity 1.2s ease;
+}
+
+html[data-hero-intro="on"] [data-site-chrome]:not(:hover):not(:focus-within) > * {
+  opacity: 0.25;
+}
+
+/* Dust drifting in the shaft of light */
+@keyframes mote {
+  0% {
+    transform: translate3d(0, 0, 0);
     opacity: 0;
-    pointer-events: none;
+  }
+  20%,
+  80% {
+    opacity: var(--o);
+  }
+  100% {
+    transform: translate3d(var(--dx), var(--dy), 0);
+    opacity: 0;
+  }
+}
+
+/* Caustic water-light, two layers drifting against each other */
+@keyframes caustic-a {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 520px -260px;
+  }
+}
+
+@keyframes caustic-b {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: -760px 380px;
   }
 }
 

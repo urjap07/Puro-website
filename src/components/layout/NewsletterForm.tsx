@@ -15,7 +15,7 @@ export default function NewsletterForm() {
           key="thanks"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex items-center gap-3 rounded-full border border-gold-soft/40 bg-ivory/[0.06] px-6 py-4 font-display text-[22px] italic text-gold-soft"
+          className="flex items-center gap-3 rounded-[28px] bg-white/60 px-6 py-4 font-display text-[22px] italic text-plum shadow-[inset_0_1px_0_rgba(255,255,255,1),inset_0_0_0_1px_rgba(255,255,255,0.7),0_12px_28px_-16px_rgba(125,104,168,0.55)] backdrop-blur-md"
         >
           <Check size={18} strokeWidth={1.5} /> Welcome to the ritual — we&rsquo;ll be in touch soon.
         </motion.p>
@@ -23,7 +23,7 @@ export default function NewsletterForm() {
         <motion.form
           key="form"
           exit={{ opacity: 0, y: -10 }}
-          className="flex w-full items-center gap-2 rounded-full border border-ivory/20 bg-ivory/[0.06] p-1.5 pl-6 backdrop-blur transition focus-within:border-gold-soft/70 focus-within:bg-ivory/[0.09]"
+          className="flex w-full items-center gap-2 rounded-full bg-white/55 p-1.5 pl-6 shadow-[inset_0_1px_0_rgba(255,255,255,1),inset_0_0_0_1px_rgba(255,255,255,0.7),inset_0_2px_6px_rgba(14,39,42,0.08),0_12px_28px_-18px_rgba(14,39,42,0.45)] backdrop-blur-md backdrop-saturate-150 transition focus-within:bg-white/75 focus-within:shadow-[inset_0_1px_0_rgba(255,255,255,1),inset_0_0_0_1px_rgba(125,104,168,0.7),0_0_0_3px_rgba(205,189,230,0.45)]"
           onSubmit={(event) => {
             event.preventDefault();
             setSubmitted(true);
@@ -37,11 +37,11 @@ export default function NewsletterForm() {
             type="email"
             required
             placeholder="Your email address"
-            className="min-w-0 flex-1 bg-transparent py-3 text-[16px] text-ivory outline-none placeholder:text-ivory/45"
+            className="min-w-0 flex-1 bg-transparent py-3 text-[16px] text-midnight caret-lilac-deep outline-none placeholder:text-stone"
           />
           <button
             type="submit"
-            className="group flex shrink-0 items-center gap-2 rounded-full bg-ivory px-5 py-3.5 text-[12px] font-medium uppercase tracking-[0.18em] text-ink transition duration-300 hover:bg-gold-soft sm:px-7"
+            className="btn-iris group shrink-0 !gap-2 !px-5 !py-3.5 !tracking-[0.18em] sm:!px-7"
           >
             <span className="hidden sm:inline">Subscribe</span>
             <ArrowRight size={16} strokeWidth={1.4} className="transition-transform duration-300 group-hover:translate-x-1" />

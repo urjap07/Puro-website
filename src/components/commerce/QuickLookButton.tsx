@@ -18,7 +18,7 @@ export default function QuickLookButton({ product, group, className }: { product
       }}
       aria-label={`Quick look at ${product.name}`}
       className={clsx(
-        "absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 items-center gap-1.5 whitespace-nowrap rounded-full bg-ink/85 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-ivory shadow-[0_10px_24px_-12px_rgba(0,0,0,0.7)] backdrop-blur transition duration-300 hover:bg-emerald",
+        "glass absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 items-center gap-1.5 whitespace-nowrap rounded-full bg-white/50 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-midnight transition duration-300 hover:bg-white/80",
         "translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 focus-visible:translate-y-0 focus-visible:opacity-100 [@media(hover:none)]:translate-y-0 [@media(hover:none)]:opacity-100",
         className,
       )}

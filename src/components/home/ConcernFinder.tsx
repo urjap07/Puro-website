@@ -39,10 +39,16 @@ const TYPES = [
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
+/** Skin is rose quartz, hair is lilac. */
+const TINT = {
+  skin: { glass: "tint-quartz", ring: "ring-quartz-deep", check: "text-quartz-deep" },
+  hair: { glass: "tint-lilac", ring: "ring-lilac-deep", check: "text-lilac-deep" },
+} as const;
+
 function StepLabel({ n, children }: { n: number; children: string }) {
   return (
-    <p className="flex items-center gap-3 text-[12px] font-medium uppercase tracking-[0.22em] text-stone">
-      <span className="flex h-7 w-7 items-center justify-center rounded-full border border-emerald/25 font-display text-[14px] normal-case tracking-normal text-emerald">
+    <p className="flex items-center gap-3 text-[12px] font-medium uppercase tracking-[0.22em] text-graphite">
+      <span className="glass tint-champagne flex h-8 w-8 items-center justify-center rounded-full font-display text-[15px] normal-case tracking-normal text-midnight">
         {n}
       </span>
       {children}
@@ -90,7 +96,7 @@ export default function ConcernFinder({ concerns, products }: { concerns: Concer
   };
 
   return (
-    <div className="grid gap-12 lg:grid-cols-[1fr_1fr] lg:gap-16">
+    <div className="glass-strong grid gap-10 rounded-[28px] p-4 sm:rounded-[36px] sm:p-8 lg:grid-cols-[1fr_1fr] lg:gap-12 lg:p-12">
       {/* Choices */}
       <div className="space-y-10">
         <div>
@@ -105,8 +111,8 @@ export default function ConcernFinder({ concerns, products }: { concerns: Concer
                   onClick={() => switchType(option.key)}
                   aria-pressed={selected}
                   className={clsx(
-                    "group relative aspect-[5/3] overflow-hidden rounded-[22px] text-left ring-offset-4 ring-offset-[#f8f4ee] transition duration-500",
-                    selected ? "ring-2 ring-emerald" : "ring-1 ring-ink/10 hover:ring-ink/30",
+                    "group relative aspect-[5/3] overflow-hidden rounded-[24px] text-left shadow-[0_24px_40px_-28px_rgba(14,39,42,0.7)] ring-offset-4 ring-offset-ivory transition duration-500",
+                    selected ? clsx("ring-2", TINT[option.key].ring) : "ring-1 ring-white/70 hover:ring-midnight/30",
                   )}
                 >
                   <Image
@@ -121,7 +127,7 @@ export default function ConcernFinder({ concerns, products }: { concerns: Concer
                   <span
                     className={clsx(
                       "absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full transition duration-500",
-                      selected ? "scale-100 bg-ivory text-emerald" : "scale-0",
+                      selected ? clsx("glass-strong scale-100", TINT[option.key].check) : "scale-0",
                     )}
                   >
                     <Check size={16} strokeWidth={2} />
@@ -155,10 +161,10 @@ export default function ConcernFinder({ concerns, products }: { concerns: Concer
                       onClick={() => choose(concern.slug)}
                       aria-pressed={selected}
                       className={clsx(
-                        "flex w-full items-center gap-3 rounded-full border p-1.5 pr-4 text-left transition duration-500",
+                        "flex w-full items-center gap-3 rounded-full p-1.5 pr-4 text-left transition duration-500",
                         selected
-                          ? "border-emerald bg-emerald text-ivory shadow-[0_16px_34px_-20px_rgba(6,48,58,0.9)]"
-                          : "border-ink/10 bg-ivory/70 text-emerald hover:border-emerald/40 hover:bg-ivory",
+                          ? "bg-[linear-gradient(180deg,#2b5a5f_0%,#173c40_55%,#10302f_100%)] text-ivory shadow-[inset_0_1px_0_rgba(255,255,255,0.35),0_16px_34px_-20px_rgba(6,48,58,0.9)]"
+                          : clsx("glass glass-hover border border-white/60 text-midnight hover:border-midnight/20", TINT[type].glass),
                       )}
                     >
                       <span className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full sm:h-11 sm:w-11">
@@ -177,7 +183,16 @@ export default function ConcernFinder({ concerns, products }: { concerns: Concer
       {/* Your ritual */}
       <div className="lg:sticky lg:top-28 lg:self-start">
         <StepLabel n={3}>Your ritual</StepLabel>
-        <div className="bg-noir mt-5 rounded-[30px] p-6 text-ivory shadow-[0_50px_100px_-50px_rgba(5,38,47,0.9)] sm:p-8">
+        <div className="relative isolate mt-5 overflow-hidden rounded-[28px] bg-[linear-gradient(150deg,#6e4a63_0%,#4a2c42_48%,#2b1827_100%)] p-5 text-ivory shadow-[inset_0_1px_0_rgba(255,255,255,0.22),0_50px_100px_-50px_rgba(43,24,39,0.9)] ring-1 ring-inset ring-white/10 sm:rounded-[30px] sm:p-8">
+          {/* Pastel light pooling in the card, in the chosen colour */}
+          <span
+            aria-hidden="true"
+            className={clsx(
+              "pointer-events-none absolute -right-24 -top-24 -z-10 h-72 w-72 rounded-full blur-[70px] transition-colors duration-700",
+              type === "skin" ? "bg-quartz/45" : "bg-lilac/45",
+            )}
+          />
+          <span aria-hidden="true" className="pointer-events-none absolute -bottom-28 -left-20 -z-10 h-64 w-64 rounded-full bg-saffron/20 blur-[70px]" />
           <AnimatePresence mode="wait">
             <motion.div
               key={current?.slug ?? "none"}
@@ -197,7 +212,7 @@ export default function ConcernFinder({ concerns, products }: { concerns: Concer
                   <Link
                     href={`/products/${hero.slug}`}
                     data-cursor="View"
-                    className="group mt-7 grid grid-cols-[0.9fr_1.1fr] items-center gap-5 overflow-hidden rounded-[22px] bg-ivory/[0.06] p-3 ring-1 ring-ivory/10"
+                    className={clsx("glass-dark glass-hover group mt-7 grid grid-cols-[0.9fr_1.1fr] items-center gap-5 overflow-hidden rounded-[24px] p-3", TINT[type].glass)}
                   >
                     <span className="relative block aspect-[4/5] overflow-hidden rounded-[16px] bg-[radial-gradient(ellipse_75%_60%_at_50%_42%,#ffffff_0%,#f3ece1_58%,#e3d8c6_100%)]">
                       {hero.images[0] && (
@@ -211,9 +226,9 @@ export default function ConcernFinder({ concerns, products }: { concerns: Concer
                       )}
                     </span>
                     <span className="pr-2">
-                      <span className="text-[11px] font-medium uppercase tracking-[0.2em] text-ivory/50">Your hero</span>
+                      <span className="text-[11px] font-medium uppercase tracking-[0.2em] text-ivory/70">Your hero</span>
                       <span className="mt-2 block font-display text-[26px] leading-[1.05] sm:text-[30px]">{hero.name}</span>
-                      {hero.headline && <span className="mt-2 block text-[14px] leading-relaxed text-ivory/65">{hero.headline}</span>}
+                      {hero.headline && <span className="mt-2 block text-[14px] leading-relaxed text-ivory/80">{hero.headline}</span>}
                       {hero.variants[0] && <span className="mt-3 block font-display text-[22px]">{formatPrice(hero.variants[0].price)}</span>}
                     </span>
                   </Link>
@@ -245,8 +260,8 @@ export default function ConcernFinder({ concerns, products }: { concerns: Concer
                       type="button"
                       onClick={addRitual}
                       className={clsx(
-                        "flex items-center gap-2.5 rounded-full px-7 py-4 text-[12px] font-medium uppercase tracking-[0.18em] transition duration-500",
-                        added ? "bg-gold-soft text-ink" : "bg-ivory text-ink hover:bg-gold-soft",
+                        "btn-iris gap-2.5 px-7 py-4",
+                        added && "brightness-105",
                       )}
                     >
                       {added ? <Check size={15} strokeWidth={2} /> : <ShoppingBag size={15} strokeWidth={1.5} />}

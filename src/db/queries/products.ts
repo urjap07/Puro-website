@@ -501,7 +501,7 @@ function toReview(row: ReviewRow): Review {
         productId: row.product_id,
         productName: row.product_name,
         productSlug: row.product_slug,
-        author: row.author?.trim() || "Verified customer",
+        author: row.author?.trim() || "PURO customer",
         rating: row.rating,
         title: row.title,
         comment: row.comment,

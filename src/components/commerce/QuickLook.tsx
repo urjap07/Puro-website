@@ -16,6 +16,7 @@ import WishButton from "@/components/cart/WishButton";
 import Price from "./Price";
 import StarRating from "./StarRating";
 import { DeliveryLine } from "./ResultCard";
+import { TINT, productTint } from "./tints";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 const RISE_S = 0.6;
@@ -161,7 +162,7 @@ export default function QuickLook() {
         >
           {/* Backdrop */}
           <motion.div
-            className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(8,50,61,0.72),rgba(3,22,28,0.88))] backdrop-blur-[6px]"
+            className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(217,200,236,0.35),rgba(43,24,39,0.45))] backdrop-blur-[16px] backdrop-saturate-[1.4]"
             initial={{ opacity: 0 }}
             animate={{ opacity: leaving ? 0 : 1 }}
             transition={{ duration: 0.4 }}
@@ -175,7 +176,7 @@ export default function QuickLook() {
                 type="button"
                 aria-label="Previous product"
                 onClick={() => step(-1)}
-                className="absolute left-4 top-1/2 z-10 hidden h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full border border-ivory/25 bg-ivory/10 text-ivory backdrop-blur transition hover:bg-ivory hover:text-ink md:flex xl:left-10"
+                className="glass !absolute left-4 top-1/2 z-10 hidden h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full text-midnight transition hover:scale-105 md:flex xl:left-10"
               >
                 <ChevronLeft size={22} strokeWidth={1.3} />
               </button>
@@ -183,7 +184,7 @@ export default function QuickLook() {
                 type="button"
                 aria-label="Next product"
                 onClick={() => step(1)}
-                className="absolute right-4 top-1/2 z-10 hidden h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full border border-ivory/25 bg-ivory/10 text-ivory backdrop-blur transition hover:bg-ivory hover:text-ink md:flex xl:right-10"
+                className="glass !absolute right-4 top-1/2 z-10 hidden h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full text-midnight transition hover:scale-105 md:flex xl:right-10"
               >
                 <ChevronRight size={22} strokeWidth={1.3} />
               </button>
@@ -192,13 +193,13 @@ export default function QuickLook() {
 
           <motion.div
             data-fly-source
-            className="relative flex max-h-[92vh] w-full flex-col overflow-hidden rounded-t-[28px] bg-ivory shadow-[0_60px_120px_-40px_rgba(0,0,0,0.8)] md:max-h-[min(720px,90vh)] md:max-w-[1040px] md:flex-row md:rounded-[32px]"
+            className="glass-strong flex max-h-[92vh] w-full flex-col overflow-hidden rounded-t-[32px] bg-ivory/60 md:max-h-[min(720px,90vh)] md:max-w-[1040px] md:flex-row md:rounded-[32px] md:p-3"
             initial={sheet ? { y: "100%" } : { opacity: 0, scale: 0.96 }}
             animate={sheet ? { y: leaving ? "100%" : 0 } : { opacity: leaving ? 0 : 1, scale: leaving ? 0.97 : 1 }}
             transition={{ duration: sheet ? 0.45 : leaving ? RETURN_S * 0.8 : 0.4, ease: EASE }}
           >
             {/* Stage: the image is the part that rises out of the card */}
-            <div className="relative shrink-0 bg-[radial-gradient(ellipse_80%_70%_at_50%_42%,#ffffff_0%,#f4ede2_55%,#e3d7c3_100%)] md:w-[46%]">
+            <div className="relative shrink-0 bg-[radial-gradient(ellipse_80%_70%_at_50%_42%,rgba(255,255,255,0.95)_0%,rgba(244,237,226,0.8)_55%,rgba(227,215,195,0.65)_100%)] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.7)] md:w-[46%] md:overflow-hidden md:rounded-[24px]">
               <div ref={flyer} className="relative mx-auto aspect-square w-[62%] origin-center md:my-0 md:h-full md:w-full md:aspect-auto">
                 <AnimatePresence mode="popLayout" initial={false}>
                   {image && (
@@ -228,11 +229,11 @@ export default function QuickLook() {
                 transition={{ delay: leaving ? 0 : RISE_S * 0.7 }}
               />
               {many && (
-                <span className="absolute left-4 top-4 rounded-full bg-ivory/90 px-3 py-1 text-[12px] font-semibold tabular-nums text-ink shadow-sm">
+                <span className="glass !absolute left-4 top-4 rounded-full px-3 py-1 text-[12px] font-semibold tabular-nums text-midnight">
                   {index + 1} / {list.length}
                 </span>
               )}
-              <span className="absolute left-1/2 top-2.5 h-1 w-10 -translate-x-1/2 rounded-full bg-ink/20 md:hidden" />
+              <span className="absolute left-1/2 top-2.5 h-1 w-10 -translate-x-1/2 rounded-full bg-graphite/25 md:hidden" />
             </div>
 
             {/* Details */}
@@ -248,7 +249,7 @@ export default function QuickLook() {
                 type="button"
                 onClick={requestClose}
                 aria-label="Close quick look"
-                className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-mist text-ink transition hover:bg-ink hover:text-ivory"
+                className="glass !absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full text-midnight transition hover:text-champagne-deep"
               >
                 <X size={18} strokeWidth={1.4} />
               </button>
@@ -262,11 +263,11 @@ export default function QuickLook() {
                   exit={{ opacity: 0, y: -8 }}
                   transition={{ duration: 0.3, ease: EASE }}
                 >
-                  <p className="flex flex-wrap items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-gold-deep">
+                  <p className={clsx("flex flex-wrap items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em]", TINT[productTint(product)].text)}>
                     {product.subCategory ?? product.categories[0]?.name}
-                    {product.isFeatured && <span className="rounded-full bg-noir px-2.5 py-0.5 text-[10px] text-gold-soft">Bestseller</span>}
+                    {product.isFeatured && <span className={clsx("glass rounded-full px-2.5 py-0.5 text-[10px]", TINT.saffron.glass, TINT.saffron.text)}>Bestseller</span>}
                   </p>
-                  <h2 className="mt-2 font-display text-[34px] leading-[1.05] text-ink sm:text-[42px]">{product.name}</h2>
+                  <h2 className="mt-2 font-display text-[34px] leading-[1.05] text-midnight sm:text-[42px]">{product.name}</h2>
                   {product.headline && <p className="mt-1.5 font-display text-[19px] italic text-emerald">{product.headline}</p>}
                   {product.rating && (
                     <Link href={`${href}#reviews`} onClick={finishClose} className="mt-3 inline-block">
@@ -284,7 +285,7 @@ export default function QuickLook() {
                     {quantity > 1 && variant && `${quantity} × ₹${variant.price} · `}Inclusive of all taxes
                   </p>
                   {variant && <DeliveryLine price={variant.price * quantity} className="mt-3 text-[14px]" />}
-                  <p className={clsx("mt-2 text-[14px] font-semibold", inStock ? "text-emerald" : "text-rose-700")}>
+                  <p className={clsx("mt-2 text-[14px] font-semibold", inStock ? "text-midnight" : "text-blush-deep")}>
                     {!variant || !inStock ? "Currently unavailable" : variant.stockQuantity <= 5 ? `Only ${variant.stockQuantity} left in stock` : "In stock"}
                   </p>
 
@@ -292,7 +293,7 @@ export default function QuickLook() {
                     <ul className="mt-5 space-y-2 text-[15px] leading-snug text-ink/85">
                       {product.benefits.slice(0, 3).map((benefit) => (
                         <li key={benefit} className="flex gap-2.5">
-                          <Check size={16} strokeWidth={2} className="mt-0.5 shrink-0 text-emerald" /> {benefit}
+                          <Check size={16} strokeWidth={2} className="mt-0.5 shrink-0 text-midnight-soft" /> {benefit}
                         </li>
                       ))}
                     </ul>
@@ -303,8 +304,8 @@ export default function QuickLook() {
                       <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-stone">Key ingredients</p>
                       <ul className="mt-2 flex flex-wrap gap-1.5">
                         {ingredients.map((name) => (
-                          <li key={name} className="flex items-center gap-1.5 rounded-full bg-mist px-3 py-1.5 text-[13px] text-ink">
-                            <Leaf size={12} strokeWidth={1.6} className="text-emerald" /> {name}
+                          <li key={name} className="glass tint-sage flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[13px] text-graphite">
+                            <Leaf size={12} strokeWidth={1.6} className="text-[#45633D]" /> {name}
                           </li>
                         ))}
                       </ul>
@@ -318,14 +319,14 @@ export default function QuickLook() {
 
                   {variant && inStock && (
                     <div className="mt-6 flex flex-wrap items-center gap-3">
-                      <div className="flex h-12 items-center rounded-full border border-ink/15 bg-mist">
-                        <button type="button" aria-label="One less" onClick={() => setQuantity((q) => Math.max(1, q - 1))} className="flex h-full w-11 items-center justify-center text-emerald hover:text-ink">
+                      <div className="glass flex h-12 items-center rounded-full">
+                        <button type="button" aria-label="One less" onClick={() => setQuantity((q) => Math.max(1, q - 1))} className="relative z-[2] flex h-full w-11 items-center justify-center rounded-full text-midnight hover:text-champagne-deep">
                           <Minus size={14} strokeWidth={1.6} />
                         </button>
                         <span className="w-6 text-center text-[15px] font-semibold tabular-nums" aria-live="polite">
                           {quantity}
                         </span>
-                        <button type="button" aria-label="One more" onClick={() => setQuantity((q) => Math.min(maxQty, q + 1))} className="flex h-full w-11 items-center justify-center text-emerald hover:text-ink">
+                        <button type="button" aria-label="One more" onClick={() => setQuantity((q) => Math.min(maxQty, q + 1))} className="relative z-[2] flex h-full w-11 items-center justify-center rounded-full text-midnight hover:text-champagne-deep">
                           <Plus size={14} strokeWidth={1.6} />
                         </button>
                       </div>
@@ -336,29 +337,29 @@ export default function QuickLook() {
                           flyToBasket(event.currentTarget, flightImage(product));
                           setAdded(true);
                         }}
-                        className="flex h-12 min-w-[180px] flex-1 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#ecdcb4] via-[#d2b077] to-[#c29b5e] px-6 text-[12px] font-semibold uppercase tracking-[0.16em] text-ink shadow-[0_12px_24px_-14px_rgba(140,106,55,0.9)] transition hover:brightness-105 active:scale-[0.98]"
+                        className="flex h-12 min-w-[180px] flex-1 items-center justify-center gap-2 rounded-full bg-gradient-to-b from-[#f3eadb] via-[#dccbab] to-[#cbb68f] text-midnight-deep shadow-[inset_0_1px_0_rgba(255,255,255,0.9),inset_0_-1px_0_rgba(122,101,68,0.35),0_14px_28px_-14px_rgba(122,101,68,0.8)] px-6 text-[12px] font-semibold uppercase tracking-[0.16em] transition hover:brightness-105 active:scale-[0.98]"
                       >
                         {added ? <Check size={16} strokeWidth={2} /> : <ShoppingBag size={16} strokeWidth={1.6} />}
                         {added ? "Added — add more" : "Add to bag"}
                       </button>
-                      <WishButton product={product} className="h-12 w-12 bg-mist shadow-none" />
+                      <WishButton product={product} className="h-12 w-12" />
                     </div>
                   )}
 
                   <Link
                     href={href}
                     onClick={finishClose}
-                    className="mt-6 inline-flex items-center gap-2 text-[14px] font-semibold text-emerald underline-offset-4 hover:underline"
+                    className="mt-6 inline-flex items-center gap-2 text-[14px] font-semibold text-midnight underline-offset-4 hover:underline"
                   >
                     See full details <ArrowRight size={15} strokeWidth={1.6} />
                   </Link>
 
                   {many && (
-                    <div className="mt-6 flex gap-2 border-t border-ink/10 pt-5 md:hidden">
-                      <button type="button" onClick={() => step(-1)} className="flex flex-1 items-center justify-center gap-1.5 rounded-full border border-ink/15 py-2.5 text-[13px] font-semibold">
+                    <div className="mt-6 flex gap-2 border-t border-white/80 pt-5 md:hidden">
+                      <button type="button" onClick={() => step(-1)} className="glass flex flex-1 items-center justify-center gap-1.5 rounded-full py-2.5 text-[13px] font-semibold text-midnight">
                         <ChevronLeft size={16} strokeWidth={1.5} /> Previous
                       </button>
-                      <button type="button" onClick={() => step(1)} className="flex flex-1 items-center justify-center gap-1.5 rounded-full border border-ink/15 py-2.5 text-[13px] font-semibold">
+                      <button type="button" onClick={() => step(1)} className="glass flex flex-1 items-center justify-center gap-1.5 rounded-full py-2.5 text-[13px] font-semibold text-midnight">
                         Next <ChevronRight size={16} strokeWidth={1.5} />
                       </button>
                     </div>

@@ -25,17 +25,17 @@ export default function BuyBox({ product, isGift = false }: { product: Product; 
   const maxQty = Math.max(1, Math.min(10, variant.stockQuantity || 10));
 
   return (
-    <div className="rounded-[26px] bg-ivory p-5 shadow-[0_30px_60px_-40px_rgba(6,48,58,0.6)] ring-1 ring-ink/[0.07] sm:p-6">
+    <div className="glass-strong rounded-[32px] p-5 sm:p-6">
       <Price value={variant.price * quantity} size="lg" />
       <p className="mt-1 text-[13px] text-stone">
         {quantity > 1 && `${quantity} × ₹${variant.price} · `}Inclusive of all taxes
       </p>
 
-      <div className="mt-5 space-y-2.5 rounded-[18px] bg-mist p-4 text-[14px]">
+      <div className="glass tint-aqua mt-5 space-y-2.5 rounded-[22px] p-4 text-[14px]">
         <p className="flex items-start gap-2.5">
-          <Truck size={17} strokeWidth={1.4} className="mt-0.5 shrink-0 text-emerald" />
+          <Truck size={17} strokeWidth={1.4} className="mt-0.5 shrink-0 text-midnight-soft" />
           <span>
-            {free ? <strong className="font-semibold text-emerald">FREE delivery </strong> : <span>Delivery </span>}
+            {free ? <strong className="font-semibold text-midnight">FREE delivery </strong> : <span>Delivery </span>}
             <strong className="font-semibold text-ink">{dates ?? `in ${INDIA_DAYS}`}</strong>
             {zone && <span className="block text-[13px] text-stone">{zone.label} · {zone.min}–{zone.max} days</span>}
             {!freeDeliveryApplies ? (
@@ -46,7 +46,7 @@ export default function BuyBox({ product, isGift = false }: { product: Product; 
           </span>
         </p>
         <p className="flex items-center gap-2.5 text-[13px] text-stone">
-          <MapPin size={16} strokeWidth={1.4} className="shrink-0 text-emerald" />
+          <MapPin size={16} strokeWidth={1.4} className="shrink-0 text-midnight-soft" />
           {destination ? (
             <span>
               Delivering to <strong className="font-semibold text-ink">{destinationLabel(destination)}</strong>
@@ -57,7 +57,7 @@ export default function BuyBox({ product, isGift = false }: { product: Product; 
         </p>
       </div>
 
-      <p className={clsx("mt-5 text-[17px] font-semibold", inStock ? "text-emerald" : "text-rose-700")}>
+      <p className={clsx("mt-5 text-[17px] font-semibold", inStock ? "text-midnight" : "text-blush-deep")}>
         {inStock ? (variant.stockQuantity <= 5 ? `Only ${variant.stockQuantity} left in stock` : "In stock") : "Currently unavailable"}
       </p>
 
@@ -68,7 +68,7 @@ export default function BuyBox({ product, isGift = false }: { product: Product; 
             <select
               value={quantity}
               onChange={(event) => setQuantity(Number(event.target.value))}
-              className="h-10 cursor-pointer rounded-full border border-ink/15 bg-mist px-4 font-medium outline-none focus:border-emerald"
+              className="h-10 cursor-pointer rounded-full bg-white/55 pl-4 pr-3 font-medium text-midnight shadow-[inset_0_1px_0_rgba(255,255,255,1),inset_0_0_0_1px_rgba(255,255,255,0.65),0_8px_18px_-12px_rgba(14,39,42,0.45)] outline-none backdrop-blur-xl focus-visible:ring-2 focus-visible:ring-midnight/50"
             >
               {Array.from({ length: maxQty }, (_, i) => i + 1).map((n) => (
                 <option key={n} value={n}>
@@ -85,7 +85,7 @@ export default function BuyBox({ product, isGift = false }: { product: Product; 
                 add(toCartItem(product), quantity);
                 flyToBasket(event.currentTarget, flightImage(product));
               }}
-              className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#ecdcb4] via-[#d2b077] to-[#c29b5e] text-[13px] font-semibold uppercase tracking-[0.16em] text-ink shadow-[0_12px_26px_-14px_rgba(140,106,55,0.9)] transition hover:brightness-105 active:scale-[0.99]"
+              className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-gradient-to-b from-[#f3eadb] via-[#dccbab] to-[#cbb68f] text-midnight-deep shadow-[inset_0_1px_0_rgba(255,255,255,0.9),inset_0_-1px_0_rgba(122,101,68,0.35),0_14px_28px_-14px_rgba(122,101,68,0.8)] text-[13px] font-semibold uppercase tracking-[0.16em] transition hover:brightness-105 active:scale-[0.99]"
             >
               <ShoppingBag size={16} strokeWidth={1.6} /> Add to bag
             </button>
@@ -95,7 +95,7 @@ export default function BuyBox({ product, isGift = false }: { product: Product; 
                 add(toCartItem(product), quantity);
                 open();
               }}
-              className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-emerald text-[13px] font-semibold uppercase tracking-[0.16em] text-ivory transition hover:bg-ink"
+              className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-gradient-to-b from-[#2b5a5f] via-[#173c40] to-[#10302f] text-ivory shadow-[inset_0_1px_0_rgba(255,255,255,0.35),inset_0_-1px_0_rgba(0,0,0,0.25),0_14px_30px_-14px_rgba(14,39,42,0.7)] text-[13px] font-semibold uppercase tracking-[0.16em] transition hover:brightness-110 active:scale-[0.99]"
             >
               <Zap size={16} strokeWidth={1.6} /> Buy now
             </button>
@@ -108,7 +108,7 @@ export default function BuyBox({ product, isGift = false }: { product: Product; 
         <span>Save for later</span>
       </div>
 
-      <dl className="mt-5 space-y-1.5 border-t border-ink/10 pt-4 text-[13px]">
+      <dl className="mt-5 space-y-1.5 border-t border-white/80 pt-4 text-[13px] shadow-[0_-1px_0_rgba(52,59,59,0.08)]">
         <div className="flex gap-3">
           <dt className="w-[86px] shrink-0 text-stone">Ships from</dt>
           <dd className="text-ink">Puro Body &amp; Soul, Maharashtra</dd>
@@ -121,7 +121,7 @@ export default function BuyBox({ product, isGift = false }: { product: Product; 
           <div className="flex gap-3">
             <dt className="w-[86px] shrink-0 text-stone">Packaging</dt>
             <dd className="flex items-center gap-1.5 text-ink">
-              <Gift size={14} strokeWidth={1.4} className="text-gold-deep" /> Keepsake gift box
+              <Gift size={14} strokeWidth={1.4} className="text-champagne-deep" /> Keepsake gift box
             </dd>
           </div>
         )}

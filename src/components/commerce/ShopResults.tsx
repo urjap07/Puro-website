@@ -11,6 +11,7 @@ import type { Concern, Product } from "@/db/queries/products";
 import { COLLECTIONS } from "@/lib/collections";
 import { searchProducts } from "@/lib/search";
 import ResultCard from "./ResultCard";
+import { TINT, collectionTint, concernTint } from "./tints";
 
 export type SortKey = "featured" | "bestsellers" | "rating" | "price-asc" | "price-desc" | "newest";
 
@@ -126,16 +127,18 @@ export default function ShopResults({
   const clearAll = () =>
     update({ collection: lockCollection ? filters.collection : null, concerns: [], price: null, rating: null, inStock: false });
 
-  const heading = "text-[13px] font-semibold uppercase tracking-[0.16em] text-ink";
+  const heading = "px-1 text-[12px] font-semibold uppercase tracking-[0.2em] text-midnight";
   const option = (active: boolean) =>
     clsx(
-      "flex w-full items-center gap-3 rounded-[12px] px-2.5 py-2 text-left text-[15px] transition",
-      active ? "bg-emerald/[0.08] font-semibold text-emerald" : "text-ink/80 hover:bg-mist-deep",
+      "flex w-full items-center gap-3 rounded-full px-3.5 py-2 text-left text-[15px] transition",
+      active
+        ? "bg-[linear-gradient(180deg,rgba(255,255,255,0.5),rgba(255,255,255,0)_60%),linear-gradient(110deg,rgba(246,227,200,0.95)_0%,rgba(242,201,196,0.9)_32%,rgba(217,200,236,0.9)_66%,rgba(191,226,227,0.95)_100%)] font-semibold text-midnight-deep shadow-[inset_0_1px_0_rgba(255,255,255,1),inset_0_0_0_1px_rgba(255,255,255,0.6),0_8px_20px_-12px_rgba(125,104,168,0.55)]"
+        : "text-graphite/85 hover:bg-white/50 hover:text-midnight",
     );
   const box = (active: boolean) =>
     clsx(
       "flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-[5px] border transition",
-      active ? "border-emerald bg-emerald text-ivory" : "border-ink/25 bg-ivory",
+      active ? "border-[#5E4B8A] bg-[#5E4B8A] text-ivory shadow-[inset_0_1px_0_rgba(255,255,255,0.35)]" : "border-graphite/25 bg-white/70",
     );
 
   const panel = (
@@ -151,10 +154,12 @@ export default function ShopResults({
           {COLLECTIONS.map((collection) =>
             lockCollection ? (
               <Link key={collection.slug} href={`/collections/${collection.slug}`} className={option(filters.collection === collection.slug)}>
+                <span aria-hidden="true" className={clsx("h-2 w-2 shrink-0 rounded-full", TINT[collectionTint(collection.slug)].dot)} />
                 {collection.title}
               </Link>
             ) : (
               <button key={collection.slug} type="button" className={option(filters.collection === collection.slug)} onClick={() => update({ collection: collection.slug })}>
+                <span aria-hidden="true" className={clsx("h-2 w-2 shrink-0 rounded-full", TINT[collectionTint(collection.slug)].dot)} />
                 {collection.title}
               </button>
             ),
@@ -209,7 +214,8 @@ export default function ShopResults({
                     }
                   >
                     <span className={box(active)}>{active && <svg viewBox="0 0 12 12" className="h-3 w-3"><path d="M2 6.5 5 9l5-6" fill="none" stroke="currentColor" strokeWidth="1.8" /></svg>}</span>
-                    {concern.name}
+                    <span className="flex-1">{concern.name}</span>
+                    <span aria-hidden="true" className={clsx("h-2 w-2 shrink-0 rounded-full", TINT[concernTint(concern)].dot)} />
                   </button>
                 );
               })}
@@ -226,7 +232,7 @@ export default function ShopResults({
       </div>
 
       {activeCount > 0 && (
-        <button type="button" onClick={clearAll} className="text-[13px] font-semibold text-emerald underline-offset-4 hover:underline">
+        <button type="button" onClick={clearAll} className="glass rounded-full px-4 py-2 text-[13px] font-semibold text-midnight transition hover:text-champagne-deep">
           Clear all filters
         </button>
       )}
@@ -237,15 +243,15 @@ export default function ShopResults({
     <div className="grid gap-8 lg:grid-cols-[260px_1fr] lg:gap-10">
       {/* Sidebar */}
       <aside className="hidden lg:block">
-        <div className="sticky top-[88px] max-h-[calc(100vh-110px)] overflow-y-auto rounded-[24px] border border-ink/[0.07] bg-ivory/80 p-5 backdrop-blur" data-lenis-prevent>
+        <div className="glass-strong no-scrollbar sticky top-[96px] max-h-[calc(100vh-120px)] overflow-y-auto rounded-[28px] p-5" data-lenis-prevent>
           {panel}
         </div>
       </aside>
 
       <div className="min-w-0">
         {/* Results bar */}
-        <div className="relative z-10 mb-6 flex flex-wrap items-center justify-between gap-3 rounded-[20px] border border-ink/[0.07] bg-ivory px-4 py-3">
-          <p className="text-[14px] text-stone">
+        <div className="glass-strong z-10 mb-6 flex flex-wrap items-center justify-between gap-3 rounded-[24px] py-2.5 pl-5 pr-2.5 sm:rounded-full">
+          <p className="text-[14px] text-graphite">
             {results.length === 0 ? "No results" : `1–${results.length} of ${results.length} results`}
             {filters.q && (
               <>
@@ -257,16 +263,16 @@ export default function ShopResults({
             <button
               type="button"
               onClick={() => setSheet(true)}
-              className="flex h-10 items-center gap-2 rounded-full border border-ink/15 px-4 text-[13px] font-medium text-ink lg:hidden"
+              className="glass flex h-10 items-center gap-2 rounded-full px-4 text-[13px] font-medium text-midnight lg:hidden"
             >
               <SlidersHorizontal size={15} strokeWidth={1.4} /> Filters{activeCount ? ` (${activeCount})` : ""}
             </button>
-            <label className="relative flex h-10 items-center rounded-full border border-ink/15 bg-ivory pl-4 pr-9 text-[13px]">
+            <label className="glass flex h-10 items-center rounded-full pl-4 pr-9 text-[13px] focus-within:ring-2 focus-within:ring-midnight/40">
               <span className="mr-1 hidden text-stone sm:inline">Sort by:</span>
               <select
                 value={filters.sort}
                 onChange={(event) => update({ sort: event.target.value as SortKey })}
-                className="cursor-pointer appearance-none bg-transparent font-medium text-ink outline-none"
+                className="relative z-[2] cursor-pointer appearance-none bg-transparent font-medium text-midnight outline-none"
               >
                 {SORTS.map((sort) => (
                   <option key={sort.value} value={sort.value}>
@@ -274,9 +280,9 @@ export default function ShopResults({
                   </option>
                 ))}
               </select>
-              <ChevronDown size={14} strokeWidth={1.5} className="pointer-events-none absolute right-3.5 text-stone" />
+              <ChevronDown size={14} strokeWidth={1.5} className="pointer-events-none absolute right-3.5 z-[2] text-stone" />
             </label>
-            <div className="hidden h-10 items-center rounded-full border border-ink/15 p-1 sm:flex">
+            <div className="glass hidden h-10 items-center rounded-full p-1 sm:flex">
               {(["grid", "list"] as const).map((mode) => (
                 <button
                   key={mode}
@@ -284,7 +290,12 @@ export default function ShopResults({
                   aria-label={`${mode} view`}
                   aria-pressed={layout === mode}
                   onClick={() => setLayout(mode)}
-                  className={clsx("flex h-8 w-8 items-center justify-center rounded-full transition", layout === mode ? "bg-emerald text-ivory" : "text-stone hover:text-ink")}
+                  className={clsx(
+                    "relative z-[2] flex h-8 w-8 items-center justify-center rounded-full transition",
+                    layout === mode
+                      ? "bg-gradient-to-b from-[#2b5a5f] via-[#173c40] to-[#10302f] text-ivory shadow-[inset_0_1px_0_rgba(255,255,255,0.35),0_6px_14px_-8px_rgba(14,39,42,0.8)]"
+                      : "text-stone hover:text-midnight",
+                  )}
                 >
                   {mode === "grid" ? <LayoutGrid size={15} strokeWidth={1.4} /> : <List size={15} strokeWidth={1.4} />}
                 </button>
@@ -311,8 +322,8 @@ export default function ShopResults({
             </AnimatePresence>
           </motion.div>
         ) : (
-          <div className="rounded-[24px] border border-dashed border-ink/15 bg-ivory/60 px-6 py-20 text-center">
-            <p className="font-display text-[34px] text-emerald">No rituals match just yet</p>
+          <div className="glass-strong rounded-[32px] px-6 py-20 text-center">
+            <p className="font-display text-[34px] text-midnight">No rituals match just yet</p>
             <p className="mt-2 text-[15px] text-stone">Try a different word, or loosen a filter.</p>
             <button type="button" onClick={() => update({ q: "", collection: lockCollection ? filters.collection : null, concerns: [], price: null, rating: null, inStock: false })} className="btn-primary mt-7 rounded-full px-8">
               Clear search &amp; filters
@@ -327,18 +338,18 @@ export default function ShopResults({
       <AnimatePresence>
         {sheet && (
           <>
-            <motion.div className="fixed inset-0 z-[95] bg-ink/50" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setSheet(false)} />
+            <motion.div className="fixed inset-0 z-[95] bg-midnight-deep/40 backdrop-blur-[6px]" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setSheet(false)} />
             <motion.div
               data-lenis-prevent
-              className="fixed inset-x-0 bottom-0 z-[96] max-h-[85svh] overflow-y-auto rounded-t-[28px] bg-ivory p-6"
+              className="glass-strong fixed inset-x-0 bottom-0 z-[96] max-h-[85svh] overflow-y-auto rounded-t-[32px] p-6"
               initial={{ y: "100%" }}
               animate={{ y: 0 }}
               exit={{ y: "100%" }}
               transition={{ duration: 0.45, ease: EASE }}
             >
               <div className="mb-5 flex items-center justify-between">
-                <p className="font-display text-[28px]">Filters</p>
-                <button type="button" onClick={() => setSheet(false)} aria-label="Close filters" className="flex h-10 w-10 items-center justify-center rounded-full border border-ink/15">
+                <p className="font-display text-[28px] text-midnight">Filters</p>
+                <button type="button" onClick={() => setSheet(false)} aria-label="Close filters" className="glass flex h-10 w-10 items-center justify-center rounded-full text-midnight">
                   <X size={17} strokeWidth={1.3} />
                 </button>
               </div>

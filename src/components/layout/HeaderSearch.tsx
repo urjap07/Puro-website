@@ -10,6 +10,7 @@ import { COLLECTIONS } from "@/lib/collections";
 import { searchProducts } from "@/lib/search";
 import { cutoutFor } from "@/lib/cutouts";
 import { formatPrice } from "@/lib/format";
+import { wellTint } from "@/components/cart/wellTint";
 
 let cache: Product[] | null = null;
 let pending: Promise<Product[]> | null = null;
@@ -23,8 +24,8 @@ function loadProducts() {
   return pending;
 }
 
-/** Marketplace-style search: department picker, field and live suggestions. */
-export default function HeaderSearch({ className }: { className?: string }) {
+/** Search field with a department picker and live suggestions. */
+export default function HeaderSearch({ className, autoFocus = false }: { className?: string; autoFocus?: boolean }) {
   const router = useRouter();
   const params = useSearchParams();
   const [query, setQuery] = useState(params.get("q") ?? "");
@@ -72,13 +73,13 @@ export default function HeaderSearch({ className }: { className?: string }) {
         } else go();
       }}
     >
-      <div className="relative flex h-12 items-stretch overflow-hidden rounded-full bg-ivory shadow-[inset_0_1px_2px_rgba(0,0,0,0.12)] ring-1 ring-gold/30 transition focus-within:ring-2 focus-within:ring-gold-soft">
-        <label className="relative hidden shrink-0 items-center border-r border-ink/10 bg-mist-deep/80 sm:flex">
+      <div className="glass-dark glass-liquid flex h-14 items-stretch rounded-full transition-shadow duration-300 focus-within:shadow-[inset_0_1px_0_rgba(255,255,255,0.3),0_0_0_2px_rgba(216,198,160,0.85),0_30px_60px_-30px_rgba(0,0,0,0.7)]">
+        <label className="relative z-[2] m-1.5 hidden shrink-0 items-center rounded-full bg-white/[0.08] shadow-[inset_0_1px_0_rgba(255,255,255,0.18),inset_0_0_0_1px_rgba(255,255,255,0.1)] transition hover:bg-white/[0.14] sm:flex">
           <span className="sr-only">Search in</span>
           <select
             value={department}
             onChange={(event) => setDepartment(event.target.value)}
-            className="h-full cursor-pointer appearance-none bg-transparent pl-5 pr-9 text-[13px] font-medium text-ink outline-none"
+            className="h-full cursor-pointer appearance-none rounded-full bg-transparent pl-5 pr-9 text-[13px] font-medium text-ivory outline-none focus-visible:ring-2 focus-visible:ring-champagne [&>option]:text-ink"
           >
             <option value="all">All</option>
             {COLLECTIONS.map((collection) => (
@@ -87,9 +88,10 @@ export default function HeaderSearch({ className }: { className?: string }) {
               </option>
             ))}
           </select>
-          <ChevronDown size={14} strokeWidth={1.5} className="pointer-events-none absolute right-3 text-stone" />
+          <ChevronDown size={14} strokeWidth={1.5} className="pointer-events-none absolute right-3 text-champagne/80" />
         </label>
         <input
+          autoFocus={autoFocus}
           value={query}
           onChange={(event) => {
             setQuery(event.target.value);
@@ -111,14 +113,14 @@ export default function HeaderSearch({ className }: { className?: string }) {
             }
             if (event.key === "Escape") setOpen(false);
           }}
-          placeholder="Search turmeric, ubtan, hair oil, gift sets…"
-          aria-label="Search Puro"
-          className="min-w-0 flex-1 bg-transparent px-5 text-[15px] text-ink outline-none placeholder:text-stone/70"
+          placeholder="Search products, ingredients, concerns…"
+          aria-label="Search PURO"
+          className="relative z-[2] min-w-0 flex-1 bg-transparent px-5 text-[15px] text-ivory caret-champagne outline-none placeholder:text-ivory/55"
         />
         <button
           type="submit"
           aria-label="Search"
-          className="m-1 flex w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#e9d7ae] via-[#c9a365] to-[#a07c45] text-ink transition hover:brightness-110"
+          className="btn-iris relative z-[2] m-1.5 w-14 !p-0 sm:w-16"
         >
           <Search size={19} strokeWidth={1.6} />
         </button>
@@ -131,7 +133,7 @@ export default function HeaderSearch({ className }: { className?: string }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -6 }}
             transition={{ duration: 0.2 }}
-            className="absolute inset-x-0 top-[calc(100%+8px)] z-[70] overflow-hidden rounded-[22px] border border-ink/10 bg-ivory text-ink shadow-[0_30px_60px_-20px_rgba(0,0,0,0.45)]"
+            className="glass-strong !absolute inset-x-0 top-[calc(100%+10px)] z-[70] overflow-hidden rounded-[26px] p-1.5 text-ink"
           >
             {suggestions.length === 0 ? (
               <p className="px-5 py-4 text-[14px] text-stone">
@@ -148,9 +150,9 @@ export default function HeaderSearch({ className }: { className?: string }) {
                         setOpen(false);
                         router.push(`/products/${product.slug}`);
                       }}
-                      className={`flex w-full items-center gap-4 px-4 py-2.5 text-left transition ${highlight === index ? "bg-mist-deep" : ""}`}
+                      className={`flex w-full items-center gap-4 rounded-[20px] px-3 py-2 text-left transition ${highlight === index ? "bg-[linear-gradient(110deg,rgba(246,227,200,0.6),rgba(242,201,196,0.5)_35%,rgba(217,200,236,0.55)_70%,rgba(191,226,227,0.6))] shadow-[inset_0_1px_0_rgba(255,255,255,1),0_8px_18px_-14px_rgba(125,104,168,0.6)]" : ""}`}
                     >
-                      <span className="relative h-12 w-12 shrink-0 overflow-hidden rounded-[10px] bg-mist">
+                      <span className={`relative h-12 w-12 shrink-0 overflow-hidden rounded-[14px] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.7)] ${wellTint(product.slug)}`}>
                         <Image
                           src={cutoutFor(product.slug) ?? product.images[0]?.imageUrl ?? "/media/brand/02.jpg"}
                           alt=""
@@ -171,7 +173,7 @@ export default function HeaderSearch({ className }: { className?: string }) {
             )}
             <button
               type="submit"
-              className="flex w-full items-center gap-2 border-t border-ink/10 bg-mist/70 px-5 py-3 text-left text-[13px] font-medium text-emerald hover:bg-mist-deep"
+              className="mt-1 flex w-full items-center gap-2 rounded-[20px] border-t border-white/70 px-4 py-3 text-left text-[13px] font-medium text-midnight transition hover:bg-white/60"
             >
               <Search size={14} strokeWidth={1.6} /> See all results for &ldquo;{query.trim()}&rdquo;
             </button>

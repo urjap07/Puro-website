@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { getActiveProducts, getConcerns } from "@/db/queries/products";
 import { parseFilters, type RawParams } from "@/lib/results-params";
 import ResultsHero from "@/components/commerce/ResultsHero";
+import { concernTint } from "@/components/commerce/tints";
 import ShopResults from "@/components/commerce/ShopResults";
 
 export const dynamic = "force-dynamic";
@@ -37,7 +38,8 @@ export default async function ConcernPage({ params, searchParams }: ConcernPageP
         image={backdrop}
         links={concerns
           .filter((item) => item.type === concern.type)
-          .map((item) => ({ label: item.name, href: `/concerns/${item.slug}`, active: item.slug === slug }))}
+          .map((item) => ({ label: item.name, href: `/concerns/${item.slug}`, active: item.slug === slug, tint: concernTint(item) }))}
+        tint={concernTint(concern)}
       />
       <div className="bg-pearl">
         <div className="container-site py-10 sm:py-14">

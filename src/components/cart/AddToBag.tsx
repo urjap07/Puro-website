@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import clsx from "clsx";
+import { twMerge } from "tailwind-merge";
 import { Check, Minus, Plus, ShoppingBag } from "lucide-react";
 import { useCart } from "@/lib/cart-store";
 import type { Product } from "@/db/queries/products";
@@ -41,10 +42,10 @@ export function AddToBagPanel({ product }: { product: CartProduct }) {
 
   return (
     <div className="flex flex-col gap-3 sm:flex-row">
-      <div className="flex h-[54px] items-center justify-between border border-line sm:w-[140px]">
+      <div className="glass-strong flex h-[54px] items-center justify-between rounded-full sm:w-[140px]">
         <button
           type="button"
-          className="flex h-full w-12 items-center justify-center text-emerald transition hover:text-gold"
+          className="relative z-[2] flex h-full w-12 items-center justify-center rounded-full text-midnight transition hover:text-champagne-deep"
           onClick={() => setQuantity((value) => Math.max(1, value - 1))}
           aria-label="Decrease quantity"
         >
@@ -55,7 +56,7 @@ export function AddToBagPanel({ product }: { product: CartProduct }) {
         </span>
         <button
           type="button"
-          className="flex h-full w-12 items-center justify-center text-emerald transition hover:text-gold"
+          className="relative z-[2] flex h-full w-12 items-center justify-center rounded-full text-midnight transition hover:text-champagne-deep"
           onClick={() => setQuantity((value) => Math.min(10, value + 1))}
           aria-label="Increase quantity"
         >
@@ -103,7 +104,7 @@ export function QuickAdd({
     return (
       <span
         className={clsx(
-          "flex items-center justify-center rounded-full border border-line px-4 py-2.5 text-[10px] uppercase tracking-[0.2em] text-stone",
+          "flex items-center justify-center rounded-full bg-white/50 px-4 py-2.5 text-[10px] uppercase tracking-[0.2em] text-stone shadow-[inset_0_1px_0_rgba(255,255,255,0.9),inset_0_0_0_1px_rgba(255,255,255,0.55)] backdrop-blur-xl",
           className
         )}
       >
@@ -123,10 +124,13 @@ export function QuickAdd({
         setAdded(true);
         setTimeout(() => setAdded(false), 1600);
       }}
-      className={clsx(
-        "flex items-center justify-center gap-2 whitespace-nowrap rounded-full px-4 py-3 text-[11px] font-medium uppercase tracking-[0.18em] transition duration-300",
-        added ? "bg-ink text-ivory" : "bg-emerald text-ivory hover:bg-ink",
-        className
+      className={twMerge(
+        clsx(
+          "flex items-center justify-center gap-2 whitespace-nowrap rounded-full px-4 py-3 text-[11px] font-medium uppercase tracking-[0.18em] transition duration-300",
+          "shadow-[inset_0_1px_0_rgba(255,255,255,0.3),0_12px_26px_-14px_rgba(14,39,42,0.7)]",
+          added ? "bg-graphite text-ivory" : "bg-midnight text-ivory hover:bg-midnight-soft",
+          className,
+        ),
       )}
     >
       {added ? (

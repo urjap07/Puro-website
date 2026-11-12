@@ -28,21 +28,21 @@ const COLUMNS = [
     ],
   },
   {
-    title: "The Puro world",
+    title: "The PURO world",
     links: [
-      ["Our story", "/our-story"],
-      ["The ritual", "/#ritual"],
+      ["Our philosophy", "/our-story"],
       ["Ingredients", "/#ingredients"],
-      ["Good to know", "/#why-puro"],
+      ["Skincare finder", "/#finder"],
+      ["Journal", "/#journal"],
     ],
   },
 ];
 
 const PROMISES = [
-  { icon: Rabbit, label: "Cruelty-free", note: "PETA certified" },
-  { icon: FlaskConical, label: "Dermatologically tested", note: "Gentle on skin" },
-  { icon: BadgeCheck, label: "GMP certified", note: "Made with care" },
-  { icon: HandHeart, label: "Gives back", note: "Supports rural women" },
+  { icon: Rabbit, label: "Cruelty-free", note: "PETA certified", tint: "tint-sage", ink: "text-sage-deep" },
+  { icon: FlaskConical, label: "Dermatologically tested", note: "Gentle on skin", tint: "tint-aqua", ink: "text-aqua-deep" },
+  { icon: BadgeCheck, label: "GMP certified", note: "Made with care", tint: "tint-saffron", ink: "text-saffron-deep" },
+  { icon: HandHeart, label: "Gives back", note: "Supports rural women", tint: "tint-quartz", ink: "text-quartz-deep" },
 ];
 
 const PERKS = ["First look at new rituals", "Seasonal gift edits", "Stories from Sa-Ni-Sa"];
@@ -94,29 +94,31 @@ export default function SiteFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-noir text-ivory">
-      {/* Gilded hairline across the top */}
-      <div className="h-px bg-gradient-to-r from-transparent via-gold/60 to-transparent" />
+    <footer className="relative isolate overflow-clip text-midnight">
+      {/* Extra pools of rose, saffron and lilac light for the glass to catch */}
+      <div aria-hidden="true" className="pointer-events-none absolute -left-[8%] top-[6%] -z-10 h-[38vmax] w-[38vmax] rounded-full bg-[radial-gradient(circle,rgba(233,195,198,0.55),transparent_65%)] blur-3xl" />
+      <div aria-hidden="true" className="pointer-events-none absolute -right-[6%] top-[30%] -z-10 h-[34vmax] w-[34vmax] rounded-full bg-[radial-gradient(circle,rgba(205,189,230,0.55),transparent_65%)] blur-3xl" />
+      <div aria-hidden="true" className="pointer-events-none absolute bottom-0 left-[30%] -z-10 h-[30vmax] w-[30vmax] rounded-full bg-[radial-gradient(circle,rgba(233,181,90,0.35),transparent_65%)] blur-3xl" />
 
       {/* The Puro Letter */}
-      <div className="container-site relative grid items-center gap-14 py-20 sm:py-28 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
-        <div>
-          <p className="eyebrow flex items-center gap-4 text-ivory/60">
-            The Puro Letter <span className="h-px w-16 bg-ivory/30" />
+      <div className="container-site relative grid items-center gap-14 pb-10 pt-12 sm:pb-12 sm:pt-16 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
+        <div className="glass tint-quartz rounded-[32px] p-7 sm:p-10">
+          <p className="eyebrow flex items-center gap-4 text-quartz-deep">
+            The Puro Letter <span className="h-px w-16 bg-quartz-deep/40" />
           </p>
-          <h2 className="mt-6 font-display text-[52px] leading-[0.98] sm:text-[76px] lg:text-[92px]">
-            Join the <em className="text-gold-soft">ritual.</em>
+          <h2 className="mt-6 font-display text-[52px] leading-[0.98] text-midnight sm:text-[76px] lg:text-[92px]">
+            Join the <em className="text-iris pr-2">ritual.</em>
           </h2>
-          <p className="mt-6 max-w-[480px] text-[17px] leading-[1.8] text-ivory/70">
+          <p className="mt-6 max-w-[480px] text-[17px] leading-[1.8] text-graphite">
             Rituals, new arrivals and quiet moments — a few thoughtful letters a month, never more.
           </p>
           <div className="mt-9 max-w-[560px]">
             <NewsletterForm />
           </div>
-          <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-[14px] text-ivory/65">
+          <ul className="mt-6 flex flex-wrap gap-2 text-[13px] text-graphite">
             {PERKS.map((perk) => (
-              <li key={perk} className="flex items-center gap-2">
-                <Check size={14} strokeWidth={1.6} className="text-gold-soft" /> {perk}
+              <li key={perk} className="flex items-center gap-2 rounded-full bg-white/55 px-3.5 py-1.5 shadow-[inset_0_1px_0_rgba(255,255,255,1),inset_0_0_0_1px_rgba(255,255,255,0.6),0_6px_14px_-10px_rgba(180,112,124,0.5)]">
+                <Check size={14} strokeWidth={1.6} className="text-quartz-deep" /> {perk}
               </li>
             ))}
           </ul>
@@ -124,18 +126,18 @@ export default function SiteFooter() {
 
         {/* Photograph mosaic with the turning seal */}
         <div className="relative mx-auto hidden h-[440px] w-full max-w-[480px] sm:block">
-          <div className="absolute left-0 top-0 h-[78%] w-[58%] overflow-hidden rounded-[28px] shadow-[0_40px_80px_-40px_rgba(0,0,0,0.8)]">
+          <div className="absolute left-0 top-0 h-[78%] w-[58%] overflow-hidden rounded-[30px] shadow-[0_40px_80px_-40px_rgba(0,0,0,0.8)] ring-1 ring-white/80">
             <Image src={MOSAIC[0]} alt="" fill sizes="280px" className="object-cover" />
           </div>
-          <div className="absolute bottom-0 right-0 h-[62%] w-[48%] overflow-hidden rounded-[28px] shadow-[0_40px_80px_-40px_rgba(0,0,0,0.8)] ring-[6px] ring-[#07303b]">
+          <div className="absolute bottom-0 right-0 h-[62%] w-[48%] overflow-hidden rounded-[30px] shadow-[0_40px_80px_-40px_rgba(0,0,0,0.8)] ring-[6px] ring-white/60">
             <Image src={MOSAIC[1]} alt="" fill sizes="240px" className="object-cover" />
           </div>
-          <div className="absolute right-[8%] top-[4%] h-[30%] w-[26%] overflow-hidden rounded-full shadow-[0_30px_60px_-30px_rgba(0,0,0,0.8)] ring-[5px] ring-[#07303b]">
+          <div className="absolute right-[8%] top-[4%] h-[30%] w-[26%] overflow-hidden rounded-full shadow-[0_30px_60px_-30px_rgba(0,0,0,0.8)] ring-[5px] ring-white/60">
             <Image src={MOSAIC[2]} alt="" fill sizes="130px" className="object-cover" />
           </div>
           <RotatingSeal
             text="Ethical inside out · Puro Body & Soul · "
-            className="absolute bottom-[10%] left-[44%] w-[124px] !bg-ivory text-[40px] !text-emerald"
+            className="absolute bottom-[10%] left-[44%] w-[124px] !bg-[linear-gradient(140deg,#4a2c42,#173c40)] text-[40px] !text-saffron-soft"
           />
         </div>
       </div>
@@ -143,17 +145,17 @@ export default function SiteFooter() {
       {/* Promises */}
       <div className="container-site">
         <ul className="grid grid-cols-1 gap-3 min-[480px]:grid-cols-2 lg:grid-cols-4">
-          {PROMISES.map(({ icon: Icon, label, note }) => (
+          {PROMISES.map(({ icon: Icon, label, note, tint, ink }) => (
             <li
               key={label}
-              className="flex items-center gap-4 rounded-[20px] border border-ivory/10 bg-ivory/[0.04] p-4 transition duration-500 hover:border-gold-soft/40 hover:bg-ivory/[0.07] sm:p-5"
+              className={`glass glass-hover flex items-center gap-4 rounded-[24px] p-4 sm:p-5 ${tint}`}
             >
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-ivory/[0.08] text-gold-soft">
+              <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/60 shadow-[inset_0_1px_0_rgba(255,255,255,1),inset_0_0_0_1px_rgba(255,255,255,0.6)] ${ink}`}>
                 <Icon size={19} strokeWidth={1.2} />
               </span>
               <span>
-                <span className="block font-display text-[18px] leading-tight sm:text-[21px]">{label}</span>
-                <span className="mt-0.5 block text-[12px] text-ivory/50 sm:text-[13px]">{note}</span>
+                <span className="block font-display text-[18px] leading-tight text-midnight sm:text-[21px]">{label}</span>
+                <span className="mt-0.5 block text-[12px] text-graphite sm:text-[13px]">{note}</span>
               </span>
             </li>
           ))}
@@ -161,17 +163,17 @@ export default function SiteFooter() {
       </div>
 
       {/* Links + visit */}
-      <div className="container-site grid gap-14 py-20 lg:grid-cols-[1.6fr_1fr] lg:gap-20">
-        <div className="grid grid-cols-2 gap-10 sm:grid-cols-3">
+      <div className="container-site grid gap-3 py-3 lg:grid-cols-[1.6fr_1fr]">
+        <div className="glass tint-lilac grid grid-cols-2 gap-10 rounded-[32px] p-7 sm:grid-cols-3 sm:p-10">
           {COLUMNS.map((column) => (
             <div key={column.title}>
-              <h3 className="text-[12px] font-medium uppercase tracking-[0.24em] text-gold-soft/80">{column.title}</h3>
+              <h3 className="text-[12px] font-medium uppercase tracking-[0.24em] text-lilac-deep">{column.title}</h3>
               <ul className="mt-6 space-y-3">
                 {column.links.map(([label, href]) => (
                   <li key={href}>
                     <Link
                       href={href}
-                      className="group inline-flex items-center gap-1.5 font-display text-[20px] leading-tight text-ivory/75 transition duration-300 hover:translate-x-1 hover:text-ivory sm:text-[22px]"
+                      className="group inline-flex items-center gap-1.5 rounded-md font-display text-[20px] leading-tight text-midnight transition duration-300 hover:translate-x-1 hover:text-lilac-deep sm:text-[22px]"
                     >
                       {label}
                       <ArrowUpRight
@@ -187,21 +189,21 @@ export default function SiteFooter() {
           ))}
         </div>
 
-        <div className="rounded-[26px] border border-ivory/10 bg-ivory/[0.04] p-7 sm:p-8">
-          <h3 className="text-[12px] font-medium uppercase tracking-[0.24em] text-gold-soft/80">Say hello</h3>
-          <ul className="mt-6 space-y-4 text-[15px] text-ivory/75">
+        <div className="glass tint-aqua rounded-[32px] p-7 sm:p-10">
+          <h3 className="text-[12px] font-medium uppercase tracking-[0.24em] text-aqua-deep">Say hello</h3>
+          <ul className="mt-6 space-y-4 text-[15px] text-graphite">
             <li>
-              <a href={`mailto:${SITE.email}`} className="flex items-center gap-3 transition hover:text-ivory">
-                <Mail size={17} strokeWidth={1.2} className="text-ivory/50" /> {SITE.email}
+              <a href={`mailto:${SITE.email}`} className="flex items-center gap-3 transition hover:text-midnight">
+                <Mail size={17} strokeWidth={1.2} className="text-aqua-deep" /> {SITE.email}
               </a>
             </li>
             <li>
-              <a href={SITE.phoneHref} className="flex items-center gap-3 transition hover:text-ivory">
-                <Phone size={17} strokeWidth={1.2} className="text-ivory/50" /> {SITE.phone}
+              <a href={SITE.phoneHref} className="flex items-center gap-3 transition hover:text-midnight">
+                <Phone size={17} strokeWidth={1.2} className="text-aqua-deep" /> {SITE.phone}
               </a>
             </li>
             <li className="flex gap-3">
-              <MapPin size={17} strokeWidth={1.2} className="mt-1 shrink-0 text-ivory/50" />
+              <MapPin size={17} strokeWidth={1.2} className="mt-1 shrink-0 text-aqua-deep" />
               <span className="leading-relaxed">
                 {SITE.address.map((line) => (
                   <span key={line} className="block">
@@ -219,7 +221,7 @@ export default function SiteFooter() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={label}
-                className="flex h-12 w-12 items-center justify-center rounded-full border border-ivory/20 text-ivory/80 transition duration-300 hover:-translate-y-0.5 hover:border-ivory hover:bg-ivory hover:text-ink"
+                className="btn-glass h-12 w-12 !p-0 hover:-translate-y-0.5 hover:text-aqua-deep"
               >
                 <Icon />
               </a>
@@ -229,15 +231,15 @@ export default function SiteFooter() {
       </div>
 
       {/* Signature */}
-      <div className="border-t border-ivory/10">
-        <div className="container-site flex flex-col items-center gap-6 pb-24 pt-8 text-center md:flex-row md:justify-between md:pb-8 md:pr-28 md:text-left">
+      <div className="container-site pb-24 pt-3 md:pb-6 md:pr-28">
+        <div className="glass-strong flex flex-col items-center gap-6 rounded-[32px] px-6 py-6 text-center md:flex-row md:justify-between md:rounded-full md:px-8 md:py-4 md:text-left">
           <Link href="/" aria-label="Puro Body & Soul — home" className="leading-none">
-            <span className="block font-display text-[30px] tracking-[0.2em]" style={{ marginRight: "-0.2em" }}>
+            <span className="block font-display text-[30px] tracking-[0.2em] text-midnight" style={{ marginRight: "-0.2em" }}>
               PURO
             </span>
-            <span className="mt-1 block text-[9px] font-medium uppercase tracking-[0.5em] text-ivory/55">Body &amp; Soul</span>
+            <span className="mt-1 block text-[9px] font-medium uppercase tracking-[0.5em] text-champagne-deep">Body &amp; Soul</span>
           </Link>
-          <p className="text-[13px] text-ivory/50">
+          <p className="text-[13px] text-stone">
             © {year} Puro Body &amp; Soul · A division of {SITE.organisation}
           </p>
           <BackToTop />

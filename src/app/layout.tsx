@@ -1,40 +1,42 @@
 import type { Metadata } from "next";
-import { Instrument_Serif, Manrope } from "next/font/google";
+import { Cormorant_Garamond, DM_Sans } from "next/font/google";
 import SiteHeader from "@/components/layout/SiteHeader";
 import SiteFooter from "@/components/layout/SiteFooter";
 import CartDrawer from "@/components/cart/CartDrawer";
 import AddedToast from "@/components/cart/AddedToast";
 import FlightLayer from "@/components/cart/FlightLayer";
 import QuickLook from "@/components/commerce/QuickLook";
-import IntroCurtain from "@/components/layout/IntroCurtain";
 import SmoothScroll from "@/components/layout/SmoothScroll";
+import LiquidBackdrop from "@/components/layout/LiquidBackdrop";
 import CursorLabel from "@/components/motion/CursorLabel";
 import ScrollProgress from "@/components/motion/ScrollProgress";
-import { INTRO_BOOT_SCRIPT } from "@/lib/intro";
 import { getConcerns, type Concern } from "@/db/queries/products";
 import "./globals.css";
 
-/** Editorial display serif for headlines and product names. */
-const display = Instrument_Serif({
+/** Editorial display serif for headlines, italics and product names (PRD §7.3). */
+const display = Cormorant_Garamond({
   variable: "--font-display",
   subsets: ["latin"],
-  weight: "400",
+  weight: ["300", "400", "500", "600"],
   style: ["normal", "italic"],
+  display: "swap",
 });
 
-const sans = Manrope({
+/** Readable sans for product information, navigation and labels. */
+const sans = DM_Sans({
   variable: "--font-sans",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
   title: {
-    default: "Puro Body & Soul — Botanical rituals for skin, body & soul",
+    default: "PURO Body & Soul — The Art of Conscious Skin",
     template: "%s | Puro Body & Soul",
   },
   description:
-    "Botanical skin, body and hair care crafted with turmeric, saffron, aloe and age-old wisdom. Cruelty-free and dermatologically tested.",
+    "Thoughtfully formulated face, body and hair care from PURO Body & Soul — botanical ingredients, honest formulation and a ritual for every day. Cruelty-free and dermatologically tested.",
 };
 
 async function loadConcerns(): Promise<Concern[]> {
@@ -54,12 +56,10 @@ export default async function RootLayout({
   const concerns = await loadConcerns();
 
   return (
-    // The boot script sets data-intro on <html> before hydration.
     <html lang="en" suppressHydrationWarning>
       <body className={`${display.variable} ${sans.variable}`}>
-        <script dangerouslySetInnerHTML={{ __html: INTRO_BOOT_SCRIPT }} />
+        <LiquidBackdrop />
         <SmoothScroll />
-        <IntroCurtain />
         <SiteHeader concerns={concerns} />
         <main>{children}</main>
         <SiteFooter />

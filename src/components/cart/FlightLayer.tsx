@@ -3,10 +3,15 @@
 import { motion } from "framer-motion";
 import { useFlights, type Flight } from "@/lib/flight-store";
 
-/** Where flights land: the header's bag button. */
+/**
+ * Where flights land: a basket docked on screen (the homepage shelves) if one
+ * is visible, otherwise the header's bag button.
+ */
 function bagTarget() {
-  const el = document.querySelector("[data-bag-target]");
-  const rect = el?.getBoundingClientRect();
+  const onScreen = (rect?: DOMRect) => Boolean(rect && rect.width > 0 && rect.bottom > 0 && rect.top < window.innerHeight);
+  const dock = document.querySelector('[data-bag-target="dock"]')?.getBoundingClientRect();
+  const header = document.querySelector("header [data-bag-target]")?.getBoundingClientRect();
+  const rect = onScreen(dock) ? dock : header;
   return rect ? { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 } : { x: window.innerWidth - 60, y: 40 };
 }
 

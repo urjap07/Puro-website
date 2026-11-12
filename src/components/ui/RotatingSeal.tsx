@@ -6,7 +6,7 @@ export default function RotatingSeal({ text, className }: { text: string; classN
     <div
       aria-hidden="true"
       className={clsx(
-        "flex aspect-square items-center justify-center rounded-full bg-emerald text-ivory shadow-[0_30px_60px_-25px_rgba(6,48,58,0.7)]",
+        "flex aspect-square items-center justify-center rounded-full bg-emerald text-ivory shadow-[inset_0_1px_0_rgba(255,255,255,0.9),inset_0_-2px_6px_rgba(14,39,42,0.12),inset_0_0_0_1px_rgba(255,255,255,0.4),0_30px_60px_-25px_rgba(6,48,58,0.7)]",
         className,
       )}
     >

@@ -48,7 +48,7 @@ export default function CursorLabel() {
         {label && (
           <motion.div
             key="label"
-            className="-ml-[46px] -mt-[46px] flex h-[92px] w-[92px] items-center justify-center rounded-full bg-ivory/95 text-[10px] font-medium uppercase tracking-[0.2em] text-ink shadow-[0_20px_40px_-20px_rgba(0,0,0,0.5)] backdrop-blur"
+            className="glass-strong glass-liquid -ml-[46px] -mt-[46px] flex h-[92px] w-[92px] items-center justify-center rounded-full text-[10px] font-medium uppercase tracking-[0.2em] text-midnight"
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0, opacity: 0 }}

@@ -14,6 +14,7 @@ import WishButton from "@/components/cart/WishButton";
 import Price from "./Price";
 import QuickLookButton from "./QuickLookButton";
 import StarRating from "./StarRating";
+import { TINT, productTint } from "./tints";
 
 /** Add-to-bag button that becomes a quantity stepper once the product is in the bag. */
 export function BagButton({ product, className }: { product: Product; className?: string }) {
@@ -24,14 +25,14 @@ export function BagButton({ product, className }: { product: Product; className?
   if (!variant) return null;
   if (variant.stockQuantity <= 0) {
     return (
-      <span className={clsx("flex h-11 items-center justify-center rounded-full border border-ink/15 text-[12px] font-medium uppercase tracking-[0.16em] text-stone", className)}>
+      <span className={clsx("glass flex h-11 items-center justify-center rounded-full text-[12px] font-medium uppercase tracking-[0.16em] text-stone", className)}>
         Currently unavailable
       </span>
     );
   }
   if (inBag) {
     return (
-      <div className={clsx("flex h-11 items-center justify-between rounded-full bg-emerald px-1.5 text-ivory", className)}>
+      <div className={clsx("flex h-11 items-center justify-between rounded-full bg-gradient-to-b from-[#2b5a5f] via-[#173c40] to-[#10302f] px-1.5 text-ivory shadow-[inset_0_1px_0_rgba(255,255,255,0.35),inset_0_-1px_0_rgba(0,0,0,0.25),0_12px_26px_-14px_rgba(14,39,42,0.75)]", className)}>
         <button type="button" aria-label={`One less ${product.name}`} onClick={() => setQuantity(variant.id, inBag.quantity - 1)} className="flex h-8 w-8 items-center justify-center rounded-full hover:bg-ivory/15">
           <Minus size={15} strokeWidth={1.6} />
         </button>
@@ -60,7 +61,7 @@ export function BagButton({ product, className }: { product: Product; className?
         flyToBasket(event.currentTarget, flightImage(product));
       }}
       className={clsx(
-        "flex h-11 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#ecdcb4] via-[#d2b077] to-[#c29b5e] text-[12px] font-semibold uppercase tracking-[0.16em] text-ink shadow-[0_10px_22px_-14px_rgba(140,106,55,0.9)] transition hover:brightness-105 active:scale-[0.98]",
+        "flex h-11 items-center justify-center gap-2 rounded-full bg-gradient-to-b from-[#f3eadb] via-[#dccbab] to-[#cbb68f] text-midnight-deep shadow-[inset_0_1px_0_rgba(255,255,255,0.9),inset_0_-1px_0_rgba(122,101,68,0.35),0_12px_24px_-14px_rgba(122,101,68,0.8)] text-[12px] font-semibold uppercase tracking-[0.16em] transition hover:brightness-105 active:scale-[0.98]",
         className,
       )}
     >
@@ -75,7 +76,7 @@ export function DeliveryLine({ price, className }: { price: number; className?: 
   const when = dates ?? `in ${INDIA_DAYS}`;
   return (
     <p className={clsx("flex items-start gap-1.5 text-[13px] leading-snug text-stone", className)}>
-      <Truck size={14} strokeWidth={1.4} className="mt-0.5 shrink-0 text-emerald" />
+      <Truck size={14} strokeWidth={1.4} className="mt-0.5 shrink-0 text-midnight-soft" />
       {!freeDeliveryApplies ? (
         <span>
           Ships abroad · arrives <span className="text-emerald">{when}</span>
@@ -117,11 +118,13 @@ export default function ResultCard({
   const badge = product.isFeatured ? "Bestseller" : product.isClassic ? "Puro Classic" : null;
   const lowStock = variant && variant.stockQuantity > 0 && variant.stockQuantity <= 5;
   const list = layout === "list";
+  const colour = TINT[productTint(product)];
 
   return (
     <article
       className={clsx(
-        "group relative flex rounded-[24px] border border-ink/[0.07] bg-ivory p-3 shadow-[0_1px_0_rgba(255,255,255,0.8)_inset] transition duration-500 hover:-translate-y-1 hover:border-gold/40 hover:shadow-[0_30px_60px_-36px_rgba(6,48,58,0.55)]",
+        "glass glass-hover group flex h-full rounded-[28px] p-3",
+        colour.glass,
         list ? "flex-col gap-4 sm:flex-row sm:gap-6" : "flex-col",
       )}
     >
@@ -129,7 +132,7 @@ export default function ResultCard({
         data-fly-source
         data-quicklook={product.slug}
         className={clsx(
-          "relative overflow-hidden rounded-[18px] bg-[radial-gradient(ellipse_75%_62%_at_50%_44%,#ffffff_0%,#f5efe5_58%,#e7ddcc_100%)]",
+          "relative overflow-hidden rounded-[22px] bg-[radial-gradient(ellipse_75%_62%_at_50%_44%,rgba(255,255,255,0.95)_0%,rgba(247,242,233,0.78)_58%,rgba(231,221,204,0.62)_100%)] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.7),inset_0_-18px_36px_-24px_rgba(122,101,68,0.25)]",
           list ? "aspect-square sm:w-[240px] sm:shrink-0" : "aspect-square",
         )}
       >
@@ -149,7 +152,7 @@ export default function ResultCard({
           )}
         </Link>
         {badge && (
-          <span className="pointer-events-none !absolute left-3 top-3 rounded-full bg-noir px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-gold-soft">
+          <span className={clsx("glass pointer-events-none !absolute left-2.5 top-2.5 rounded-full px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.12em] sm:left-3 sm:top-3 sm:px-3 sm:py-1 sm:text-[10px] sm:tracking-[0.18em]", product.isFeatured ? clsx(TINT.saffron.glass, TINT.saffron.text) : clsx(TINT.lilac.glass, TINT.lilac.text))}>
             {badge}
           </span>
         )}
@@ -158,8 +161,8 @@ export default function ResultCard({
       </div>
 
       <div className={clsx("flex flex-1 flex-col", list ? "py-2 sm:pr-4" : "px-1.5 pb-1 pt-4")}>
-        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-gold-deep">{product.subCategory ?? product.categories[0]?.name}</p>
-        <Link href={href} className={clsx("mt-1.5 font-display leading-[1.12] text-ink transition hover:text-emerald", list ? "text-[28px]" : "line-clamp-2 text-[22px]")}>
+        <p className={clsx("text-[11px] font-semibold uppercase tracking-[0.18em]", colour.text)}>{product.subCategory ?? product.categories[0]?.name}</p>
+        <Link href={href} className={clsx("mt-1.5 font-display leading-[1.12] text-midnight transition hover:text-champagne-deep", list ? "text-[28px]" : "line-clamp-2 text-[22px]")}>
           {product.name}
         </Link>
         {product.headline && <p className={clsx("mt-1 text-[14px] text-stone", list ? "" : "line-clamp-1")}>{product.headline}</p>}
@@ -172,7 +175,7 @@ export default function ResultCard({
           <ul className="mt-3 space-y-1 text-[14px] text-stone">
             {product.benefits.slice(0, 3).map((benefit) => (
               <li key={benefit} className="flex gap-2">
-                <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-gold" /> {benefit}
+                <span className={clsx("mt-2 h-1.5 w-1.5 shrink-0 rounded-full", colour.dot)} /> {benefit}
               </li>
             ))}
           </ul>
@@ -182,7 +185,7 @@ export default function ResultCard({
           {product.sizeLabel && <span className="mb-0.5 text-[12px] uppercase tracking-[0.12em] text-stone">{product.sizeLabel}</span>}
         </div>
         {variant && <DeliveryLine price={variant.price} className="mt-2" />}
-        {lowStock && <p className="mt-1.5 text-[13px] font-medium text-rose-700">Only {variant.stockQuantity} left in stock</p>}
+        {lowStock && <p className="mt-1.5 text-[13px] font-medium text-blush-deep">Only {variant.stockQuantity} left in stock</p>}
         <div className={clsx("mt-auto pt-4", list && "sm:max-w-[280px]")}>
           <BagButton product={product} className="w-full" />
         </div>

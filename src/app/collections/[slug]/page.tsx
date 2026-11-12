@@ -4,6 +4,7 @@ import { getActiveProducts, getConcerns } from "@/db/queries/products";
 import { COLLECTIONS, getCollection } from "@/lib/collections";
 import { parseFilters, type RawParams } from "@/lib/results-params";
 import ResultsHero from "@/components/commerce/ResultsHero";
+import { collectionTint } from "@/components/commerce/tints";
 import ShopResults from "@/components/commerce/ShopResults";
 
 export const dynamic = "force-dynamic";
@@ -38,7 +39,8 @@ export default async function CollectionPage({ params, searchParams }: Collectio
         title={collection.title}
         description={collection.description}
         image={collection.image}
-        links={COLLECTIONS.map((item) => ({ label: item.title, href: `/collections/${item.slug}`, active: item.slug === slug }))}
+        links={COLLECTIONS.map((item) => ({ label: item.title, href: `/collections/${item.slug}`, active: item.slug === slug, tint: collectionTint(item.slug) }))}
+        tint={collectionTint(slug)}
       />
       <div className="bg-pearl">
         <div className="container-site py-10 sm:py-14">

@@ -3,6 +3,7 @@ import { getActiveProducts, getConcerns } from "@/db/queries/products";
 import { COLLECTIONS } from "@/lib/collections";
 import { parseFilters, type RawParams } from "@/lib/results-params";
 import ResultsHero from "@/components/commerce/ResultsHero";
+import { collectionTint } from "@/components/commerce/tints";
 import ShopResults from "@/components/commerce/ShopResults";
 
 export const dynamic = "force-dynamic";
@@ -27,7 +28,8 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
         }
         description="Botanical care for face, body and hair — rooted in age-old wisdom, delivered across India and abroad, free in India over ₹500."
         image="/media/products/glow-up-pithi-pack/04.jpg"
-        links={COLLECTIONS.map((collection) => ({ label: collection.title, href: `/collections/${collection.slug}` }))}
+        links={COLLECTIONS.map((collection) => ({ label: collection.title, href: `/collections/${collection.slug}`, tint: collectionTint(collection.slug) }))}
+        tint="champagne"
       />
       <div className="bg-pearl">
         <div className="container-site py-10 sm:py-14">

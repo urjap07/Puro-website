@@ -15,6 +15,7 @@ import BuyBox from "@/components/pdp/BuyBox";
 import MobileBuyBar from "@/components/pdp/MobileBuyBar";
 import FrequentlyBought from "@/components/pdp/FrequentlyBought";
 import ReviewsPanel from "@/components/pdp/ReviewsPanel";
+import { TINT, concernTint } from "@/components/commerce/tints";
 
 export const dynamic = "force-dynamic";
 
@@ -34,9 +35,9 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
 }
 
 const PROMISES = [
-  { icon: Rabbit, label: "Cruelty-free" },
-  { icon: ShieldCheck, label: "Dermatologically tested" },
-  { icon: Leaf, label: "Non-toxic" },
+  { icon: Rabbit, label: "Cruelty-free", tint: TINT.quartz },
+  { icon: ShieldCheck, label: "Dermatologically tested", tint: TINT.aqua },
+  { icon: Leaf, label: "Non-toxic", tint: TINT.sage },
 ];
 
 const byReviews = (list: Product[]) => [...list].sort((a, b) => (b.rating?.count ?? 0) - (a.rating?.count ?? 0));
@@ -106,7 +107,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
       content: (
         <ul className="flex flex-wrap gap-2">
           {certifications.map((claim) => (
-            <li key={claim} className="rounded-full border border-emerald/20 px-3.5 py-1.5 text-[13px] text-emerald">
+            <li key={claim} className={`glass rounded-full px-3.5 py-1.5 text-[13px] ${TINT.sage.glass} ${TINT.sage.text}`}>
               {claim}
             </li>
           ))}
@@ -142,12 +143,12 @@ export default async function ProductPage({ params }: ProductPageProps) {
           <div className="min-w-0">
             <Link
               href={collection ? `/collections/${collection.slug}` : "/shop"}
-              className="text-[12px] font-semibold uppercase tracking-[0.18em] text-gold-deep hover:underline"
+              className="text-[12px] font-semibold uppercase tracking-[0.18em] text-champagne-deep hover:underline"
             >
               {product.subCategory ?? product.categories[0]?.name}
             </Link>
-            <h1 className="mt-2 font-display text-[38px] leading-[1.04] text-ink sm:text-[48px]">{product.name}</h1>
-            {product.headline && <p className="mt-2 font-display text-[21px] italic text-emerald">{product.headline}</p>}
+            <h1 className="mt-2 font-display text-[38px] leading-[1.04] text-midnight sm:text-[48px]">{product.name}</h1>
+            {product.headline && <p className="mt-2 font-display text-[21px] italic text-midnight-soft">{product.headline}</p>}
             <div className="mt-3 flex flex-wrap items-center gap-3">
               {product.rating && (
                 <a href="#reviews">
@@ -155,11 +156,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 </a>
               )}
               {product.isFeatured && (
-                <span className="rounded-full bg-noir px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-gold-soft">Bestseller</span>
+                <span className={`glass rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] ${TINT.saffron.glass} ${TINT.saffron.text}`}>Bestseller</span>
               )}
             </div>
 
-            <div className="mt-5 border-t border-ink/10 pt-5">
+            <div className="mt-5 border-t border-white/70 pt-5 shadow-[0_-1px_0_rgba(52,59,59,0.08)]">
               {variant && (
                 <div className="flex flex-wrap items-end gap-3">
                   <Price value={variant.price} size="lg" />
@@ -185,7 +186,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                         <Link
                           key={concern.slug}
                           href={`/concerns/${concern.slug}`}
-                          className="rounded-full border border-emerald/20 px-3 py-1 text-[13px] text-emerald hover:bg-emerald hover:text-ivory"
+                          className={`glass glass-hover rounded-full px-3 py-1 text-[13px] ${TINT[concernTint(concern)].glass} ${TINT[concernTint(concern)].text}`}
                         >
                           {concern.name}
                         </Link>
@@ -197,7 +198,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
             )}
 
             {product.benefits.length > 0 && (
-              <div className="mt-7 border-t border-ink/10 pt-6">
+              <div className="mt-7 border-t border-white/70 pt-6 shadow-[0_-1px_0_rgba(52,59,59,0.08)]">
                 <h2 className="font-display text-[24px] text-ink">About this item</h2>
                 <ul className="mt-3 space-y-2.5">
                   {product.benefits.map((benefit) => (
@@ -211,17 +212,17 @@ export default async function ProductPage({ params }: ProductPageProps) {
             )}
 
             <div className="mt-7 grid grid-cols-3 gap-2">
-              {PROMISES.map(({ icon: Icon, label }) => (
-                <div key={label} className="flex flex-col items-center gap-2 rounded-[16px] bg-ivory p-3 text-center ring-1 ring-ink/[0.06]">
-                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-mist text-emerald">
+              {PROMISES.map(({ icon: Icon, label, tint }) => (
+                <div key={label} className={`glass flex flex-col items-center gap-2 rounded-[24px] p-3 text-center ${tint.glass}`}>
+                  <span className={`flex h-10 w-10 items-center justify-center rounded-full bg-white/60 ${tint.text} shadow-[inset_0_1px_0_rgba(255,255,255,1),inset_0_0_0_1px_rgba(255,255,255,0.6),0_6px_14px_-8px_rgba(14,39,42,0.4)]`}>
                     <Icon size={18} strokeWidth={1.3} />
                   </span>
-                  <span className="text-[12px] font-medium text-ink">{label}</span>
+                  <span className="text-[12px] font-medium text-graphite">{label}</span>
                 </div>
               ))}
             </div>
 
-            {product.tagline && <p className="mt-7 font-display text-[22px] italic text-emerald">&ldquo;{product.tagline}&rdquo;</p>}
+            {product.tagline && <p className="text-iris mt-7 w-fit pr-1 font-display text-[22px] italic">&ldquo;{product.tagline}&rdquo;</p>}
 
             {/* Buy box below details until there's room for a third column */}
             <div className="mt-8 xl:hidden">

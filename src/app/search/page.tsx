@@ -3,6 +3,7 @@ import { getActiveProducts, getConcerns } from "@/db/queries/products";
 import { getCollection } from "@/lib/collections";
 import { parseFilters, type RawParams } from "@/lib/results-params";
 import ResultsHero from "@/components/commerce/ResultsHero";
+import { collectionTint } from "@/components/commerce/tints";
 import ShopResults from "@/components/commerce/ShopResults";
 
 export const dynamic = "force-dynamic";
@@ -33,6 +34,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
             </>
           )
         }
+        tint={department ? collectionTint(department.slug) : "lilac"}
       />
       <div className="bg-pearl">
         <div className="container-site py-10 sm:py-14">

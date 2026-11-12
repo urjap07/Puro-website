@@ -19,7 +19,7 @@ export default function ReviewsPanel({ product, reviews }: { product: Product; r
         {rating ? (
           <>
             <div className="flex items-end gap-3">
-              <span className="font-display text-[64px] leading-none text-ink">{rating.value.toFixed(1)}</span>
+              <span className="font-display text-[64px] leading-none text-midnight">{rating.value.toFixed(1)}</span>
               <span className="mb-2 text-[14px] text-stone">out of 5</span>
             </div>
             <StarRating value={rating.value} size={18} className="mt-2" />
@@ -28,9 +28,9 @@ export default function ReviewsPanel({ product, reviews }: { product: Product; r
               <ul className="mt-6 space-y-2.5">
                 {[5, 4, 3, 2, 1].map((stars) => (
                   <li key={stars} className="flex items-center gap-3 text-[13px]">
-                    <span className="w-12 shrink-0 text-emerald">{stars} star</span>
-                    <span className="h-3 flex-1 overflow-hidden rounded-full bg-mist-deep">
-                      <span className="block h-full rounded-full bg-gradient-to-r from-gold to-gold-soft" style={{ width: stars === 5 ? "100%" : "0%" }} />
+                    <span className="w-12 shrink-0 text-midnight">{stars} star</span>
+                    <span className="h-3 flex-1 overflow-hidden rounded-full bg-white/60 shadow-[inset_0_1px_2px_rgba(14,39,42,0.12),inset_0_0_0_1px_rgba(255,255,255,0.7)]">
+                      <span className="block h-full rounded-full bg-gradient-to-r from-saffron via-apricot to-quartz" style={{ width: stars === 5 ? "100%" : "0%" }} />
                     </span>
                     <span className="w-10 shrink-0 text-right text-stone">{stars === 5 ? "100%" : "0%"}</span>
                   </li>
@@ -41,25 +41,25 @@ export default function ReviewsPanel({ product, reviews }: { product: Product; r
         ) : (
           <p className="text-[15px] text-stone">No ratings yet.</p>
         )}
-        <div className="mt-8 rounded-[18px] bg-mist p-5">
-          <p className="font-display text-[22px] leading-tight text-ink">Tried this ritual?</p>
+        <div className="glass tint-apricot mt-8 rounded-[24px] p-5">
+          <p className="font-display text-[22px] leading-tight text-midnight">Tried this ritual?</p>
           <p className="mt-1 text-[14px] text-stone">We&rsquo;d love to hear how it felt. Reviews open with online ordering.</p>
         </div>
       </div>
 
       <div>
         {reviews.length === 0 ? (
-          <div className="flex h-full min-h-[200px] flex-col items-center justify-center rounded-[22px] border border-dashed border-ink/15 p-8 text-center">
-            <MessageSquareQuote size={30} strokeWidth={1} className="text-emerald/60" />
-            <p className="mt-4 font-display text-[26px] text-ink">No written reviews yet</p>
+          <div className="glass tint-lilac flex h-full min-h-[200px] flex-col items-center justify-center rounded-[28px] p-8 text-center">
+            <MessageSquareQuote size={30} strokeWidth={1} className="text-midnight/60" />
+            <p className="mt-4 font-display text-[26px] text-midnight">No written reviews yet</p>
             <p className="mt-1 text-[14px] text-stone">Ratings above were shared by customers of our previous store.</p>
           </div>
         ) : (
           <ul className="space-y-5">
             {reviews.map((review) => (
-              <li key={review.id} className="rounded-[22px] bg-mist p-6">
+              <li key={review.id} className="glass tint-quartz rounded-[28px] p-6">
                 <div className="flex items-center gap-3">
-                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald font-display text-[18px] text-ivory">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[linear-gradient(135deg,#f6e3c8_0%,#f2c9c4_35%,#d9c8ec_70%,#bfe2e3_100%)] font-display text-[19px] text-midnight-deep shadow-[inset_0_1px_0_rgba(255,255,255,0.95),0_8px_16px_-10px_rgba(125,104,168,0.7)]">
                     {review.author.charAt(0)}
                   </span>
                   <span>
@@ -69,9 +69,9 @@ export default function ReviewsPanel({ product, reviews }: { product: Product; r
                 </div>
                 <div className="mt-3 flex flex-wrap items-center gap-3">
                   <StarRating value={review.rating} size={14} />
-                  {review.title && <p className="font-display text-[20px] leading-tight text-ink">{review.title}</p>}
+                  {review.title && <p className="font-display text-[20px] leading-tight text-midnight">{review.title}</p>}
                 </div>
-                {review.comment && <p className="mt-3 text-[15px] leading-[1.8] text-ink/80">{review.comment}</p>}
+                {review.comment && <p className="mt-3 text-[15px] leading-[1.8] text-graphite">{review.comment}</p>}
               </li>
             ))}
           </ul>

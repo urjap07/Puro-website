@@ -14,6 +14,7 @@ import { cutoutFor } from "@/lib/cutouts";
 import { formatPrice } from "@/lib/format";
 import Price from "@/components/commerce/Price";
 import ProductRow, { RecentlyViewedRow } from "@/components/commerce/ProductRow";
+import { PROGRESS_FILL, PROGRESS_TRACK, WELL_SHADOW, wellTint } from "./wellTint";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -32,7 +33,9 @@ function Thumb({ slug, image, name, size = "lg" }: { slug: string; image: string
     <Link
       href={`/products/${slug}`}
       className={clsx(
-        "relative block shrink-0 overflow-hidden rounded-[20px] bg-[radial-gradient(ellipse_80%_65%_at_50%_45%,#ffffff_0%,#f3ece1_60%,#e6dccb_100%)] ring-1 ring-ink/[0.05]",
+        "relative block shrink-0 overflow-hidden rounded-[22px]",
+        wellTint(slug),
+        WELL_SHADOW,
         size === "lg" ? "h-[120px] w-[110px] sm:h-[160px] sm:w-[150px]" : "aspect-square w-full",
       )}
     >
@@ -47,12 +50,12 @@ function Thumb({ slug, image, name, size = "lg" }: { slug: string; image: string
 
 function Stock({ variant }: { variant?: Product["variants"][number] }) {
   if (!variant) return null;
-  if (variant.stockQuantity <= 0) return <p className="text-[14px] font-semibold text-rose-700">Currently unavailable</p>;
-  if (variant.stockQuantity <= 5) return <p className="text-[14px] font-semibold text-rose-700">Only {variant.stockQuantity} left in stock</p>;
-  return <p className="text-[14px] font-semibold text-emerald">In stock</p>;
+  if (variant.stockQuantity <= 0) return <p className="text-[14px] font-semibold text-blush-deep">Currently unavailable</p>;
+  if (variant.stockQuantity <= 5) return <p className="text-[14px] font-semibold text-blush-deep">Only {variant.stockQuantity} left in stock</p>;
+  return <p className="text-[14px] font-semibold text-sage-deep">In stock</p>;
 }
 
-const linkAction = "text-[13px] font-medium text-emerald underline-offset-4 hover:underline";
+const linkAction = "rounded-full text-[13px] font-medium text-midnight underline-offset-4 hover:underline";
 
 /** The full bag page: items, saved for later, order summary and suggestions. */
 export default function CartPage({ products }: { products: Product[] }) {
@@ -119,10 +122,10 @@ export default function CartPage({ products }: { products: Product[] }) {
   const bestsellers = [...products].sort((a, b) => (b.rating?.count ?? 0) - (a.rating?.count ?? 0)).slice(0, 12);
 
   return (
-    <div className="bg-pearl">
+    <div className="relative">
       <div className="container-site py-8 sm:py-12">
         <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-[13px] text-stone">
-          <Link href="/" className="hover:text-emerald">
+          <Link href="/" className="hover:text-midnight hover:underline underline-offset-4">
             Home
           </Link>
           <ChevronRight size={13} strokeWidth={1.4} />
@@ -132,22 +135,22 @@ export default function CartPage({ products }: { products: Product[] }) {
         <div className="mt-6 grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_380px] xl:gap-8">
           {/* Order summary — first on phones, alongside on desktop */}
           <aside className={clsx("lg:sticky lg:top-[100px] lg:order-last", ready && items.length === 0 && "order-last")}>
-            <div className="rounded-[28px] bg-ivory p-6 shadow-[0_30px_60px_-46px_rgba(6,48,58,0.6)] ring-1 ring-ink/[0.06]">
+            <div className="glass-strong rounded-[32px] p-6">
               {ready && items.length > 0 && freeDeliveryApplies && (
-                <div className="mb-5 rounded-[18px] bg-mist p-4">
+                <div className="glass tint-saffron mb-5 rounded-[22px] p-4">
                   <p className="flex items-center gap-2 text-[14px] text-ink">
-                    <Truck size={17} strokeWidth={1.4} className="text-emerald" />
+                    <Truck size={17} strokeWidth={1.4} className="text-saffron-deep" />
                     {remaining > 0 ? (
                       <span>
-                        Add <strong className="font-semibold text-emerald">{formatPrice(remaining)}</strong> more for FREE delivery
+                        Add <strong className="font-semibold text-midnight">{formatPrice(remaining)}</strong> more for FREE delivery
                       </span>
                     ) : (
-                      <span className="font-semibold text-emerald">Your order qualifies for FREE delivery</span>
+                      <span className="font-semibold text-midnight">Your order qualifies for FREE delivery</span>
                     )}
                   </p>
-                  <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-emerald/10">
+                  <div className={clsx("mt-3 h-2 overflow-hidden rounded-full", PROGRESS_TRACK)}>
                     <motion.div
-                      className="h-full rounded-full bg-gradient-to-r from-emerald via-gold to-gold-soft"
+                      className={clsx("h-full rounded-full shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]", PROGRESS_FILL)}
                       initial={{ width: 0 }}
                       animate={{ width: `${Math.min(1, subtotal / FREE_DELIVERY_THRESHOLD) * 100}%` }}
                       transition={{ duration: 0.8, ease: EASE }}
@@ -159,7 +162,7 @@ export default function CartPage({ products }: { products: Product[] }) {
               <p className="text-[18px] text-ink">
                 Subtotal ({count} {count === 1 ? "item" : "items"}): <Price value={subtotal} size="md" className="ml-1 align-middle" />
               </p>
-              <dl className="mt-4 space-y-2 border-t border-ink/10 pt-4 text-[14px] text-stone">
+              <dl className="mt-4 space-y-2 border-t border-midnight/10 pt-4 text-[14px] text-stone">
                 <div className="flex justify-between">
                   <dt>Items</dt>
                   <dd className="text-ink">{formatPrice(subtotal)}</dd>
@@ -167,23 +170,23 @@ export default function CartPage({ products }: { products: Product[] }) {
                 <div className="flex justify-between">
                   <dt>Delivery</dt>
                   <dd className="text-ink">
-                    {!freeDeliveryApplies ? "Charged at checkout" : items.length === 0 ? "—" : remaining > 0 ? "Calculated at checkout" : <span className="font-semibold text-emerald">FREE</span>}
+                    {!freeDeliveryApplies ? "Charged at checkout" : items.length === 0 ? "—" : remaining > 0 ? "Calculated at checkout" : <span className="font-semibold text-sage-deep">FREE</span>}
                   </dd>
                 </div>
-                <div className="flex items-baseline justify-between border-t border-ink/10 pt-3">
+                <div className="flex items-baseline justify-between border-t border-midnight/10 pt-3">
                   <dt className="text-[12px] font-semibold uppercase tracking-[0.2em]">Order total</dt>
-                  <dd className="font-display text-[30px] leading-none text-emerald">{formatPrice(subtotal)}</dd>
+                  <dd className="font-display text-[30px] leading-none text-midnight">{formatPrice(subtotal)}</dd>
                 </div>
               </dl>
 
-              <button type="button" disabled className="mt-5 flex h-12 w-full cursor-not-allowed items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#ecdcb4] via-[#d2b077] to-[#c29b5e] text-[12px] font-semibold uppercase tracking-[0.16em] text-ink opacity-70">
+              <button type="button" disabled className="btn-iris mt-5 h-12 w-full cursor-not-allowed !gap-2 !py-0 !font-semibold !tracking-[0.16em] opacity-75">
                 <Lock size={15} strokeWidth={1.6} /> Checkout — coming soon
               </button>
               <p className="mt-2 text-center text-[12px] text-stone">Secure checkout is being set up. Your bag is saved in this browser.</p>
 
-              <div className="mt-5 rounded-[18px] border border-ink/10 p-4 text-[14px]">
+              <div className="glass tint-aqua mt-5 rounded-[22px] p-4 text-[14px]">
                 <p className="flex items-start gap-2.5">
-                  <MapPin size={17} strokeWidth={1.4} className="mt-0.5 shrink-0 text-emerald" />
+                  <MapPin size={17} strokeWidth={1.4} className="mt-0.5 shrink-0 text-aqua-deep" />
                   {destination ? (
                     <span>
                       Delivering to <strong className="font-semibold">{destinationLabel(destination)}</strong>
@@ -202,14 +205,14 @@ export default function CartPage({ products }: { products: Product[] }) {
               </div>
 
               <ul className="mt-4 grid grid-cols-3 gap-2 text-center text-[11px] leading-tight text-stone">
-                <li className="flex flex-col items-center gap-1.5 rounded-[14px] bg-mist px-2 py-3">
-                  <Lock size={16} strokeWidth={1.4} className="text-emerald" /> Secure payments
+                <li className="glass tint-lilac flex flex-col items-center gap-1.5 rounded-[18px] px-2 py-3 text-graphite">
+                  <Lock size={16} strokeWidth={1.4} className="text-lilac-deep" /> Secure payments
                 </li>
-                <li className="flex flex-col items-center gap-1.5 rounded-[14px] bg-mist px-2 py-3">
-                  <Rabbit size={16} strokeWidth={1.4} className="text-emerald" /> Cruelty-free
+                <li className="glass tint-sage flex flex-col items-center gap-1.5 rounded-[18px] px-2 py-3 text-graphite">
+                  <Rabbit size={16} strokeWidth={1.4} className="text-sage-deep" /> Cruelty-free
                 </li>
-                <li className="flex flex-col items-center gap-1.5 rounded-[14px] bg-mist px-2 py-3">
-                  <HandHeart size={16} strokeWidth={1.4} className="text-emerald" /> Empowers women
+                <li className="glass tint-quartz flex flex-col items-center gap-1.5 rounded-[18px] px-2 py-3 text-graphite">
+                  <HandHeart size={16} strokeWidth={1.4} className="text-quartz-deep" /> Empowers women
                 </li>
               </ul>
             </div>
@@ -217,8 +220,8 @@ export default function CartPage({ products }: { products: Product[] }) {
 
           <div className="min-w-0 space-y-6">
             {/* Bag */}
-            <section className="rounded-[28px] bg-ivory p-5 shadow-[0_30px_60px_-46px_rgba(6,48,58,0.6)] ring-1 ring-ink/[0.06] sm:p-8">
-              <div className="flex items-end justify-between gap-4 border-b border-ink/10 pb-4">
+            <section className="glass rounded-[32px] p-5 sm:p-8">
+              <div className="flex items-end justify-between gap-4 border-b border-white/70 pb-4">
                 <div>
                   <h1 className="font-display text-[40px] leading-none text-ink sm:text-[52px]">Your bag</h1>
                   {ready && items.length > 0 && <p className="mt-2 text-[14px] text-stone">{count} {count === 1 ? "item" : "items"} · prices include all taxes</p>}
@@ -234,11 +237,11 @@ export default function CartPage({ products }: { products: Product[] }) {
                     exit={{ opacity: 0, height: 0 }}
                     className="overflow-hidden"
                   >
-                    <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-[16px] bg-mist px-4 py-3 text-[14px]">
+                    <div className="glass tint-champagne mt-4 flex flex-wrap items-center justify-between gap-3 rounded-full px-5 py-3 text-[14px]">
                       <span>
                         <strong className="font-semibold">{undo.item.name}</strong> {undo.savedForLater ? "was saved for later." : "was removed from your bag."}
                       </span>
-                      <button type="button" onClick={undoLast} className="flex items-center gap-1.5 font-semibold text-emerald hover:underline">
+                      <button type="button" onClick={undoLast} className="flex items-center gap-1.5 rounded-full font-semibold text-midnight underline-offset-4 hover:underline">
                         <Undo2 size={15} strokeWidth={1.6} /> Undo
                       </button>
                     </div>
@@ -250,24 +253,24 @@ export default function CartPage({ products }: { products: Product[] }) {
                 <div className="space-y-4 py-6" aria-hidden>
                   {[0, 1].map((i) => (
                     <div key={i} className="flex gap-5">
-                      <div className="h-[160px] w-[150px] animate-pulse rounded-[20px] bg-mist" />
+                      <div className="h-[160px] w-[150px] animate-pulse rounded-[22px] bg-white/50" />
                       <div className="flex-1 space-y-3 pt-2">
-                        <div className="h-6 w-2/3 animate-pulse rounded-full bg-mist" />
-                        <div className="h-4 w-1/3 animate-pulse rounded-full bg-mist" />
+                        <div className="h-6 w-2/3 animate-pulse rounded-full bg-white/50" />
+                        <div className="h-4 w-1/3 animate-pulse rounded-full bg-white/50" />
                       </div>
                     </div>
                   ))}
                 </div>
               ) : items.length === 0 ? (
                 <div className="flex flex-col items-center px-4 py-14 text-center">
-                  <span className="flex h-20 w-20 items-center justify-center rounded-full bg-mist">
-                    <ShoppingBag size={32} strokeWidth={1} className="text-emerald" />
+                  <span className="glass tint-quartz flex h-20 w-20 items-center justify-center rounded-full">
+                    <ShoppingBag size={32} strokeWidth={1} className="text-quartz-deep" />
                   </span>
                   <p className="mt-6 font-display text-[34px] leading-tight text-ink">Your bag is empty</p>
                   <p className="mt-2 max-w-[420px] text-[15px] leading-7 text-stone">
                     {saved.length > 0 ? "You have rituals saved for later below — move one in, or browse the shelves." : "Wander the shelves and pick a ritual or two. Every purchase empowers a woman artisan."}
                   </p>
-                  <Link href="/shop" className="btn-primary mt-7 rounded-full px-9">
+                  <Link href="/shop" className="btn-primary mt-7 px-9">
                     Browse all rituals
                   </Link>
                 </div>
@@ -285,14 +288,14 @@ export default function CartPage({ products }: { products: Product[] }) {
                           animate={{ opacity: 1 }}
                           exit={{ opacity: 0, height: 0, paddingTop: 0, paddingBottom: 0 }}
                           transition={{ duration: 0.4, ease: EASE }}
-                          className="flex gap-4 overflow-hidden border-b border-ink/10 py-6 last:border-b-0 sm:gap-6"
+                          className="flex gap-4 overflow-hidden border-b border-white/70 py-6 last:border-b-0 sm:gap-6"
                         >
                           <Thumb slug={item.slug} image={item.image} name={item.name} />
                           <div className="flex min-w-0 flex-1 flex-col gap-1.5">
                             <div className="flex items-start justify-between gap-4">
                               <div className="min-w-0">
                                 {match?.product.subCategory && <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-gold-deep">{match.product.subCategory}</p>}
-                                <Link href={`/products/${item.slug}`} className="mt-1 block font-display text-[22px] leading-[1.1] text-ink hover:text-emerald sm:text-[26px]">
+                                <Link href={`/products/${item.slug}`} className="mt-1 block font-display text-[22px] leading-[1.1] text-ink transition hover:text-midnight-soft sm:text-[26px]">
                                   {item.name}
                                 </Link>
                               </div>
@@ -312,16 +315,16 @@ export default function CartPage({ products }: { products: Product[] }) {
                             </p>
                             {dates && (
                               <p className="flex items-center gap-1.5 text-[13px] text-stone">
-                                <Truck size={14} strokeWidth={1.4} className="text-emerald" /> Arrives {dates}
+                                <Truck size={14} strokeWidth={1.4} className="text-saffron-deep" /> Arrives {dates}
                               </p>
                             )}
                             <div className="mt-auto flex flex-wrap items-center gap-x-4 gap-y-2 pt-3">
-                              <div className="flex h-10 items-center rounded-full border border-ink/15 bg-mist">
+                              <div className="flex h-10 items-center rounded-full bg-white/50 shadow-[inset_0_1px_0_rgba(255,255,255,0.95),inset_0_0_0_1px_rgba(255,255,255,0.6),0_6px_14px_-10px_rgba(14,39,42,0.5)] backdrop-blur-md">
                                 <button
                                   type="button"
                                   aria-label={item.quantity === 1 ? `Remove ${item.name}` : `One less ${item.name}`}
                                   onClick={() => (item.quantity === 1 ? deleteItem(item) : setQuantity(item.variantId, item.quantity - 1))}
-                                  className="flex h-full w-10 items-center justify-center text-emerald hover:text-ink"
+                                  className="flex h-full w-10 items-center justify-center text-midnight hover:text-quartz-deep"
                                 >
                                   {item.quantity === 1 ? <Trash2 size={14} strokeWidth={1.5} /> : <Minus size={14} strokeWidth={1.6} />}
                                 </button>
@@ -331,7 +334,7 @@ export default function CartPage({ products }: { products: Product[] }) {
                                   aria-label={`One more ${item.name}`}
                                   disabled={item.quantity >= maxQty}
                                   onClick={() => setQuantity(item.variantId, item.quantity + 1)}
-                                  className="flex h-full w-10 items-center justify-center text-emerald hover:text-ink disabled:opacity-30"
+                                  className="flex h-full w-10 items-center justify-center text-midnight hover:text-quartz-deep disabled:opacity-30"
                                 >
                                   <Plus size={14} strokeWidth={1.6} />
                                 </button>
@@ -340,7 +343,7 @@ export default function CartPage({ products }: { products: Product[] }) {
                                 <button type="button" onClick={() => deleteItem(item)} className={linkAction}>
                                   Delete
                                 </button>
-                                <span className="h-4 w-px bg-ink/15" />
+                                <span className="h-4 w-px bg-midnight/15" />
                                 <button type="button" onClick={() => saveForLater(item)} className={linkAction}>
                                   Save for later
                                 </button>
@@ -355,7 +358,7 @@ export default function CartPage({ products }: { products: Product[] }) {
               )}
 
               {ready && items.length > 0 && (
-                <p className="border-t border-ink/10 pt-4 text-right text-[18px] text-ink">
+                <p className="border-t border-white/70 pt-4 text-right text-[18px] text-ink">
                   Subtotal ({count} {count === 1 ? "item" : "items"}): <Price value={subtotal} size="md" className="ml-1 align-middle" />
                 </p>
               )}
@@ -363,9 +366,9 @@ export default function CartPage({ products }: { products: Product[] }) {
 
             {/* Saved for later */}
             {ready && saved.length > 0 && (
-              <section className="rounded-[28px] bg-ivory p-5 shadow-[0_30px_60px_-46px_rgba(6,48,58,0.6)] ring-1 ring-ink/[0.06] sm:p-8">
+              <section className="glass tint-lilac rounded-[32px] p-5 sm:p-8">
                 <h2 className="flex items-center gap-2.5 font-display text-[30px] leading-tight text-ink sm:text-[36px]">
-                  <Heart size={22} strokeWidth={1.3} className="fill-rose-600 text-rose-600" /> Saved for later
+                  <Heart size={22} strokeWidth={1.3} className="fill-quartz-deep text-quartz-deep" /> Saved for later
                   <span className="text-[18px] text-stone">({saved.length})</span>
                 </h2>
                 <ul className="mt-5 grid grid-cols-2 gap-4 sm:grid-cols-3 xl:grid-cols-4">
@@ -380,10 +383,10 @@ export default function CartPage({ products }: { products: Product[] }) {
                           layout
                           exit={{ opacity: 0, scale: 0.94 }}
                           transition={{ duration: 0.35, ease: EASE }}
-                          className="flex flex-col rounded-[22px] border border-ink/[0.07] p-3"
+                          className="glass-strong glass-hover flex flex-col rounded-[26px] p-3"
                         >
                           <Thumb slug={item.slug} image={item.image} name={item.name} size="md" />
-                          <Link href={`/products/${item.slug}`} className="mt-3 line-clamp-2 font-display text-[19px] leading-[1.15] text-ink hover:text-emerald">
+                          <Link href={`/products/${item.slug}`} className="mt-3 line-clamp-2 font-display text-[19px] leading-[1.15] text-ink transition hover:text-midnight-soft">
                             {item.name}
                           </Link>
                           <Price value={match?.variant.price ?? item.price} size="sm" className="mt-2" />
@@ -396,13 +399,13 @@ export default function CartPage({ products }: { products: Product[] }) {
                               disabled={alreadyInBag || !available}
                               onClick={() => moveToBag(item)}
                               className={clsx(
-                                "flex h-10 w-full items-center justify-center gap-2 rounded-full text-[11px] font-semibold uppercase tracking-[0.14em] transition",
-                                alreadyInBag || !available ? "bg-emerald/10 text-emerald" : "bg-emerald text-ivory hover:bg-ink",
+                                "h-10 w-full !gap-2 !px-3 !py-0 !text-[11px] !font-semibold !tracking-[0.14em]",
+                                alreadyInBag || !available ? "btn-glass cursor-default" : "btn-iris",
                               )}
                             >
                               <ShoppingBag size={13} strokeWidth={1.6} /> {alreadyInBag ? "In your bag" : available ? "Move to bag" : "Unavailable"}
                             </button>
-                            <button type="button" onClick={() => unsave(item.productId)} className="w-full py-1 text-[13px] text-stone underline-offset-4 hover:text-rose-700 hover:underline">
+                            <button type="button" onClick={() => unsave(item.productId)} className="w-full py-1 text-[13px] text-stone underline-offset-4 hover:text-blush-deep hover:underline">
                               Remove
                             </button>
                           </div>

@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import clsx from "clsx";
+import { twMerge } from "tailwind-merge";
 import { Heart } from "lucide-react";
 import type { Product } from "@/db/queries/products";
 import { useWishlist } from "@/lib/wishlist-store";
@@ -33,11 +34,11 @@ export default function WishButton({ product, className }: { product: WishProduc
           image: product.images[0]?.imageUrl ?? null,
         });
       }}
-      className={clsx(
-        "relative flex h-9 w-9 items-center justify-center rounded-full bg-ivory/95 shadow-[0_6px_16px_-8px_rgba(0,0,0,0.45)] backdrop-blur transition duration-300 hover:scale-110",
-        saved ? "text-rose-700" : "text-ink/70 hover:text-rose-700",
+      className={twMerge(clsx(
+        "relative flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-white/80 to-white/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.95),inset_0_0_0_1px_rgba(255,255,255,0.6),0_8px_18px_-10px_rgba(14,39,42,0.5)] backdrop-blur-xl backdrop-saturate-[1.8] transition duration-300 hover:scale-110",
+        saved ? "text-blush-deep" : "text-graphite/75 hover:text-blush-deep",
         className,
-      )}
+      ))}
     >
       <motion.span key={String(saved)} initial={{ scale: saved ? 0.4 : 1 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 500, damping: 14 }}>
         <Heart size={16} strokeWidth={1.5} className={saved ? "fill-current" : ""} />
@@ -46,7 +47,7 @@ export default function WishButton({ product, className }: { product: WishProduc
         {saved && (
           <motion.span
             key="burst"
-            className="pointer-events-none absolute inset-0 rounded-full ring-2 ring-rose-400"
+            className="pointer-events-none absolute inset-0 rounded-full ring-2 ring-blush"
             initial={{ scale: 0.6, opacity: 0.9 }}
             animate={{ scale: 1.8, opacity: 0 }}
             exit={{ opacity: 0 }}
