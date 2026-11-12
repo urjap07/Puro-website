@@ -11,6 +11,7 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: "Shop All",
   description: "Explore the complete Puro Body & Soul collection of botanical skin, body and hair care.",
+  alternates: { canonical: "/shop" },
 };
 
 export default async function ShopPage({ searchParams }: { searchParams: Promise<RawParams> }) {

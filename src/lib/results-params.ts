@@ -14,6 +14,8 @@ export function parseFilters(params: RawParams, overrides: Partial<ResultFilters
     q: one(params.q).slice(0, 80),
     collection: one(params.in) || null,
     concerns: one(params.concern).split(",").filter(Boolean),
+    types: one(params.type).split(",").filter(Boolean),
+    ingredients: one(params.ingredient).split(",").filter(Boolean),
     price: /^\d*-\d*$/.test(one(params.price)) ? one(params.price) : null,
     rating: rating >= 1 && rating <= 5 ? rating : null,
     inStock: one(params.stock) === "1",

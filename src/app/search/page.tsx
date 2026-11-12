@@ -10,7 +10,8 @@ export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ searchParams }: { searchParams: Promise<RawParams> }): Promise<Metadata> {
   const { q } = parseFilters(await searchParams);
-  return { title: q ? `Results for “${q}”` : "Search" };
+  // Search results are for people, not for search engines' index.
+  return { title: q ? `Results for “${q}”` : "Search", robots: { index: false, follow: true } };
 }
 
 export default async function SearchPage({ searchParams }: { searchParams: Promise<RawParams> }) {

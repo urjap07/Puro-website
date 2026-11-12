@@ -1,6 +1,8 @@
 /** Brand contact details, as published on purobodysoul.com. */
 export const SITE = {
   name: "Puro Body & Soul",
+  /** Public origin used for canonical URLs, the sitemap and structured data. */
+  url: (process.env.NEXT_PUBLIC_SITE_URL || "https://purobodysoul.com").replace(/\/$/, ""),
   organisation: "Shramik Naari Sangh (Sa-Ni-Sa)",
   email: "puro@sanisa.co.in",
   ordersEmail: "puro.orders@sanisa.co.in",

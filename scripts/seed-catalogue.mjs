@@ -16,6 +16,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import mysql from "mysql2/promise";
+import { linkIngredients } from "./lib/ingredient-links.mjs";
 
 const env = Object.fromEntries(
   fs
@@ -323,6 +324,7 @@ try {
   await seedConcerns();
   await seedReviews();
   await seedIngredients();
+  console.log(`✓ ${await linkIngredients(pool)} product–ingredient links`);
 } finally {
   await pool.end();
 }

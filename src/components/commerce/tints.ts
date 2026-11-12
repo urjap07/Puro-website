@@ -48,3 +48,13 @@ export function concernTint(concern: { slug: string; type: string }): Tint {
   if (/tan|bright|glow|pigment/.test(concern.slug)) return "apricot";
   return "quartz";
 }
+
+/** Tint for a library ingredient, matching the homepage ingredient explorer. */
+export function ingredientTint(slug: string): Tint {
+  if (slug.includes("turmeric")) return "saffron";
+  if (slug.includes("aloe")) return "sage";
+  if (slug.includes("clay")) return "terracotta";
+  if (slug.includes("shea") || slug.includes("cocoa")) return "apricot";
+  if (slug.includes("lavender") || slug.includes("rosemary")) return "lilac";
+  return "champagne";
+}

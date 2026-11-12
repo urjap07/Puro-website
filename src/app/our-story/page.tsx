@@ -23,6 +23,7 @@ export const metadata: Metadata = {
   title: "Our Story",
   description:
     "Puro Body & Soul is a division of Shramik Naari Sangh. Clean, cruelty-free botanical care — and every purchase helps a rural woman live a life of dignity.",
+  alternates: { canonical: "/our-story" },
 };
 
 /** Philosophy pillars, as published on purobodysoul.com/our-brand. */

@@ -11,6 +11,7 @@ import LiquidBackdrop from "@/components/layout/LiquidBackdrop";
 import CursorLabel from "@/components/motion/CursorLabel";
 import ScrollProgress from "@/components/motion/ScrollProgress";
 import { getConcerns, type Concern } from "@/db/queries/products";
+import { SITE } from "@/lib/site";
 import "./globals.css";
 
 /** Editorial display serif for headlines, italics and product names (PRD §7.3). */
@@ -30,7 +31,27 @@ const sans = DM_Sans({
   display: "swap",
 });
 
+/** Who PURO is, for search engines (shown sitewide). */
+const ORGANIZATION_LD = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "PURO Body & Soul",
+  url: SITE.url,
+  parentOrganization: { "@type": "Organization", name: SITE.organisation },
+  email: SITE.email,
+  telephone: SITE.phone,
+  sameAs: [SITE.social.instagram, SITE.social.facebook],
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "99/2 Jambhulpada, Sudhagad Taluka",
+    addressRegion: "Maharashtra",
+    postalCode: "410205",
+    addressCountry: "IN",
+  },
+}).replace(/</g, "\\u003c");
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE.url),
   title: {
     default: "PURO Body & Soul — The Art of Conscious Skin",
     template: "%s | Puro Body & Soul",
@@ -58,6 +79,7 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${display.variable} ${sans.variable}`}>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: ORGANIZATION_LD }} />
         <LiquidBackdrop />
         <SmoothScroll />
         <SiteHeader concerns={concerns} />

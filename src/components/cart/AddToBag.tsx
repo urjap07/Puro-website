@@ -17,8 +17,8 @@ export function flightImage(product: Pick<Product, "slug" | "images">) {
 
 export type CartProduct = Pick<Product, "id" | "slug" | "name" | "images" | "variants">;
 
-export function toCartItem(product: CartProduct) {
-  const variant = product.variants[0];
+/** A bag line for a product; pass `variant` to add a specific size (defaults to the first). */
+export function toCartItem(product: CartProduct, variant: CartProduct["variants"][number] = product.variants[0]) {
   return {
     variantId: variant.id,
     productId: product.id,

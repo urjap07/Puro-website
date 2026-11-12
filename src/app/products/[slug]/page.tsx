@@ -8,7 +8,6 @@ import { displayCertifications } from "@/lib/format";
 import ProductGallery from "@/components/product/ProductGallery";
 import Accordion, { type AccordionItem } from "@/components/ui/Accordion";
 import Module from "@/components/commerce/Module";
-import Price from "@/components/commerce/Price";
 import StarRating from "@/components/commerce/StarRating";
 import ProductRow, { RecentlyViewedRow, RecordView } from "@/components/commerce/ProductRow";
 import BuyBox from "@/components/pdp/BuyBox";
@@ -16,6 +15,10 @@ import MobileBuyBar from "@/components/pdp/MobileBuyBar";
 import FrequentlyBought from "@/components/pdp/FrequentlyBought";
 import ReviewsPanel from "@/components/pdp/ReviewsPanel";
 import { TINT, concernTint } from "@/components/commerce/tints";
+import ProductStory from "@/components/pdp/ProductStory";
+import { VariantPicker, VariantPrice, VariantProvider } from "@/components/pdp/VariantContext";
+import { SITE } from "@/lib/site";
+import type { Review } from "@/db/queries/products";
 
 export const dynamic = "force-dynamic";
 
@@ -27,11 +30,85 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   const { slug } = await params;
   const product = await getProductBySlug(slug);
   if (!product) return { title: "Product not found" };
+  const description = [product.headline, product.summary !== product.headline ? product.summary : null]
+    .filter(Boolean)
+    .join(". ") || product.description || undefined;
   return {
     title: product.name,
-    description: product.headline ?? product.description ?? undefined,
-    openGraph: { images: product.images[0] ? [product.images[0].imageUrl] : undefined },
+    description,
+    alternates: { canonical: `/products/${product.slug}` },
+    openGraph: {
+      title: `${product.name} | PURO Body & Soul`,
+      description,
+      url: `/products/${product.slug}`,
+      images: product.images[0] ? [product.images[0].imageUrl] : undefined,
+    },
   };
+}
+
+/** Absolute URL on the public site. */
+const absolute = (path: string) => (path.startsWith("http") ? path : `${SITE.url}${path}`);
+
+/**
+ * Product, Offer, AggregateRating and BreadcrumbList structured data. It only
+ * describes what the page shows: the rating appears only when there are
+ * customer reviews on the page.
+ */
+function structuredData(product: Product, reviews: Review[], collection: { slug: string; title: string } | undefined) {
+  const url = absolute(`/products/${product.slug}`);
+  const productLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    description: product.description ?? product.headline ?? undefined,
+    image: product.images.map((image) => absolute(image.imageUrl)),
+    sku: product.variants[0]?.sku,
+    category: product.subCategory ?? undefined,
+    brand: { "@type": "Brand", name: "PURO Body & Soul" },
+    url,
+    offers: product.variants.map((variant) => ({
+      "@type": "Offer",
+      sku: variant.sku,
+      name: variant.name,
+      price: variant.price.toFixed(2),
+      priceCurrency: "INR",
+      availability: variant.stockQuantity > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+      itemCondition: "https://schema.org/NewCondition",
+      url: product.variants.length > 1 ? `${url}?variant=${variant.id}` : url,
+      seller: { "@type": "Organization", name: SITE.organisation },
+    })),
+    ...(product.rating && reviews.length > 0
+      ? {
+          aggregateRating: {
+            "@type": "AggregateRating",
+            ratingValue: product.rating.value,
+            reviewCount: product.rating.count,
+            bestRating: 5,
+          },
+          review: reviews.slice(0, 5).map((review) => ({
+            "@type": "Review",
+            author: { "@type": "Person", name: review.author },
+            reviewRating: { "@type": "Rating", ratingValue: review.rating, bestRating: 5 },
+            name: review.title ?? undefined,
+            reviewBody: review.comment ?? undefined,
+            datePublished: review.createdAt?.slice(0, 10),
+          })),
+        }
+      : {}),
+  };
+  const breadcrumbs = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: absolute("/") },
+      collection
+        ? { "@type": "ListItem", position: 2, name: collection.title, item: absolute(`/collections/${collection.slug}`) }
+        : { "@type": "ListItem", position: 2, name: "Shop", item: absolute("/shop") },
+      { "@type": "ListItem", position: 3, name: product.name, item: url },
+    ],
+  };
+  // Escape "<" so the JSON can't close the script tag.
+  return JSON.stringify([productLd, breadcrumbs]).replace(/</g, "\\u003c");
 }
 
 const PROMISES = [
@@ -48,7 +125,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
   if (!product) notFound();
   const reviews = await getProductReviews(product.id);
 
-  const variant = product.variants[0];
   const collection = getProductCollection(product);
   const others = products.filter((item) => item.id !== product.id);
   const sameCollection = byReviews(collection ? productsInCollection(others, collection) : others);
@@ -64,8 +140,17 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
   const certifications = displayCertifications(product.certifications);
   const details: AccordionItem[] = [
-    product.description && { title: "The story", content: <p>{product.description}</p> },
-    product.howToUse && { title: "How to use", content: <p>{product.howToUse}</p> },
+    product.howToUse && { title: "Directions for use", content: <p>{product.howToUse}</p> },
+    product.warnings.length > 0 && {
+      title: "Good to know",
+      content: (
+        <ul className="list-disc space-y-1.5 pl-5">
+          {product.warnings.map((warning) => (
+            <li key={warning}>{warning}</li>
+          ))}
+        </ul>
+      ),
+    },
     product.kitContents.length > 0 && {
       title: "What's inside",
       content: (
@@ -118,7 +203,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
   return (
     <div className="bg-pearl pb-28 lg:pb-12">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: structuredData(product, reviews, collection) }} />
       <RecordView slug={product.slug} />
+      <VariantProvider product={product}>
 
       <div className="container-site pt-6 sm:pt-8">
         <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-1.5 text-[13px] text-stone">
@@ -161,13 +248,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
             </div>
 
             <div className="mt-5 border-t border-white/70 pt-5 shadow-[0_-1px_0_rgba(52,59,59,0.08)]">
-              {variant && (
-                <div className="flex flex-wrap items-end gap-3">
-                  <Price value={variant.price} size="lg" />
-                  {product.sizeLabel && <span className="mb-1.5 text-[14px] uppercase tracking-[0.12em] text-stone">{product.sizeLabel}</span>}
-                </div>
-              )}
+              <VariantPrice product={product} sizeLabel={product.sizeLabel} />
               <p className="mt-1 text-[13px] text-stone">Inclusive of all taxes · Free delivery in India over ₹500</p>
+              <VariantPicker product={product} />
             </div>
 
             {(product.skinType || product.concerns.length > 0) && (
@@ -222,7 +305,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
               ))}
             </div>
 
-            {product.tagline && <p className="text-iris mt-7 w-fit pr-1 font-display text-[22px] italic">&ldquo;{product.tagline}&rdquo;</p>}
 
             {/* Buy box below details until there's room for a third column */}
             <div className="mt-8 xl:hidden">
@@ -238,6 +320,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
       </div>
 
       <div className="mt-12 space-y-6 sm:space-y-8">
+        <ProductStory product={product} />
+
         {companions.length > 0 && (
           <Module title="Frequently bought together" note="Complete the ritual — tick what you'd like and add them in one go.">
             <FrequentlyBought products={[product, ...companions]} />
@@ -273,6 +357,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
       </div>
 
       <MobileBuyBar product={product} />
+      </VariantProvider>
     </div>
   );
 }

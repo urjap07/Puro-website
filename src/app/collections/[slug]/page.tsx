@@ -17,7 +17,9 @@ interface CollectionPageProps {
 export async function generateMetadata({ params }: CollectionPageProps): Promise<Metadata> {
   const { slug } = await params;
   const collection = getCollection(slug);
-  return collection ? { title: collection.title, description: collection.description } : { title: "Collection not found" };
+  return collection
+    ? { title: collection.title, description: collection.description, alternates: { canonical: `/collections/${collection.slug}` } }
+    : { title: "Collection not found" };
 }
 
 export default async function CollectionPage({ params, searchParams }: CollectionPageProps) {

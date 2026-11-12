@@ -16,7 +16,9 @@ interface ConcernPageProps {
 export async function generateMetadata({ params }: ConcernPageProps): Promise<Metadata> {
   const { slug } = await params;
   const concern = (await getConcerns()).find((item) => item.slug === slug);
-  return concern ? { title: concern.name, description: concern.description ?? undefined } : { title: "Concern not found" };
+  return concern
+    ? { title: concern.name, description: concern.description ?? undefined, alternates: { canonical: `/concerns/${concern.slug}` } }
+    : { title: "Concern not found" };
 }
 
 export default async function ConcernPage({ params, searchParams }: ConcernPageProps) {

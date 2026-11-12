@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import clsx from "clsx";
 import { Gift, Lock, MapPin, ShoppingBag, Truck, Zap } from "lucide-react";
 import type { Product } from "@/db/queries/products";
@@ -10,14 +10,17 @@ import { flyToBasket } from "@/lib/flight-store";
 import { flightImage, toCartItem } from "@/components/cart/AddToBag";
 import WishButton from "@/components/cart/WishButton";
 import Price from "@/components/commerce/Price";
+import { useSelectedVariant } from "./VariantContext";
 
-/** Marketplace buy box: price, delivery promise, stock, quantity and actions. */
+/** Buy box: price, delivery promise, stock, quantity and actions for the chosen variant. */
 export default function BuyBox({ product, isGift = false }: { product: Product; isGift?: boolean }) {
-  const variant = product.variants[0];
+  const variant = useSelectedVariant(product);
   const add = useCart((state) => state.add);
   const open = useCart((state) => state.open);
   const { destination, dates, zone, freeDeliveryApplies } = useDeliveryEstimate();
   const [quantity, setQuantity] = useState(1);
+  // A different size may have less stock: start again at one.
+  useEffect(() => setQuantity(1), [variant?.id]);
 
   if (!variant) return null;
   const inStock = variant.stockQuantity > 0;
@@ -82,7 +85,7 @@ export default function BuyBox({ product, isGift = false }: { product: Product; 
             <button
               type="button"
               onClick={(event) => {
-                add(toCartItem(product), quantity);
+                add(toCartItem(product, variant), quantity);
                 flyToBasket(event.currentTarget, flightImage(product));
               }}
               className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-gradient-to-b from-[#f3eadb] via-[#dccbab] to-[#cbb68f] text-midnight-deep shadow-[inset_0_1px_0_rgba(255,255,255,0.9),inset_0_-1px_0_rgba(122,101,68,0.35),0_14px_28px_-14px_rgba(122,101,68,0.8)] text-[13px] font-semibold uppercase tracking-[0.16em] transition hover:brightness-105 active:scale-[0.99]"
@@ -92,7 +95,7 @@ export default function BuyBox({ product, isGift = false }: { product: Product; 
             <button
               type="button"
               onClick={() => {
-                add(toCartItem(product), quantity);
+                add(toCartItem(product, variant), quantity);
                 open();
               }}
               className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-gradient-to-b from-[#2b5a5f] via-[#173c40] to-[#10302f] text-ivory shadow-[inset_0_1px_0_rgba(255,255,255,0.35),inset_0_-1px_0_rgba(0,0,0,0.25),0_14px_30px_-14px_rgba(14,39,42,0.7)] text-[13px] font-semibold uppercase tracking-[0.16em] transition hover:brightness-110 active:scale-[0.99]"

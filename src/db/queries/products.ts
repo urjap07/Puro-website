@@ -62,6 +62,13 @@ interface ConcernRow extends RowDataPacket {
     type: ConcernType;
 }
 
+interface IngredientLinkRow extends RowDataPacket {
+    product_id: number;
+    id: number;
+    name: string;
+    slug: string;
+}
+
 interface ImageRow extends RowDataPacket {
     id: number;
     product_id: number;
@@ -111,6 +118,14 @@ export interface Product {
         slug: string;
     }[];
     concerns: Concern[];
+    /** Brand-approved library ingredients this formula features (product_ingredients). */
+    ingredientLinks: {
+        id: number;
+        name: string;
+        slug: string;
+    }[];
+    /** When the product was added, for "Newest" sorting. */
+    createdAt: string;
     images: {
         id: number;
         imageUrl: string;
@@ -199,6 +214,23 @@ async function attachProductRelations(
         productIds
     );
 
+    // Fetch library ingredients featured in each product
+    const [ingredientLinks] = await pool.query<IngredientLinkRow[]>(
+        `
+      SELECT
+        pi.product_id,
+        i.id,
+        i.name,
+        i.slug
+      FROM product_ingredients pi
+      INNER JOIN ingredients i
+        ON pi.ingredient_id = i.id
+      WHERE pi.product_id IN (${placeholders})
+      ORDER BY i.id ASC
+    `,
+        productIds
+    );
+
     // Fetch product images
     const [images] = await pool.query<ImageRow[]>(
         `
@@ -220,6 +252,13 @@ async function attachProductRelations(
     const categoriesMap = new Map<number, CategoryRow[]>();
     const concernsMap = new Map<number, ConcernRow[]>();
     const imagesMap = new Map<number, ImageRow[]>();
+    const ingredientLinksMap = new Map<number, IngredientLinkRow[]>();
+
+    for (const link of ingredientLinks) {
+        const existing = ingredientLinksMap.get(link.product_id) || [];
+        existing.push(link);
+        ingredientLinksMap.set(link.product_id, existing);
+    }
 
     for (const variant of variants) {
         const existing = variantsMap.get(variant.product_id) || [];
@@ -290,6 +329,14 @@ async function attachProductRelations(
             description: concern.description,
             type: concern.type,
         })),
+
+        ingredientLinks: (ingredientLinksMap.get(product.id) || []).map((link) => ({
+            id: link.id,
+            name: link.name,
+            slug: link.slug,
+        })),
+
+        createdAt: product.created_at instanceof Date ? product.created_at.toISOString() : String(product.created_at),
 
         images: (imagesMap.get(product.id) || []).map((image) => ({
             id: image.id,

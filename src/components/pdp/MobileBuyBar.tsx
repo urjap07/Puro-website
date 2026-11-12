@@ -6,11 +6,12 @@ import { useCart } from "@/lib/cart-store";
 import { flyToBasket } from "@/lib/flight-store";
 import { flightImage, toCartItem } from "@/components/cart/AddToBag";
 import Price from "@/components/commerce/Price";
+import { useSelectedVariant } from "./VariantContext";
 
 /** Phones: price and Add to bag always within thumb's reach. */
 export default function MobileBuyBar({ product }: { product: Product }) {
   const add = useCart((state) => state.add);
-  const variant = product.variants[0];
+  const variant = useSelectedVariant(product);
   if (!variant || variant.stockQuantity <= 0) return null;
 
   return (
@@ -23,7 +24,7 @@ export default function MobileBuyBar({ product }: { product: Product }) {
         <button
           type="button"
           onClick={(event) => {
-            add(toCartItem(product));
+            add(toCartItem(product, variant));
             flyToBasket(event.currentTarget, flightImage(product));
           }}
           className="relative z-[2] flex h-12 shrink-0 items-center gap-2 rounded-full bg-gradient-to-b from-[#f3eadb] via-[#dccbab] to-[#cbb68f] text-midnight-deep shadow-[inset_0_1px_0_rgba(255,255,255,0.9),inset_0_-1px_0_rgba(122,101,68,0.35),0_14px_28px_-14px_rgba(122,101,68,0.8)] px-6 text-[12px] font-semibold uppercase tracking-[0.16em] transition hover:brightness-105 active:scale-[0.98]"
