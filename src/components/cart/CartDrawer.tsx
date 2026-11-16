@@ -278,9 +278,9 @@ export default function CartDrawer() {
                       <span className="font-display text-[32px] leading-none text-midnight">{formatPrice(subtotal)}</span>
                     </div>
                     <PriceCheckStatus className="mt-2 justify-end" />
-                    <button type="button" disabled className="btn-primary mt-5 w-full cursor-not-allowed opacity-70">
-                      Checkout — coming soon
-                    </button>
+                    <Link href="/checkout" onClick={close} className="btn-primary mt-5 w-full">
+                      Checkout
+                    </Link>
                     <div className="mt-2 flex gap-2">
                       <Link
                         href="/cart"

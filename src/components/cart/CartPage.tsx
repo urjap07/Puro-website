@@ -136,7 +136,7 @@ export default function CartPage({ products }: { products: Product[] }) {
           <span className="text-ink">Your bag</span>
         </nav>
 
-        <div className="mt-6 grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_380px] xl:gap-8">
+        <div className="mt-6 grid grid-cols-1 items-start gap-6 lg:grid-cols-[minmax(0,1fr)_380px] xl:gap-8">
           {/* Order summary — first on phones, alongside on desktop */}
           <aside className={clsx("lg:sticky lg:top-[100px] lg:order-last", ready && items.length === 0 && "order-last")}>
             <div className="glass-strong rounded-[32px] p-6">
@@ -184,10 +184,16 @@ export default function CartPage({ products }: { products: Product[] }) {
               </dl>
               {items.length > 0 && <PriceCheckStatus className="mt-2 justify-end" />}
 
-              <button type="button" disabled className="btn-iris mt-5 h-12 w-full cursor-not-allowed !gap-2 !py-0 !font-semibold !tracking-[0.16em] opacity-75">
-                <Lock size={15} strokeWidth={1.6} /> Checkout — coming soon
-              </button>
-              <p className="mt-2 text-center text-[12px] text-stone">Secure checkout is being set up. Your bag is saved in this browser.</p>
+              {items.length > 0 ? (
+                <Link href="/checkout" className="btn-iris mt-5 h-12 w-full !gap-2 !py-0 !font-semibold !tracking-[0.16em]">
+                  <Lock size={15} strokeWidth={1.6} /> Proceed to checkout
+                </Link>
+              ) : (
+                <button type="button" disabled className="btn-iris mt-5 h-12 w-full cursor-not-allowed !gap-2 !py-0 !font-semibold !tracking-[0.16em] opacity-60">
+                  <Lock size={15} strokeWidth={1.6} /> Proceed to checkout
+                </button>
+              )}
+              <p className="mt-2 text-center text-[12px] text-stone">Online payment opens soon — you can check your delivery details now.</p>
 
               <div className="glass tint-aqua mt-5 rounded-[22px] p-4 text-[14px]">
                 <p className="flex items-start gap-2.5">
