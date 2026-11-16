@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { getActiveProducts, getConcerns } from "@/db/queries/products";
+import { getActiveProducts, getConcerns, getIngredients } from "@/db/queries/products";
 import { COLLECTIONS } from "@/lib/collections";
 import { SITE } from "@/lib/site";
 
@@ -8,13 +8,17 @@ export const revalidate = 3600;
 
 /** sitemap.xml: every page worth indexing, straight from the catalogue. */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [products, concerns] = await Promise.all([getActiveProducts(), getConcerns()]);
+  const [products, concerns, ingredients] = await Promise.all([getActiveProducts(), getConcerns(), getIngredients()]);
   const url = (path: string) => `${SITE.url}${path}`;
 
   return [
     { url: url("/"), changeFrequency: "weekly", priority: 1 },
     { url: url("/shop"), changeFrequency: "weekly", priority: 0.9 },
     { url: url("/our-story"), changeFrequency: "monthly", priority: 0.6 },
+    { url: url("/ingredients"), changeFrequency: "monthly", priority: 0.7 },
+    { url: url("/concerns"), changeFrequency: "monthly", priority: 0.7 },
+    { url: url("/finder"), changeFrequency: "monthly", priority: 0.6 },
+    ...ingredients.map((ingredient) => ({ url: url(`/ingredients/${ingredient.slug}`), changeFrequency: "monthly" as const, priority: 0.6 })),
     ...COLLECTIONS.map((collection) => ({ url: url(`/collections/${collection.slug}`), changeFrequency: "weekly" as const, priority: 0.8 })),
     ...products.map((product) => ({
       url: url(`/products/${product.slug}`),

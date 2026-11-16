@@ -222,7 +222,7 @@ export default function SiteHeader({ concerns = [] }: { concerns?: Concern[] }) 
               <Link href="/our-story" className={navLink} onMouseEnter={scheduleClose}>
                 Philosophy
               </Link>
-              <Link href="/#ingredients" className={navLink} onMouseEnter={scheduleClose}>
+              <Link href="/ingredients" className={navLink} onMouseEnter={scheduleClose}>
                 Ingredients
               </Link>
               <button
@@ -350,9 +350,14 @@ export default function SiteHeader({ concerns = [] }: { concerns?: Concern[] }) 
                             </li>
                           ))}
                       </ul>
+                      {type === "hair" && (
+                        <Link href="/concerns" className="mt-6 inline-flex items-center gap-1.5 text-[12px] font-semibold uppercase tracking-[0.18em] text-[#5E4B8A] underline-offset-4 hover:underline">
+                          All concerns <ArrowUpRight size={13} strokeWidth={1.6} />
+                        </Link>
+                      )}
                     </div>
                   ))}
-                  <Link href="/#finder" className="group flex flex-col justify-between overflow-hidden rounded-[24px] bg-[radial-gradient(120%_90%_at_0%_0%,#2b5a5f,#173c40_55%,#0e272a)] p-7 text-ivory shadow-[inset_0_1px_0_rgba(255,255,255,0.25),0_20px_40px_-20px_rgba(14,39,42,0.7)]">
+                  <Link href="/finder" className="group flex flex-col justify-between overflow-hidden rounded-[24px] bg-[radial-gradient(120%_90%_at_0%_0%,#2b5a5f,#173c40_55%,#0e272a)] p-7 text-ivory shadow-[inset_0_1px_0_rgba(255,255,255,0.25),0_20px_40px_-20px_rgba(14,39,42,0.7)]">
                     <span className="eyebrow text-champagne/80">Skincare finder</span>
                     <span className="mt-8 font-display text-[30px] leading-[1.05]">
                       Not sure where to begin? <em className="text-champagne">Find your ritual.</em>

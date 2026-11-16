@@ -31,8 +31,8 @@ const COLUMNS = [
     title: "The PURO world",
     links: [
       ["Our philosophy", "/our-story"],
-      ["Ingredients", "/#ingredients"],
-      ["Skincare finder", "/#finder"],
+      ["Ingredients", "/ingredients"],
+      ["Skincare finder", "/finder"],
       ["Journal", "/#journal"],
     ],
   },

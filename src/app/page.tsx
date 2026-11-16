@@ -406,6 +406,11 @@ export default async function Home() {
             <div className="mt-14 sm:mt-20">
               <IngredientExplorer ingredients={explorer} />
             </div>
+            <div className="mt-12 text-center">
+              <Link href="/ingredients" className="btn-glass !px-8 !py-3.5">
+                Explore the ingredient library <ArrowRight size={15} strokeWidth={1.3} />
+              </Link>
+            </div>
           </div>
         </section>
       )}
@@ -429,6 +434,11 @@ export default async function Home() {
             </div>
             <div className="mt-14">
               <ConcernFinder concerns={concerns} products={finderProducts} />
+            </div>
+            <div className="mt-10 text-center">
+              <Link href="/finder" className="btn-iris !px-9 !py-3.5">
+                Take the full skincare finder <ArrowRight size={15} strokeWidth={1.3} />
+              </Link>
             </div>
             <p className="mx-auto mt-10 max-w-[620px] text-center text-[12px] leading-[1.7] text-stone">
               The finder suggests products based on the concerns each formula was designed for. It is a guide to discovery and

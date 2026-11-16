@@ -152,10 +152,10 @@ export default function IngredientExplorer({ ingredients }: { ingredients: Explo
               )}
 
               <Link
-                href={`/search?q=${encodeURIComponent(current.name.split(/\s*&\s*/)[0])}`}
+                href={`/ingredients/${current.slug}`}
                 className="link-underline mt-8 self-start text-midnight"
               >
-                Explore formulas with {current.name.toLowerCase()}
+                More about {current.name.toLowerCase()}
               </Link>
             </div>
           </motion.div>

@@ -19,8 +19,9 @@ const EXPLORE = [
 ];
 
 const PURO_WORLD = [
-  { label: "Ingredients", href: "/#ingredients" },
-  { label: "Skincare finder", href: "/#finder" },
+  { label: "Ingredients", href: "/ingredients" },
+  { label: "Skin & hair concerns", href: "/concerns" },
+  { label: "Skincare finder", href: "/finder" },
   { label: "Journal", href: "/#journal" },
 ];
 
