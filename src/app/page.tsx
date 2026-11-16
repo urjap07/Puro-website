@@ -12,7 +12,6 @@ import {
 import { COLLECTIONS } from "@/lib/collections";
 import { cutoutFor } from "@/lib/cutouts";
 import { formatPrice } from "@/lib/format";
-import { JOURNAL } from "@/lib/journal";
 import CinematicHero, { type HeroProduct } from "@/components/home/CinematicHero";
 import ShelfDisplay, { type Shelf, type ShelfProduct } from "@/components/home/ShelfDisplay";
 import Apothecary, { type ApothecaryItem } from "@/components/home/Apothecary";
@@ -85,7 +84,7 @@ const PRINCIPLES = [
   },
 ];
 
-/** Glass tint for each collection card, principle and journal category. */
+/** Glass tint for each collection card and principle. */
 const CATEGORY_TINT: Record<string, string> = { face: "tint-quartz", body: "tint-saffron", hair: "tint-lilac" };
 const PRINCIPLE_TINTS = [
   { glass: "tint-quartz", number: "text-quartz-deep" },
@@ -93,7 +92,6 @@ const PRINCIPLE_TINTS = [
   { glass: "tint-saffron", number: "text-saffron-deep" },
   { glass: "tint-lilac", number: "text-lilac-deep" },
 ];
-const JOURNAL_TINT: Record<string, string> = { Rituals: "tint-saffron", Routines: "tint-quartz", Ingredients: "tint-sage" };
 
 /** Words that are too generic to match an ingredient to a product. */
 const GENERIC = new Set(["vera", "butter", "volcanic", "extract", "natural", "oil", "oils"]);
@@ -249,16 +247,9 @@ export default async function Home() {
             <SectionLabel index="01">The Atelier</SectionLabel>
           </Reveal>
           <Reveal delay={0.1} className="glass mt-10 rounded-[28px] px-6 py-10 sm:rounded-[36px] sm:px-12 sm:py-14 lg:px-16 lg:py-20">
-            <p className="max-w-[1180px] font-display text-[34px] font-light leading-[1.08] tracking-[-0.01em] text-midnight sm:text-[58px] lg:text-[76px]">
-              Where{" "}
-              <span className="relative mx-1 inline-block h-[0.78em] w-[1.5em] translate-y-[0.08em] overflow-hidden rounded-full align-baseline">
-                <Image src="/media/products/glow-up-pithi-pack/04.jpg" alt="" fill sizes="120px" className="object-cover" />
-              </span>{" "}
-              botanical wisdom meets <em className="text-iris pr-[0.05em]">modern formulation</em> — care that is{" "}
-              <span className="relative mx-1 inline-block h-[0.78em] w-[1.5em] translate-y-[0.08em] overflow-hidden rounded-full align-baseline">
-                <Image src="/media/products/aquench-soothing-hydrogel/03.jpg" alt="" fill sizes="120px" className="object-cover" />
-              </span>{" "}
-              felt, never hurried.
+            <p className="max-w-[1180px] font-display text-[34px] font-light leading-[1.08] tracking-[-0.01em] text-midnight [text-wrap:balance] sm:text-[58px] lg:text-[76px]">
+              Where botanical wisdom meets <em className="text-iris pr-[0.05em]">modern formulation</em> — care that is felt,
+              never hurried.
             </p>
           </Reveal>
 
@@ -492,52 +483,6 @@ export default async function Home() {
               </li>
             </Reveal>
           </ol>
-        </div>
-      </section>
-
-      {/* ═════ 9 · Journal ═════ */}
-      <section id="journal" aria-labelledby="journal-title" className="bg-pearl scroll-mt-20 py-24 sm:py-32">
-        <div className="container-site">
-          <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-            <Reveal>
-              <SectionLabel index="08">The Journal</SectionLabel>
-              <h2 id="journal-title" className="heading-lg mt-6 text-midnight">
-                Notes on <em className="text-iris pr-[0.08em]">ritual &amp; craft.</em>
-              </h2>
-            </Reveal>
-            <Reveal delay={0.1}>
-              <p className="max-w-[360px] text-[14px] leading-[1.7] text-stone">
-                Ingredient stories, routines and the traditions behind our formulas. New pieces arrive soon.
-              </p>
-            </Reveal>
-          </div>
-
-          <div className="mt-14 grid gap-6 md:grid-cols-3 md:gap-6 lg:gap-8">
-            {JOURNAL.map((article, index) => (
-              <Reveal key={article.slug} delay={index * 0.1}>
-                <article className={`glass glass-hover ${JOURNAL_TINT[article.category] ?? "tint-champagne"} rounded-[30px] p-3 pb-7 sm:p-3.5 sm:pb-8 ${index === 1 ? "md:mt-16" : ""}`}>
-                  <div className="relative aspect-[4/5] overflow-hidden rounded-[22px] bg-mist-deep">
-                    <Image src={article.image} alt={article.imageAlt} fill sizes="(min-width: 768px) 30vw, 100vw" className="object-cover" />
-                    <span className="glass-strong absolute left-3 top-3 rounded-full px-3.5 py-1.5 text-[10px] font-medium uppercase tracking-[0.22em] text-midnight">
-                      {article.category}
-                    </span>
-                  </div>
-                  <div className="px-3 sm:px-4">
-                  <p className="mt-5 text-[11px] font-medium uppercase tracking-[0.22em] text-stone">
-                    {article.readTime} · Coming soon
-                  </p>
-                  <h3 className="mt-2 font-display text-[28px] leading-[1.1] text-midnight">{article.title}</h3>
-                  <p className="mt-3 text-[14px] leading-[1.7] text-stone">{article.excerpt}</p>
-                  {article.product && (
-                    <Link href={`/products/${article.product.slug}`} className="link-underline mt-5 text-midnight">
-                      {article.product.label}
-                    </Link>
-                  )}
-                  </div>
-                </article>
-              </Reveal>
-            ))}
-          </div>
         </div>
       </section>
 

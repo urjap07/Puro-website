@@ -33,7 +33,6 @@ const COLUMNS = [
       ["Our philosophy", "/our-story"],
       ["Ingredients", "/ingredients"],
       ["Skincare finder", "/finder"],
-      ["Journal", "/#journal"],
     ],
   },
 ];

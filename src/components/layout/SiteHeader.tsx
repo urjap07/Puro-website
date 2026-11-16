@@ -235,9 +235,6 @@ export default function SiteHeader({ concerns = [] }: { concerns?: Concern[] }) 
               >
                 Concerns <ChevronDown size={13} strokeWidth={1.5} className={clsx("transition-transform duration-300", panel === "concerns" && "rotate-180")} />
               </button>
-              <Link href="/#journal" className={navLink} onMouseEnter={scheduleClose}>
-                Journal
-              </Link>
             </nav>
           </div>
 

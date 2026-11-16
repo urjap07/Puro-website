@@ -22,7 +22,6 @@ const PURO_WORLD = [
   { label: "Ingredients", href: "/ingredients" },
   { label: "Skin & hair concerns", href: "/concerns" },
   { label: "Skincare finder", href: "/finder" },
-  { label: "Journal", href: "/#journal" },
 ];
 
 /** Mobile navigation drawer: shop, concerns and the PURO world. */
