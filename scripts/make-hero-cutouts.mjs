@@ -9,6 +9,12 @@
  * studio shadow under each tube) is found by flood-filling light, neutral
  * pixels from the image edges; the mask edge is then tightened, feathered and
  * pulled away from white so no halo shows on midnight teal.
+ *
+ * For REPLACE_SMALL products it also rewrites the shop-sized cut-outs
+ * (public/media/cutouts/<slug>.webp and cutouts/dark/<slug>.webp) from this
+ * clean high-res cut. Their originals in public/media/products/<slug>/01.jpg
+ * have white print that runs into the white background, so the flood fill in
+ * make-cutouts.mjs bites into the tube there.
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -18,12 +24,17 @@ const ROOT = "public/images/Product Images";
 const OUT = "public/media/cutouts/hero";
 const WORK = 2600; // working height in px
 const HEIGHT = 1600; // output height in px
+const SMALL_HEIGHT = 790; // shop-sized cut-outs, matching make-cutouts.mjs
 
 const SOURCES = {
   "glow-up-pithi-pack": "03. Glow up Pithi Pack/Copy of IMG_9400 copy.jpg",
   "aquench-soothing-hydrogel": "06. Aquench soothing gel/Copy of IMG_9438 copy.jpg",
   "vita-clay-ubtan-pack": "04. Vita Clay Ubtan Pack/Copy of IMG_9420 copy.jpg",
+  "scrubulush-exfoliator": "05. Scrubulush Exfoliator/Copy of IMG_9380 copy.jpg",
 };
+
+/** Products whose shop-sized cut-outs are rebuilt from the high-res cut. */
+const REPLACE_SMALL = ["aquench-soothing-hydrogel", "scrubulush-exfoliator"];
 
 fs.mkdirSync(OUT, { recursive: true });
 
@@ -131,6 +142,16 @@ async function cut(slug, file) {
     .toFile(path.join(OUT, `${slug}.webp`));
   const meta = await sharp(path.join(OUT, `${slug}.webp`)).metadata();
   console.log(slug, `${meta.width}x${meta.height}`);
+
+  if (REPLACE_SMALL.includes(slug)) {
+    for (const dir of ["public/media/cutouts", "public/media/cutouts/dark"]) {
+      await sharp(path.join(OUT, `${slug}.webp`))
+        .resize({ height: SMALL_HEIGHT })
+        .webp({ quality: 88, alphaQuality: 95, effort: 6 })
+        .toFile(path.join(dir, `${slug}.webp`));
+    }
+    console.log(`  + shop-sized cut-outs for ${slug}`);
+  }
 }
 
 for (const [slug, file] of Object.entries(SOURCES)) await cut(slug, file);

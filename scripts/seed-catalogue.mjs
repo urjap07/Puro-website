@@ -50,6 +50,8 @@ const PRODUCT_COLUMNS = {
   rating_value: "DECIMAL(2,1) NULL",
   rating_count: "INT NULL",
   is_classic: "TINYINT(1) NOT NULL DEFAULT 0",
+  // Set per product with `npm run db:launch`; the seed never overwrites it.
+  launched_at: "DATE NULL",
 };
 
 /** Products shown in "The Signatures" on the homepage. */

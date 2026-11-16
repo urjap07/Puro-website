@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { getActiveProducts, getConcerns, getIngredients } from "@/db/queries/products";
+import { productsInEdit } from "@/lib/edits";
 import { COLLECTIONS } from "@/lib/collections";
 import { SITE } from "@/lib/site";
 
@@ -16,6 +17,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: url("/shop"), changeFrequency: "weekly", priority: 0.9 },
     { url: url("/our-story"), changeFrequency: "monthly", priority: 0.6 },
     { url: url("/ingredients"), changeFrequency: "monthly", priority: 0.7 },
+    { url: url("/bestsellers"), changeFrequency: "weekly", priority: 0.8 },
+    { url: url("/classics"), changeFrequency: "monthly", priority: 0.7 },
+    ...(productsInEdit(products, "new-arrivals").length ? [{ url: url("/new-arrivals"), changeFrequency: "weekly" as const, priority: 0.8 }] : []),
     { url: url("/concerns"), changeFrequency: "monthly", priority: 0.7 },
     { url: url("/finder"), changeFrequency: "monthly", priority: 0.6 },
     ...ingredients.map((ingredient) => ({ url: url(`/ingredients/${ingredient.slug}`), changeFrequency: "monthly" as const, priority: 0.6 })),

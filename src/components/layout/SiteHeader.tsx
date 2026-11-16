@@ -13,6 +13,7 @@ import { useWishlist } from "@/lib/wishlist-store";
 import type { Concern } from "@/db/queries/products";
 import HeaderSearch from "./HeaderSearch";
 import AllMenu from "./AllMenu";
+import { menuEdits } from "@/lib/edits";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -30,9 +31,7 @@ const SHOP_LINKS = [
   { label: "Gift sets", href: "/collections/gifting" },
 ];
 
-const SHOP_EDITS = [
-  { label: "Bestsellers", href: "/search?sort=bestsellers" },
-  { label: "New arrivals", href: "/search?sort=newest" },
+const MORE_EDITS = [
   { label: "Top rated", href: "/search?sort=rating" },
   { label: "Under ₹500", href: "/search?price=0-500" },
 ];
@@ -100,7 +99,8 @@ function Announcements() {
  * Editorial header. On the homepage it floats transparently over the
  * cinematic hero and settles into a pearl bar once the visitor scrolls.
  */
-export default function SiteHeader({ concerns = [] }: { concerns?: Concern[] }) {
+export default function SiteHeader({ concerns = [], hasNewArrivals = false }: { concerns?: Concern[]; hasNewArrivals?: boolean }) {
+  const shopEdits = [...menuEdits(hasNewArrivals).map(({ label, href }) => ({ label, href })), ...MORE_EDITS];
   const pathname = usePathname();
   const isHome = pathname === "/";
   const [menuOpen, setMenuOpen] = useState(false);
@@ -309,7 +309,7 @@ export default function SiteHeader({ concerns = [] }: { concerns?: Concern[] }) 
                   <div>
                     <p className="eyebrow">Edits</p>
                     <ul className="mt-5 space-y-3.5">
-                      {SHOP_EDITS.map((link) => (
+                      {shopEdits.map((link) => (
                         <li key={link.href}>
                           <Link href={link.href} className="text-[14px] text-graphite transition hover:text-midnight">
                             {link.label}
@@ -422,7 +422,7 @@ export default function SiteHeader({ concerns = [] }: { concerns?: Concern[] }) 
         )}
       </AnimatePresence>
 
-      <AllMenu open={menuOpen} onClose={closeMenu} concerns={concerns} />
+      <AllMenu open={menuOpen} onClose={closeMenu} concerns={concerns} hasNewArrivals={hasNewArrivals} />
     </>
   );
 }

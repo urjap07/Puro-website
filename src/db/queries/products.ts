@@ -33,6 +33,7 @@ interface ProductRow extends RowDataPacket {
     rating_count: number | null;
     is_classic: number;
     is_featured: number;
+    launched_at: string | null;
     is_active: number;
     created_at: Date;
 }
@@ -114,6 +115,8 @@ export interface Product {
     rating: { value: number; count: number } | null;
     isClassic: boolean;
     isFeatured: boolean;
+    /** Launch date (YYYY-MM-DD) for New Arrivals; null when not set. */
+    launchedAt: string | null;
     categories: {
         id: number;
         name: string;
@@ -317,6 +320,7 @@ async function attachProductRelations(
                 : null,
         isClassic: Boolean(product.is_classic),
         isFeatured: Boolean(product.is_featured),
+        launchedAt: product.launched_at ?? null,
 
         categories: (categoriesMap.get(product.id) || []).map((category) => ({
             id: category.id,
@@ -395,6 +399,7 @@ export const getActiveProducts = cache(async (): Promise<Product[]> => {
         rating_count,
         is_classic,
         is_featured,
+        DATE_FORMAT(launched_at, '%Y-%m-%d') AS launched_at,
         is_active,
         created_at
       FROM products
@@ -441,6 +446,7 @@ export const getProductBySlug = cache(async (
         rating_count,
         is_classic,
         is_featured,
+        DATE_FORMAT(launched_at, '%Y-%m-%d') AS launched_at,
         is_active,
         created_at
       FROM products

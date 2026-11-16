@@ -8,13 +8,13 @@ import { ChevronRight, Heart, HeartHandshake, UserRound, X } from "lucide-react"
 import type { Concern } from "@/db/queries/products";
 import { COLLECTIONS } from "@/lib/collections";
 import { SITE } from "@/lib/site";
+import { menuEdits } from "@/lib/edits";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
-const EXPLORE = [
+const exploreLinks = (hasNewArrivals: boolean) => [
   { label: "All products", href: "/shop" },
-  { label: "Bestsellers", href: "/search?sort=bestsellers" },
-  { label: "New arrivals", href: "/search?sort=newest" },
+  ...menuEdits(hasNewArrivals).map(({ label, href }) => ({ label, href })),
   { label: "Under ₹500", href: "/search?price=0-500" },
 ];
 
@@ -25,7 +25,17 @@ const PURO_WORLD = [
 ];
 
 /** Mobile navigation drawer: shop, concerns and the PURO world. */
-export default function AllMenu({ open, onClose, concerns }: { open: boolean; onClose: () => void; concerns: Concern[] }) {
+export default function AllMenu({
+  open,
+  onClose,
+  concerns,
+  hasNewArrivals = false,
+}: {
+  open: boolean;
+  onClose: () => void;
+  concerns: Concern[];
+  hasNewArrivals?: boolean;
+}) {
   useEffect(() => {
     if (!open) return;
     const onKey = (event: KeyboardEvent) => event.key === "Escape" && onClose();
@@ -79,7 +89,7 @@ export default function AllMenu({ open, onClose, concerns }: { open: boolean; on
 
               <div className="mx-3 mt-4 h-px bg-gradient-to-r from-transparent via-midnight/15 to-transparent" />
               <p className={heading}>Edits</p>
-              {EXPLORE.map((item) => (
+              {exploreLinks(hasNewArrivals).map((item) => (
                 <Link key={item.href} href={item.href} onClick={onClose} className={row}>
                   {item.label}
                   <ChevronRight size={16} strokeWidth={1.3} className="text-stone" />

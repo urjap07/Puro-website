@@ -237,7 +237,8 @@ export default function ShopResults({
     if (filters.sort === "rating") sorted.sort((a, b) => (b.rating?.value ?? 0) - (a.rating?.value ?? 0) || (b.rating?.count ?? 0) - (a.rating?.count ?? 0));
     if (filters.sort === "price-asc") sorted.sort((a, b) => priceOf(a) - priceOf(b));
     if (filters.sort === "price-desc") sorted.sort((a, b) => priceOf(b) - priceOf(a));
-    if (filters.sort === "newest") sorted.sort((a, b) => b.createdAt.localeCompare(a.createdAt) || b.id - a.id);
+    if (filters.sort === "newest")
+      sorted.sort((a, b) => (b.launchedAt ?? b.createdAt).localeCompare(a.launchedAt ?? a.createdAt) || b.id - a.id);
     return sorted;
   }, [pool, filters]);
   const shown = results.slice(0, visible);

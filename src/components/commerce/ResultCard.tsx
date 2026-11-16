@@ -15,6 +15,7 @@ import Price from "./Price";
 import QuickLookButton from "./QuickLookButton";
 import StarRating from "./StarRating";
 import { TINT, productTint } from "./tints";
+import { isNewArrival } from "@/lib/edits";
 
 /** Add-to-bag button that becomes a quantity stepper once the product is in the bag. */
 export function BagButton({ product, className }: { product: Product; className?: string }) {
@@ -115,7 +116,9 @@ export default function ResultCard({
   const href = `/products/${product.slug}`;
   const cutout = cutoutFor(product.slug);
   const image = cutout ?? product.images[0]?.imageUrl;
-  const badge = product.isFeatured ? "Bestseller" : product.isClassic ? "Puro Classic" : null;
+  const isNew = isNewArrival(product);
+  const badge = isNew ? "New" : product.isFeatured ? "Bestseller" : product.isClassic ? "Puro Classic" : null;
+  const badgeTint = isNew ? TINT.aqua : product.isFeatured ? TINT.saffron : TINT.lilac;
   const lowStock = variant && variant.stockQuantity > 0 && variant.stockQuantity <= 5;
   const list = layout === "list";
   const colour = TINT[productTint(product)];
@@ -137,6 +140,12 @@ export default function ResultCard({
         )}
       >
         <Link href={href} aria-label={product.name} data-cursor="View" className="absolute inset-0">
+          {!image && (
+            <span className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-center">
+              <span className="font-display text-[26px] tracking-[0.3em] text-midnight/35 sm:text-[32px]">PURO</span>
+              <span className="text-[10px] font-medium uppercase tracking-[0.22em] text-stone/80">Photo coming soon</span>
+            </span>
+          )}
           {image && (
             <Image
               src={image}
@@ -152,7 +161,7 @@ export default function ResultCard({
           )}
         </Link>
         {badge && (
-          <span className={clsx("glass pointer-events-none !absolute left-2.5 top-2.5 rounded-full px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.12em] sm:left-3 sm:top-3 sm:px-3 sm:py-1 sm:text-[10px] sm:tracking-[0.18em]", product.isFeatured ? clsx(TINT.saffron.glass, TINT.saffron.text) : clsx(TINT.lilac.glass, TINT.lilac.text))}>
+          <span className={clsx("glass pointer-events-none !absolute left-2.5 top-2.5 rounded-full px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.12em] sm:left-3 sm:top-3 sm:px-3 sm:py-1 sm:text-[10px] sm:tracking-[0.18em]", badgeTint.glass, badgeTint.text)}>
             {badge}
           </span>
         )}

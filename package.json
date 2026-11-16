@@ -10,6 +10,7 @@
     "db:seed": "node scripts/seed-catalogue.mjs",
     "db:ingredients": "node scripts/link-ingredients.mjs",
     "db:snapshot": "node scripts/export-snapshot.mjs",
+    "db:launch": "node scripts/launch-product.mjs",
     "images": "node scripts/optimize-images.mjs"
   },
   "dependencies": {

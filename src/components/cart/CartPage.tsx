@@ -442,7 +442,7 @@ export default function CartPage({ products }: { products: Product[] }) {
             {items.length > 0 ? (
               <ProductRow title="Pairs beautifully with your bag" note="Chosen for the same skin and hair concerns" products={pairs} />
             ) : (
-              <ProductRow title="Bestsellers" note="Most-loved rituals, ranked by reviews" href="/search?sort=bestsellers" products={bestsellers} ranked />
+              <ProductRow title="Bestsellers" note="Most-loved rituals, ranked by reviews" href="/bestsellers" products={bestsellers} ranked />
             )}
             <RecentlyViewedRow products={products} />
           </div>

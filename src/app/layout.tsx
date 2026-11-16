@@ -10,7 +10,8 @@ import SmoothScroll from "@/components/layout/SmoothScroll";
 import LiquidBackdrop from "@/components/layout/LiquidBackdrop";
 import CursorLabel from "@/components/motion/CursorLabel";
 import ScrollProgress from "@/components/motion/ScrollProgress";
-import { getConcerns, type Concern } from "@/db/queries/products";
+import { getActiveProducts, getConcerns, type Concern } from "@/db/queries/products";
+import { productsInEdit } from "@/lib/edits";
 import { SITE } from "@/lib/site";
 import "./globals.css";
 
@@ -60,12 +61,13 @@ export const metadata: Metadata = {
     "Thoughtfully formulated face, body and hair care from PURO Body & Soul — botanical ingredients, honest formulation and a ritual for every day. Cruelty-free and dermatologically tested.",
 };
 
-async function loadConcerns(): Promise<Concern[]> {
+async function loadNavigation(): Promise<{ concerns: Concern[]; hasNewArrivals: boolean }> {
   try {
-    return await getConcerns();
+    const [concerns, products] = await Promise.all([getConcerns(), getActiveProducts()]);
+    return { concerns, hasNewArrivals: productsInEdit(products, "new-arrivals").length > 0 };
   } catch (error) {
-    console.error("Unable to load concerns for navigation:", error);
-    return [];
+    console.error("Unable to load navigation:", error);
+    return { concerns: [], hasNewArrivals: false };
   }
 }
 
@@ -74,7 +76,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const concerns = await loadConcerns();
+  const { concerns, hasNewArrivals } = await loadNavigation();
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -82,7 +84,7 @@ export default async function RootLayout({
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: ORGANIZATION_LD }} />
         <LiquidBackdrop />
         <SmoothScroll />
-        <SiteHeader concerns={concerns} />
+        <SiteHeader concerns={concerns} hasNewArrivals={hasNewArrivals} />
         <main>{children}</main>
         <SiteFooter />
         <CartDrawer />
