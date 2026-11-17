@@ -7,6 +7,8 @@
 #   DB_SSL                true   (most hosted MySQL providers require TLS)
 #   DB_SSL_CA             optional: the provider's CA certificate, if it gives you one
 #   NEXT_PUBLIC_SITE_URL  https://your-domain   (canonical URLs, sitemap, structured data)
+#   NEXT_PUBLIC_FORMSPREE_NEWSLETTER_ID  the Formspree form ID for the Puro Letter, e.g. xyzabcde
+#                         (the part after /f/ in https://formspree.io/f/xyzabcde); redeploy after setting
 # The database must be reachable during the build too: the sitemap and a few
 # pages are pre-rendered from it.
 
