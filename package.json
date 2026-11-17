@@ -11,6 +11,7 @@
     "db:ingredients": "node scripts/link-ingredients.mjs",
     "db:snapshot": "node scripts/export-snapshot.mjs",
     "db:launch": "node scripts/launch-product.mjs",
+    "db:orders": "node scripts/migrate-orders.mjs",
     "images": "node scripts/optimize-images.mjs"
   },
   "dependencies": {

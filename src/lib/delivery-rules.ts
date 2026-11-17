@@ -5,6 +5,16 @@
 
 export type ZoneId = "maharashtra" | "india" | "international";
 
+/** Orders at or above this subtotal (in rupees) ship free within India. */
+export const FREE_DELIVERY_THRESHOLD = 500;
+
+/**
+ * Delivery charge (in rupees) on Indian orders below FREE_DELIVERY_THRESHOLD.
+ * PLACEHOLDER — the real fee hasn't been decided; change it here and the
+ * bag, checkout, orders and FAQs all follow.
+ */
+export const STANDARD_DELIVERY_FEE = 60;
+
 export interface DeliveryZone {
   id: ZoneId;
   /** Shown to shoppers, e.g. "Maharashtra". */

@@ -11,8 +11,8 @@ import { SNAPSHOT } from "@/db/snapshot";
 
 /** Most of one item a single order can hold. */
 export const MAX_LINE_QUANTITY = 10;
-/** Orders at or above this subtotal (in rupees) ship free within India. */
-export const FREE_DELIVERY_THRESHOLD = 500;
+import { FREE_DELIVERY_THRESHOLD } from "@/lib/delivery-rules";
+export { FREE_DELIVERY_THRESHOLD, STANDARD_DELIVERY_FEE } from "@/lib/delivery-rules";
 
 export interface QuoteRequestLine {
   variantId: number;

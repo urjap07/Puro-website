@@ -35,6 +35,8 @@ interface CartState {
   add: (item: Omit<CartItem, "quantity">, quantity?: number) => void;
   setQuantity: (variantId: number, quantity: number) => void;
   remove: (variantId: number) => void;
+  /** Empties the bag (after an order is placed). */
+  clear: () => void;
   /**
    * Brings the bag in line with the server's quote: current prices and names,
    * quantities lowered to what's in stock, and lines that are no longer sold
@@ -105,6 +107,8 @@ export const useCart = create<CartState>()(
           items: state.items.filter((item) => item.variantId !== variantId),
         })),
 
+      clear: () => set({ items: [], lastAdded: null }),
+
       reconcile: (lines) =>
         set((state) => {
           const byId = new Map(lines.map((line) => [line.variantId, line]));
@@ -157,4 +161,4 @@ export function cartSubtotal(items: CartItem[]) {
 }
 
 /** Orders at or above this subtotal ship free. */
-export const FREE_DELIVERY_THRESHOLD = 500;
+export { FREE_DELIVERY_THRESHOLD } from "./delivery-rules";

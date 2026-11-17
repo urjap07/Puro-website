@@ -19,15 +19,34 @@ export {
 } from "./account-schema";
 import type { Address, AddressInput, Profile } from "./account-schema";
 
+/** An order placed from this device: enough to list it and reopen its page. */
+export interface SavedOrder {
+  number: string;
+  /** Private token for the order's confirmation page. */
+  token: string;
+  placedAt: string;
+  total: number;
+  itemCount: number;
+  /** e.g. "Glow Up Pithi Pack + 2 more" */
+  summary: string;
+  paymentMethod: "cod";
+}
+
+/** Link to an order's confirmation page. */
+export const orderHref = (order: Pick<SavedOrder, "number" | "token">) => `/orders/${order.number}?t=${order.token}`;
+
 interface AccountState {
   profile: Profile;
   addresses: Address[];
+  /** Orders placed from this device, newest first. */
+  orders: SavedOrder[];
+  addOrder: (order: SavedOrder) => void;
   saveProfile: (profile: Profile) => void;
   /** Adds (no id) or updates an address. The first address becomes the default. */
   saveAddress: (input: AddressInput, id?: string) => Address;
   removeAddress: (id: string) => void;
   setDefault: (id: string) => void;
-  /** Forget everything stored for this account on this device. */
+  /** Forget the profile and addresses on this device (orders are kept, so their pages stay reachable). */
   clear: () => void;
 }
 
@@ -38,6 +57,8 @@ export const useAccount = create<AccountState>()(
     (set, get) => ({
       profile: EMPTY_PROFILE,
       addresses: [],
+      orders: [],
+      addOrder: (order) => set((state) => ({ orders: [order, ...state.orders.filter((item) => item.number !== order.number)].slice(0, 50) })),
       saveProfile: (profile) => set({ profile }),
       saveAddress: (input, id) => {
         const existing = id ? get().addresses.find((address) => address.id === id) : undefined;

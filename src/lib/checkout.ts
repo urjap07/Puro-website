@@ -2,14 +2,14 @@ import { z } from "zod";
 import { AddressSchema } from "@/lib/account-schema";
 import { ContactSchema } from "@/lib/checkout-contact";
 import { type CartQuote, type QuoteRequestLine, quoteCart } from "@/lib/cart-pricing";
-import { DELIVERY_ZONES, type DeliveryZone, pincodeLooksMaharashtra, pincodeProblem } from "@/lib/delivery-rules";
+import { DELIVERY_ZONES, type DeliveryZone, STANDARD_DELIVERY_FEE, pincodeLooksMaharashtra, pincodeProblem } from "@/lib/delivery-rules";
 import { lookupIndiaPost } from "@/lib/pincode-lookup";
 
 /**
- * The address-and-delivery stage of checkout, checked on the server.
- * Payment isn't enabled yet (Release 2), so this is as far as an order goes:
+ * The address-and-delivery stage of checkout, checked on the server:
  * everything the shopper entered is validated, the pincode is confirmed with
- * India Post, and the bag is re-priced from the database.
+ * India Post, and the bag is re-priced from the database. Placing the order
+ * (lib/orders.ts) runs this again before saving anything.
  */
 
 
@@ -33,8 +33,8 @@ export type CheckoutRequestBody = z.input<typeof CheckoutRequest>;
 
 export interface CheckoutDelivery {
   zone: DeliveryZone;
-  /** 0 when free; null when the charge is confirmed at payment. */
-  fee: number | null;
+  /** Delivery charge in rupees; 0 when free. */
+  fee: number;
   freeDelivery: boolean;
   remainingForFreeDelivery: number;
   /** Whether India Post confirmed the pincode (false when it couldn't be reached). */
@@ -112,7 +112,7 @@ export async function prepareCheckout(body: unknown): Promise<CheckoutResult> {
     warnings,
     delivery: {
       zone,
-      fee: quote.freeDelivery ? 0 : null,
+      fee: quote.freeDelivery ? 0 : STANDARD_DELIVERY_FEE,
       freeDelivery: quote.freeDelivery,
       remainingForFreeDelivery: quote.remainingForFreeDelivery,
       pincodeVerified,

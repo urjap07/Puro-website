@@ -25,6 +25,7 @@ import {
   type Profile,
   ProfileSchema,
   defaultAddress,
+  orderHref,
   useAccount,
 } from "@/lib/account-store";
 import { cartCount, cartSubtotal, useCart } from "@/lib/cart-store";
@@ -397,7 +398,10 @@ function Addresses() {
 
 /* ------------------------------------------------------------------ */
 
+const ORDER_DATE = new Intl.DateTimeFormat("en-IN", { day: "numeric", month: "short", year: "numeric", timeZone: "Asia/Kolkata" });
+
 function Orders() {
+  const orders = useAccount((state) => state.orders);
   return (
     <section
       id="orders"
@@ -415,13 +419,35 @@ function Orders() {
           Your orders
         </h2>
       </div>
-      <p className="relative z-[2] mt-5 max-w-[520px] text-[15px] leading-7 text-graphite/85">
-        No orders yet. Secure checkout is being set up — once it opens, your
-        orders, their status and tracking will appear right here.
-      </p>
-      <Link href="/shop" className="btn-iris relative z-[2] mt-6 !px-8 !py-3.5">
-        Explore the collection
-      </Link>
+      {orders.length === 0 ? (
+        <>
+          <p className="relative z-[2] mt-5 max-w-[520px] text-[15px] leading-7 text-graphite/85">
+            No orders yet. When you place one, its order number, status and details will appear right here.
+          </p>
+          <Link href="/shop" className="btn-iris relative z-[2] mt-6 !px-8 !py-3.5">
+            Explore the collection
+          </Link>
+        </>
+      ) : (
+        <ul className="relative z-[2] mt-5 divide-y divide-midnight/10">
+          {orders.map((order) => (
+            <li key={order.number}>
+              <Link href={orderHref(order)} className="group flex flex-wrap items-center gap-x-4 gap-y-1 py-4">
+                <span className="min-w-0 flex-1">
+                  <span className="block font-mono text-[15px] font-semibold tracking-[0.06em] text-midnight">{order.number}</span>
+                  <span className="block truncate text-[13px] text-stone">
+                    {ORDER_DATE.format(new Date(order.placedAt))} · {order.summary} · Cash on delivery
+                  </span>
+                </span>
+                <span className="font-display text-[22px] text-midnight">{formatPrice(order.total)}</span>
+                <span className="flex items-center gap-1 text-[12px] font-semibold uppercase tracking-[0.14em] text-[#5E4B8A]">
+                  View <ChevronRight size={14} strokeWidth={1.6} className="transition group-hover:translate-x-0.5" />
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
     </section>
   );
 }

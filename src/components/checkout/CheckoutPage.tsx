@@ -1,12 +1,14 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import clsx from "clsx";
 import {
   AlertCircle,
+  Banknote,
   Check,
   ChevronRight,
   CreditCard,
@@ -21,7 +23,9 @@ import {
   Truck,
 } from "lucide-react";
 import type { Address } from "@/lib/account-schema";
-import { defaultAddress, useAccount } from "@/lib/account-store";
+import { defaultAddress, orderHref, useAccount } from "@/lib/account-store";
+import type { PlacedOrder } from "@/lib/orders";
+import { notifyTeamOfOrder } from "@/lib/order-notify";
 import { useCart } from "@/lib/cart-store";
 import { useCheckout, type CheckoutStep } from "@/lib/checkout-store";
 import type { CheckoutResult } from "@/lib/checkout";
@@ -170,11 +174,11 @@ function OrderSummary({ prepared }: { prepared: Extract<CheckoutResult, { ok: tr
         <div className="flex justify-between">
           <dt>Delivery</dt>
           <dd className="text-ink">
-            {!delivery ? "Calculated at the next step" : delivery.fee === 0 ? <span className="font-semibold text-[#45633D]">FREE</span> : "Confirmed at payment"}
+            {!delivery ? "Calculated at the next step" : delivery.fee === 0 ? <span className="font-semibold text-[#45633D]">FREE</span> : formatPrice(delivery.fee)}
           </dd>
         </div>
         <div className="flex items-baseline justify-between border-t border-midnight/10 pt-3">
-          <dt className="text-[12px] font-semibold uppercase tracking-[0.2em]">{delivery?.fee === null ? "Total before delivery" : "Total"}</dt>
+          <dt className="text-[12px] font-semibold uppercase tracking-[0.2em]">{delivery ? "Total" : "Total before delivery"}</dt>
           <dd className="font-display text-[30px] leading-none text-midnight">{formatPrice(total)}</dd>
         </div>
       </dl>
@@ -191,9 +195,9 @@ function OrderSummary({ prepared }: { prepared: Extract<CheckoutResult, { ok: tr
 /* ------------------------------------------------------------------ */
 
 /**
- * Checkout, up to the delivery stage. Contact → address → delivery are
- * checked on the server; payment (Razorpay, UPI, cards and Cash on Delivery)
- * opens in Release 2, and the page says so plainly.
+ * Checkout: contact → address → delivery → payment, each checked on the
+ * server. Orders are placed with Cash on Delivery (lib/orders.ts); online
+ * payment (Razorpay: UPI, cards, net banking) opens in Release 2.
  */
 export default function CheckoutPage() {
   const [ready, setReady] = useState(false);
@@ -213,6 +217,14 @@ export default function CheckoutPage() {
   const [prepared, setPrepared] = useState<Extract<CheckoutResult, { ok: true }> | null>(null);
   const [checking, setChecking] = useState(false);
   const [problems, setProblems] = useState<Record<string, string> | null>(null);
+  const [placing, setPlacing] = useState(false);
+  const [placedNumber, setPlacedNumber] = useState<string | null>(null);
+  const router = useRouter();
+  const clearBag = useCart((state) => state.clear);
+  const addOrder = useAccount((state) => state.addOrder);
+  // One id per attempt: pressing "Place order" twice, or retrying after a
+  // network blip, can't create two orders.
+  const attempt = useRef<string | null>(null);
 
   useEffect(() => {
     useAccount.persist.rehydrate();
@@ -275,6 +287,17 @@ export default function CheckoutPage() {
 
   if (!ready) return <div className="min-h-[60vh]" />;
 
+  // Just placed: the bag is now empty while the confirmation page opens.
+  if (placedNumber) {
+    return (
+      <div className="container-site flex min-h-[60vh] items-center justify-center py-16">
+        <p role="status" className="flex items-center gap-3 font-display text-[26px] text-midnight">
+          <Loader2 size={22} className="animate-spin text-[#5E4B8A]" /> Order {placedNumber} placed — opening it…
+        </p>
+      </div>
+    );
+  }
+
   if (items.length === 0) {
     return (
       <div className="container-site py-16">
@@ -313,6 +336,59 @@ export default function CheckoutPage() {
 
   const zone = prepared?.delivery.zone;
   const problemList = problems ? Object.entries(problems) : [];
+  const orderTotal = prepared ? Math.round((prepared.quote.subtotal + prepared.delivery.fee) * 100) / 100 : null;
+
+  const placeOrder = async () => {
+    if (!prepared || !address || orderTotal === null || placing) return;
+    setPlacing(true);
+    setProblems(null);
+    attempt.current ??= globalThis.crypto?.randomUUID?.() ?? `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    try {
+      const response = await fetch("/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          items: items.map((item) => ({ variantId: item.variantId, quantity: item.quantity })),
+          contact: { email: checkout.email },
+          address: { label: address.label, fullName: address.fullName, phone: address.phone, line1: address.line1, landmark: address.landmark ?? "", city: address.city, state: address.state, pincode: address.pincode },
+          gift: { enabled: checkout.giftEnabled, message: checkout.giftMessage },
+          instructions: checkout.instructions,
+          paymentMethod: "cod",
+          requestId: attempt.current,
+          expectedTotal: orderTotal,
+        }),
+      });
+      const result = (await response.json()) as { ok: true; order: PlacedOrder } | { ok: false; errors: Record<string, string> };
+      if (!result.ok) {
+        setProblems(result.errors);
+        // Totals or stock changed: start a fresh attempt once the shopper has reviewed.
+        attempt.current = null;
+        refreshQuote();
+        setPlacing(false);
+        return;
+      }
+      const { order } = result;
+      const first = order.items[0];
+      const more = order.items.reduce((sum, item) => sum + item.quantity, 0) - (first?.quantity ?? 0);
+      addOrder({
+        number: order.number,
+        token: order.token,
+        placedAt: order.placedAt,
+        total: order.total,
+        itemCount: order.items.reduce((sum, item) => sum + item.quantity, 0),
+        summary: first ? `${first.name}${more > 0 ? ` + ${more} more` : ""}` : "",
+        paymentMethod: "cod",
+      });
+      notifyTeamOfOrder(order, window.location.origin);
+      setPlacedNumber(order.number);
+      router.push(orderHref(order));
+      clearBag();
+      checkout.reset();
+    } catch {
+      setProblems({ form: "We couldn't reach our server to place your order. Please check your connection and try again — you won't be charged twice." });
+      setPlacing(false);
+    }
+  };
 
   return (
     <div className="pb-24">
@@ -330,7 +406,7 @@ export default function CheckoutPage() {
             Checkout<em className="text-iris pl-3 pr-1">securely</em>
           </h1>
           <p className="flex items-center gap-2 text-[13px] text-stone">
-            <Lock size={14} strokeWidth={1.6} /> Your details stay on this device until payment opens
+            <Lock size={14} strokeWidth={1.6} /> Prices and stock are checked again when you place your order
           </p>
         </div>
 
@@ -464,7 +540,7 @@ export default function CheckoutPage() {
                       <p className="flex flex-wrap items-baseline justify-between gap-2">
                         <span className="font-display text-[22px] text-midnight">Standard delivery</span>
                         <span className="text-[14px] font-semibold text-midnight">
-                          {prepared.delivery.fee === 0 ? "FREE" : "Confirmed at payment"}
+                          {prepared.delivery.fee === 0 ? "FREE" : formatPrice(prepared.delivery.fee)}
                         </span>
                       </p>
                       <p className="mt-1 text-[14px] text-graphite">
@@ -514,35 +590,56 @@ export default function CheckoutPage() {
               )}
             </StepPanel>
 
-            {/* 4 · Payment (Release 2) */}
+            {/* 4 · Payment */}
             <StepPanel number={4} title="Payment" icon={CreditCard} step="payment" current={step}>
-              <div className="glass tint-lilac rounded-[24px] p-5 sm:p-6">
-                <div className="relative z-[2] flex items-start gap-4">
-                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/70 text-[#5E4B8A]">
-                    <Lock size={18} strokeWidth={1.6} />
+              <div role="radiogroup" aria-label="Payment method" className="grid gap-3">
+                <button
+                  type="button"
+                  role="radio"
+                  aria-checked="true"
+                  className="flex items-start gap-4 rounded-[22px] bg-white/85 p-4 text-left shadow-[0_14px_30px_-18px_rgba(94,75,138,0.6)] ring-2 ring-[#5E4B8A] sm:p-5"
+                >
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[linear-gradient(135deg,#f6e3c8,#efc3c8_50%,#d6c8ee)] text-midnight">
+                    <Banknote size={19} strokeWidth={1.5} />
                   </span>
-                  <div>
-                    <p className="font-display text-[24px] leading-tight text-midnight">Online payment opens soon</p>
-                    <p className="mt-2 text-[15px] leading-[1.7] text-graphite/90">
-                      We&rsquo;re setting up secure payment by UPI, cards and net banking, and Cash on Delivery.{" "}
-                      <strong className="font-semibold text-midnight">Your order hasn&rsquo;t been placed and you haven&rsquo;t been charged.</strong> Your bag, address and
-                      delivery choices are saved on this device, ready for when payment opens.
-                    </p>
-                  </div>
+                  <span className="flex-1">
+                    <span className="flex items-center justify-between gap-3">
+                      <span className="font-display text-[22px] leading-tight text-midnight">Cash on delivery</span>
+                      <span className="flex h-5 w-5 items-center justify-center rounded-full border border-[#5E4B8A] bg-[#5E4B8A] text-ivory">
+                        <Check size={12} strokeWidth={2.4} />
+                      </span>
+                    </span>
+                    <span className="mt-1 block text-[14px] leading-[1.6] text-graphite">
+                      Pay {orderTotal !== null ? <strong className="font-semibold">{formatPrice(orderTotal)}</strong> : "the total"} in cash or by UPI to the delivery partner when your order arrives.
+                    </span>
+                  </span>
+                </button>
+                <div aria-disabled="true" className="flex items-start gap-4 rounded-[22px] bg-white/40 p-4 opacity-70 ring-1 ring-inset ring-white/70 sm:p-5">
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/70 text-stone">
+                    <Lock size={17} strokeWidth={1.6} />
+                  </span>
+                  <span>
+                    <span className="flex flex-wrap items-center gap-2">
+                      <span className="font-display text-[22px] leading-tight text-midnight">Pay online</span>
+                      <span className="rounded-full bg-white/80 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-stone">Coming soon</span>
+                    </span>
+                    <span className="mt-1 block text-[14px] text-stone">UPI, cards and net banking.</span>
+                  </span>
                 </div>
               </div>
-              <button type="button" disabled className="btn-iris mt-6 h-12 w-full cursor-not-allowed !gap-2 !py-0 !font-semibold opacity-60 sm:w-auto sm:!px-10">
-                <Lock size={15} strokeWidth={1.6} /> Place order — payment coming soon
+
+              <button
+                type="button"
+                onClick={placeOrder}
+                disabled={!prepared || checking || placing}
+                className="btn-iris mt-6 h-12 w-full !gap-2 !py-0 !font-semibold disabled:cursor-wait disabled:opacity-70 sm:w-auto sm:!px-10"
+              >
+                {placing ? <Loader2 size={16} className="animate-spin" /> : <Check size={16} strokeWidth={1.8} />}
+                {placing ? "Placing your order…" : `Place order${orderTotal !== null ? ` · ${formatPrice(orderTotal)}` : ""}`}
               </button>
-              <div className="mt-4 flex flex-wrap gap-3 text-[13px]">
-                <Link href="/shop" className="font-semibold text-[#5E4B8A] underline-offset-4 hover:underline">
-                  Keep shopping
-                </Link>
-                <span className="text-stone">·</span>
-                <Link href="/account" className="font-semibold text-[#5E4B8A] underline-offset-4 hover:underline">
-                  Your account
-                </Link>
-              </div>
+              <p className="mt-3 text-[13px] leading-[1.6] text-stone">
+                By placing your order you agree to pay {orderTotal !== null ? formatPrice(orderTotal) : "the total"} on delivery. You&rsquo;ll get an order number straight away.
+              </p>
             </StepPanel>
           </div>
 
