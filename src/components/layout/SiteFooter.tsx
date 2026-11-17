@@ -212,7 +212,15 @@ export default function SiteFooter() {
               </span>
             </li>
           </ul>
-          <div className="mt-7 flex gap-3">
+          <div className="mt-6 flex flex-wrap gap-2">
+            <Link href="/contact" className="btn-glass !px-5 !py-2.5 !text-[11px] hover:text-aqua-deep">
+              Contact us
+            </Link>
+            <Link href="/faq" className="btn-glass !px-5 !py-2.5 !text-[11px] hover:text-aqua-deep">
+              FAQs
+            </Link>
+          </div>
+          <div className="mt-5 flex gap-3">
             {SOCIALS.map(({ label, href, icon: Icon }) => (
               <a
                 key={label}

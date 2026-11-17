@@ -208,7 +208,7 @@ export default function SiteHeader({ concerns = [], hasNewArrivals = false }: { 
               <Search size={19} strokeWidth={1.3} />
             </button>
 
-            <nav aria-label="Primary" className="hidden items-center gap-7 lg:flex xl:gap-9">
+            <nav aria-label="Primary" className="hidden items-center gap-5 lg:flex xl:gap-9 [&>*]:max-xl:tracking-[0.12em]">
               <button
                 type="button"
                 aria-expanded={panel === "shop"}
@@ -243,8 +243,16 @@ export default function SiteHeader({ concerns = [], hasNewArrivals = false }: { 
             <Wordmark tone={tone} />
           </Link>
 
-          {/* Right: search, saved, bag */}
+          {/* Right: FAQs, contact, search, saved, bag */}
           <div className="flex items-center justify-end gap-0.5 sm:gap-1">
+            <nav aria-label="Help" className="mr-2 hidden items-center gap-4 lg:flex xl:mr-5 xl:gap-7 [&>*]:max-xl:tracking-[0.12em]">
+              <Link href="/faq" className={navLink} onMouseEnter={scheduleClose}>
+                FAQs
+              </Link>
+              <Link href="/contact" className={navLink} onMouseEnter={scheduleClose}>
+                Contact
+              </Link>
+            </nav>
             <button type="button" onClick={() => setSearchOpen(true)} aria-label="Search" className={clsx(iconButton, "hidden sm:flex")}>
               <Search size={19} strokeWidth={1.3} />
             </button>

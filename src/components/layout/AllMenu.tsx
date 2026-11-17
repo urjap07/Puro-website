@@ -24,7 +24,12 @@ const PURO_WORLD = [
   { label: "Skincare finder", href: "/finder" },
 ];
 
-/** Mobile navigation drawer: shop, concerns and the PURO world. */
+const HELP = [
+  { label: "Contact us", href: "/contact" },
+  { label: "FAQs", href: "/faq" },
+];
+
+/** Mobile navigation drawer: shop, concerns, the PURO world and help. */
 export default function AllMenu({
   open,
   onClose,
@@ -141,6 +146,15 @@ export default function AllMenu({
                 <ChevronRight size={16} strokeWidth={1.3} className="text-stone" />
               </Link>
               {PURO_WORLD.map((item) => (
+                <Link key={item.href} href={item.href} onClick={onClose} className={row}>
+                  {item.label}
+                  <ChevronRight size={16} strokeWidth={1.3} className="text-stone" />
+                </Link>
+              ))}
+
+              <div className="mx-6 mt-4 h-px bg-ink/10" />
+              <p className={heading}>Help</p>
+              {HELP.map((item) => (
                 <Link key={item.href} href={item.href} onClick={onClose} className={row}>
                   {item.label}
                   <ChevronRight size={16} strokeWidth={1.3} className="text-stone" />
