@@ -2,15 +2,16 @@
 
 import { useEffect, useState } from "react";
 import clsx from "clsx";
-import { Gift, Lock, MapPin, ShoppingBag, Truck, Zap } from "lucide-react";
+import { Gift, Lock, ShoppingBag, Truck, Zap } from "lucide-react";
 import type { Product } from "@/db/queries/products";
 import { FREE_DELIVERY_THRESHOLD, useCart } from "@/lib/cart-store";
-import { INDIA_DAYS, destinationLabel, useDeliveryEstimate } from "@/lib/delivery";
+import { INDIA_DAYS, useDeliveryEstimate } from "@/lib/delivery";
 import { flyToBasket } from "@/lib/flight-store";
 import { flightImage, toCartItem } from "@/components/cart/AddToBag";
 import WishButton from "@/components/cart/WishButton";
 import Price from "@/components/commerce/Price";
 import { useSelectedVariant } from "./VariantContext";
+import DeliverTo from "@/components/commerce/DeliverTo";
 
 /** Buy box: price, delivery promise, stock, quantity and actions for the chosen variant. */
 export default function BuyBox({ product, isGift = false }: { product: Product; isGift?: boolean }) {
@@ -48,16 +49,7 @@ export default function BuyBox({ product, isGift = false }: { product: Product; 
             )}
           </span>
         </p>
-        <p className="flex items-center gap-2.5 text-[13px] text-stone">
-          <MapPin size={16} strokeWidth={1.4} className="shrink-0 text-midnight-soft" />
-          {destination ? (
-            <span>
-              Delivering to <strong className="font-semibold text-ink">{destinationLabel(destination)}</strong>
-            </span>
-          ) : (
-            <span>Add your pincode under “Deliver to” for exact dates</span>
-          )}
-        </p>
+        <DeliverTo destination={destination} />
       </div>
 
       <p className={clsx("mt-5 text-[17px] font-semibold", inStock ? "text-midnight" : "text-blush-deep")}>

@@ -5,18 +5,19 @@ import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import clsx from "clsx";
-import { ChevronRight, Gift, HandHeart, Heart, Lock, MapPin, Minus, Plus, Rabbit, ShoppingBag, Trash2, Truck, Undo2 } from "lucide-react";
+import { ChevronRight, Gift, HandHeart, Heart, Lock, Minus, Plus, Rabbit, ShoppingBag, Trash2, Truck, Undo2 } from "lucide-react";
 import type { Product } from "@/db/queries/products";
 import { type CartItem, FREE_DELIVERY_THRESHOLD, useCart } from "@/lib/cart-store";
 import { useCartQuote } from "@/lib/cart-quote";
 import { BagNotices, PriceCheckStatus, useBagTotals } from "./BagCheck";
 import { type SavedItem, useWishlist } from "@/lib/wishlist-store";
-import { INDIA_DAYS, destinationLabel, useDeliveryEstimate } from "@/lib/delivery";
+import { INDIA_DAYS, useDeliveryEstimate } from "@/lib/delivery";
 import { cutoutFor } from "@/lib/cutouts";
 import { formatPrice } from "@/lib/format";
 import Price from "@/components/commerce/Price";
 import ProductRow, { RecentlyViewedRow } from "@/components/commerce/ProductRow";
 import { PROGRESS_FILL, PROGRESS_TRACK, WELL_SHADOW, wellTint } from "./wellTint";
+import DeliverTo from "@/components/commerce/DeliverTo";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -197,22 +198,19 @@ export default function CartPage({ products }: { products: Product[] }) {
 
               <div className="glass tint-aqua mt-5 rounded-[22px] p-4 text-[14px]">
                 <p className="flex items-start gap-2.5">
-                  <MapPin size={17} strokeWidth={1.4} className="mt-0.5 shrink-0 text-aqua-deep" />
+                  <Truck size={17} strokeWidth={1.4} className="mt-0.5 shrink-0 text-aqua-deep" />
                   {destination ? (
                     <span>
-                      Delivering to <strong className="font-semibold">{destinationLabel(destination)}</strong>
-                      <span className="block text-[13px] text-stone">
-                        Arrives <strong className="font-semibold text-ink">{dates}</strong>
-                        {zone && ` · ${zone.label}, ${zone.min}–${zone.max} days`}
-                      </span>
+                      Arrives <strong className="font-semibold text-ink">{dates}</strong>
+                      {zone && <span className="block text-[13px] text-stone">{zone.label} · {zone.min}–{zone.max} days</span>}
                     </span>
                   ) : (
-                    <span>
-                      Delivered in {INDIA_DAYS} across India
-                      <span className="block text-[13px] text-stone">Add your pincode under “Deliver to” at the top for exact dates.</span>
-                    </span>
+                    <span>Delivered in {INDIA_DAYS} across India</span>
                   )}
                 </p>
+                <div className="mt-2.5">
+                  <DeliverTo destination={destination} />
+                </div>
               </div>
 
               <ul className="mt-4 grid grid-cols-3 gap-2 text-center text-[11px] leading-tight text-stone">

@@ -373,9 +373,13 @@ function Addresses() {
                     type="button"
                     onClick={() => {
                       removeAddress(address.id);
-                      toDestination(
-                        defaultAddress(useAccount.getState().addresses),
-                      );
+                      const next = defaultAddress(useAccount.getState().addresses);
+                      if (next) toDestination(next);
+                      else {
+                        // No address left: forget the pincode if it came from this one.
+                        const current = useDestination.getState().destination;
+                        if (current && "pincode" in current && current.pincode === address.pincode) useDestination.getState().setDestination(null);
+                      }
                     }}
                     className="ml-auto flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[12px] font-medium text-[#8E4F5B] hover:bg-white/60"
                   >
@@ -459,6 +463,7 @@ function DeviceData() {
                 type="button"
                 onClick={() => {
                   clear();
+                  useDestination.getState().setDestination(null);
                   setConfirming(false);
                 }}
                 className="rounded-full bg-[#8E4F5B] px-4 py-2 text-[12px] font-semibold text-ivory"
