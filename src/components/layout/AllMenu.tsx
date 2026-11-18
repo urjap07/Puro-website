@@ -27,6 +27,8 @@ const PURO_WORLD = [
 const HELP = [
   { label: "Contact us", href: "/contact" },
   { label: "FAQs", href: "/faq" },
+  { label: "Shipping & returns", href: "/policies/shipping" },
+  { label: "All policies", href: "/policies" },
 ];
 
 /** Mobile navigation drawer: shop, concerns, the PURO world and help. */

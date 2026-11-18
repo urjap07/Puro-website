@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getActiveProducts, getConcerns, getIngredients } from "@/db/queries/products";
 import { productsInEdit } from "@/lib/edits";
+import { POLICIES } from "@/lib/policies";
 import { COLLECTIONS } from "@/lib/collections";
 import { SITE } from "@/lib/site";
 
@@ -18,6 +19,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: url("/our-story"), changeFrequency: "monthly", priority: 0.6 },
     { url: url("/contact"), changeFrequency: "yearly", priority: 0.5 },
     { url: url("/faq"), changeFrequency: "monthly", priority: 0.5 },
+    { url: url("/policies"), changeFrequency: "yearly", priority: 0.3 },
+    ...POLICIES.map((policy) => ({ url: url(`/policies/${policy.slug}`), changeFrequency: "yearly" as const, priority: 0.3 })),
     { url: url("/ingredients"), changeFrequency: "monthly", priority: 0.7 },
     { url: url("/bestsellers"), changeFrequency: "weekly", priority: 0.8 },
     { url: url("/classics"), changeFrequency: "monthly", priority: 0.7 },

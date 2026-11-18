@@ -5,6 +5,7 @@ import NewsletterForm from "./NewsletterForm";
 import BackToTop from "./BackToTop";
 import RotatingSeal from "@/components/ui/RotatingSeal";
 import { SITE } from "@/lib/site";
+import { POLICIES } from "@/lib/policies";
 
 const COLUMNS = [
   {
@@ -246,9 +247,22 @@ export default function SiteFooter() {
             </span>
             <span className="mt-1 block text-[9px] font-medium uppercase tracking-[0.5em] text-champagne-deep">Body &amp; Soul</span>
           </Link>
-          <p className="text-[13px] text-stone">
-            © {year} Puro Body &amp; Soul · A division of {SITE.organisation}
-          </p>
+          <div className="flex flex-col items-center gap-2 md:items-start">
+            <p className="text-[13px] text-stone">
+              © {year} Puro Body &amp; Soul · A division of {SITE.organisation}
+            </p>
+            <nav aria-label="Policies">
+              <ul className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-[12px] md:justify-start">
+                {POLICIES.map((policy) => (
+                  <li key={policy.slug}>
+                    <Link href={`/policies/${policy.slug}`} className="text-stone underline-offset-4 transition hover:text-midnight hover:underline">
+                      {policy.short}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </div>
           <BackToTop />
         </div>
       </div>
