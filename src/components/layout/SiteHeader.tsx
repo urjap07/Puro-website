@@ -208,7 +208,7 @@ export default function SiteHeader({ concerns = [], hasNewArrivals = false }: { 
               <Search size={19} strokeWidth={1.3} />
             </button>
 
-            <nav aria-label="Primary" className="hidden items-center gap-5 lg:flex xl:gap-9 [&>*]:max-xl:tracking-[0.12em]">
+            <nav aria-label="Primary" className="hidden items-center gap-3.5 lg:flex xl:gap-9 [&>*]:max-xl:tracking-[0.08em]">
               <button
                 type="button"
                 aria-expanded={panel === "shop"}
@@ -243,9 +243,12 @@ export default function SiteHeader({ concerns = [], hasNewArrivals = false }: { 
             <Wordmark tone={tone} />
           </Link>
 
-          {/* Right: FAQs, contact, search, saved, bag */}
+          {/* Right: policies, FAQs, contact, search, saved, bag */}
           <div className="flex items-center justify-end gap-0.5 sm:gap-1">
-            <nav aria-label="Help" className="mr-2 hidden items-center gap-4 lg:flex xl:mr-5 xl:gap-7 [&>*]:max-xl:tracking-[0.12em]">
+            <nav aria-label="Help" className="hidden items-center gap-3 lg:flex xl:mr-5 xl:gap-7 [&>*]:max-xl:tracking-[0.08em]">
+              <Link href="/policies" className={navLink} onMouseEnter={scheduleClose}>
+                Policies
+              </Link>
               <Link href="/faq" className={navLink} onMouseEnter={scheduleClose}>
                 FAQs
               </Link>

@@ -4,10 +4,10 @@ import { useEffect, useId, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import clsx from "clsx";
 import { ArrowRight, Check, Loader2 } from "lucide-react";
-import { subscribe } from "@/lib/newsletter";
+import { SUBSCRIBED_KEY, subscribe } from "@/lib/newsletter";
 import { SITE } from "@/lib/site";
 
-const STORAGE_KEY = "puro-letter-subscribed";
+const STORAGE_KEY = SUBSCRIBED_KEY;
 
 type Status = "idle" | "sending" | "done" | "error";
 

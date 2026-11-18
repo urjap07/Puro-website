@@ -14,6 +14,7 @@ import { getActiveProducts, getConcerns, type Concern } from "@/db/queries/produ
 import { productsInEdit } from "@/lib/edits";
 import { SITE } from "@/lib/site";
 import "./globals.css";
+import SignupPopup from "@/components/layout/SignupPopup";
 
 /** Editorial display serif for headlines, italics and product names (PRD §7.3). */
 const display = Cormorant_Garamond({
@@ -90,6 +91,7 @@ export default async function RootLayout({
         <CartDrawer />
         <AddedToast />
         <QuickLook />
+        <SignupPopup />
         <FlightLayer />
         <CursorLabel />
         <ScrollProgress />
