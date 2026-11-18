@@ -6,6 +6,7 @@ import { hasDatabase } from "@/lib/data-source";
 import { CheckoutRequest, prepareCheckout } from "@/lib/checkout";
 import { MAX_LINE_QUANTITY } from "@/lib/cart-pricing";
 import { DELIVERY_ZONES, type ZoneId } from "@/lib/delivery-rules";
+import { ORDERS_ENABLED } from "@/lib/orders-config";
 
 /**
  * Placing an order (server only).
@@ -91,6 +92,10 @@ interface LockedVariant extends RowDataPacket {
 const round = (value: number) => Math.round(value * 100) / 100;
 
 export async function placeOrder(body: unknown): Promise<PlaceOrderResult> {
+  // Ordering opens with the payment gateway (lib/orders-config.ts).
+  if (!ORDERS_ENABLED) {
+    return { ok: false, status: 503, errors: { form: "Online ordering opens soon. Your order hasn't been placed and you haven't been charged." } };
+  }
   if (!hasDatabase()) {
     return { ok: false, status: 503, errors: { form: "Ordering isn't available on this version of the site yet." } };
   }

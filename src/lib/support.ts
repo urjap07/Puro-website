@@ -1,5 +1,6 @@
 import { DELIVERY_ZONES, FREE_DELIVERY_THRESHOLD, STANDARD_DELIVERY_FEE } from "@/lib/delivery-rules";
 import { SITE } from "@/lib/site";
+import { ORDERS_ENABLED } from "@/lib/orders-config";
 
 /**
  * Content for the Contact and FAQ pages, in one place so the team can edit
@@ -11,12 +12,12 @@ import { SITE } from "@/lib/site";
  */
 
 /**
- * Ask customers for their order number on the contact form and in the FAQs.
- * Every order placed on the site gets one (e.g. PURO-261117-7K3Q), shown on
- * its confirmation page and under "Your orders" on the account page. The
- * wording keeps a fallback for orders placed by phone or WhatsApp.
+ * Ask customers for their order number on the contact form and in the FAQs —
+ * only once orders can be placed on the site (lib/orders-config.ts). Every
+ * order then gets one (e.g. PURO-261117-7K3Q), shown on its confirmation page
+ * and under "Your orders" on the account page.
  */
-export const ASK_ORDER_NUMBER = true;
+export const ASK_ORDER_NUMBER = ORDERS_ENABLED;
 
 /** How we ask customers to identify their order. */
 const ORDER_REF = ASK_ORDER_NUMBER
@@ -62,12 +63,16 @@ export const FAQ: FaqSection[] = [
     id: "orders-delivery",
     title: "Orders & delivery",
     items: [
-      {
-        q: "Where do I find my order number?",
-        a: [
-          "You'll see it as soon as you place your order — it looks like PURO-261117-7K3Q — on your order confirmation page. It's also saved under \"Your orders\" on your account page on the device you ordered from.",
-        ],
-      },
+      ...(ORDERS_ENABLED
+        ? [
+            {
+              q: "Where do I find my order number?",
+              a: [
+                "You'll see it as soon as you place your order — it looks like PURO-261117-7K3Q — on your order confirmation page. It's also saved under \"Your orders\" on your account page on the device you ordered from.",
+              ],
+            },
+          ]
+        : []),
       {
         q: "How long will my order take to arrive?",
         a: [
@@ -80,7 +85,7 @@ export const FAQ: FaqSection[] = [
       },
       {
         q: "How much does delivery cost on smaller orders?",
-        a: [`Orders under ₹${FREE_DELIVERY} have a delivery charge of ₹${STANDARD_DELIVERY_FEE}, shown at checkout before you place your order.`],
+        a: [`Orders under ₹${FREE_DELIVERY} have a delivery charge of ₹${STANDARD_DELIVERY_FEE}, shown at checkout.`],
         placeholder: true, // PLACEHOLDER — the fee (STANDARD_DELIVERY_FEE in lib/delivery-rules.ts) hasn't been decided.
       },
       {
@@ -110,7 +115,9 @@ export const FAQ: FaqSection[] = [
       {
         q: "How do I pay?",
         a: [
-          "Right now you pay on delivery: place your order at checkout, and pay the delivery partner in cash or by UPI when it arrives. Online payment by UPI, cards and net banking is opening soon.",
+          ORDERS_ENABLED
+            ? "Right now you pay on delivery: place your order at checkout, and pay the delivery partner in cash or by UPI when it arrives. Online payment by UPI, cards and net banking is opening soon."
+            : "Secure payment is opening soon. Until then you can fill your bag, add your address and check delivery dates at checkout — your bag stays saved on this device.",
         ],
       },
       {

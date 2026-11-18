@@ -26,6 +26,7 @@ import type { Address } from "@/lib/account-schema";
 import { defaultAddress, orderHref, useAccount } from "@/lib/account-store";
 import type { PlacedOrder } from "@/lib/orders";
 import { notifyTeamOfOrder } from "@/lib/order-notify";
+import { ORDERS_ENABLED } from "@/lib/orders-config";
 import { useCart } from "@/lib/cart-store";
 import { useCheckout, type CheckoutStep } from "@/lib/checkout-store";
 import type { CheckoutResult } from "@/lib/checkout";
@@ -194,6 +195,48 @@ function OrderSummary({ prepared }: { prepared: Extract<CheckoutResult, { ok: tr
 
 /* ------------------------------------------------------------------ */
 
+/** The Cash on delivery step, shown once ORDERS_ENABLED is on. */
+function CashOnDelivery({ children }: { children: React.ReactNode }) {
+  return <>{children}</>;
+}
+
+/** Shown until online ordering opens: nothing is placed or charged. */
+function PaymentComingSoon() {
+  return (
+    <>
+      <div className="glass tint-lilac rounded-[24px] p-5 sm:p-6">
+        <div className="relative z-[2] flex items-start gap-4">
+          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/70 text-[#5E4B8A]">
+            <Lock size={18} strokeWidth={1.6} />
+          </span>
+          <div>
+            <p className="font-display text-[24px] leading-tight text-midnight">Online payment opens soon</p>
+            <p className="mt-2 text-[15px] leading-[1.7] text-graphite/90">
+              We&rsquo;re setting up secure payment by UPI, cards and net banking.{" "}
+              <strong className="font-semibold text-midnight">Your order hasn&rsquo;t been placed and you haven&rsquo;t been charged.</strong> Your bag, address and
+              delivery choices are saved on this device, ready for when payment opens.
+            </p>
+          </div>
+        </div>
+      </div>
+      <button type="button" disabled className="btn-iris mt-6 h-12 w-full cursor-not-allowed !gap-2 !py-0 !font-semibold opacity-60 sm:w-auto sm:!px-10">
+        <Lock size={15} strokeWidth={1.6} /> Place order — payment coming soon
+      </button>
+      <div className="mt-4 flex flex-wrap gap-3 text-[13px]">
+        <Link href="/shop" className="font-semibold text-[#5E4B8A] underline-offset-4 hover:underline">
+          Keep shopping
+        </Link>
+        <span className="text-stone">·</span>
+        <Link href="/account" className="font-semibold text-[#5E4B8A] underline-offset-4 hover:underline">
+          Your account
+        </Link>
+      </div>
+    </>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+
 /**
  * Checkout: contact → address → delivery → payment, each checked on the
  * server. Orders are placed with Cash on Delivery (lib/orders.ts); online
@@ -339,7 +382,7 @@ export default function CheckoutPage() {
   const orderTotal = prepared ? Math.round((prepared.quote.subtotal + prepared.delivery.fee) * 100) / 100 : null;
 
   const placeOrder = async () => {
-    if (!prepared || !address || orderTotal === null || placing) return;
+    if (!ORDERS_ENABLED || !prepared || !address || orderTotal === null || placing) return;
     setPlacing(true);
     setProblems(null);
     attempt.current ??= globalThis.crypto?.randomUUID?.() ?? `${Date.now()}-${Math.random().toString(36).slice(2)}`;
@@ -406,7 +449,8 @@ export default function CheckoutPage() {
             Checkout<em className="text-iris pl-3 pr-1">securely</em>
           </h1>
           <p className="flex items-center gap-2 text-[13px] text-stone">
-            <Lock size={14} strokeWidth={1.6} /> Prices and stock are checked again when you place your order
+            <Lock size={14} strokeWidth={1.6} />{" "}
+            {ORDERS_ENABLED ? "Prices and stock are checked again when you place your order" : "Your details stay on this device until payment opens"}
           </p>
         </div>
 
@@ -590,8 +634,10 @@ export default function CheckoutPage() {
               )}
             </StepPanel>
 
-            {/* 4 · Payment */}
+            {/* 4 · Payment — locked until the payment gateway is in place (lib/orders-config.ts) */}
             <StepPanel number={4} title="Payment" icon={CreditCard} step="payment" current={step}>
+              {ORDERS_ENABLED ? (
+                <CashOnDelivery>
               <div role="radiogroup" aria-label="Payment method" className="grid gap-3">
                 <button
                   type="button"
@@ -640,6 +686,10 @@ export default function CheckoutPage() {
               <p className="mt-3 text-[13px] leading-[1.6] text-stone">
                 By placing your order you agree to pay {orderTotal !== null ? formatPrice(orderTotal) : "the total"} on delivery. You&rsquo;ll get an order number straight away.
               </p>
+                </CashOnDelivery>
+              ) : (
+                <PaymentComingSoon />
+              )}
             </StepPanel>
           </div>
 

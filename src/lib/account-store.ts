@@ -41,6 +41,8 @@ interface AccountState {
   /** Orders placed from this device, newest first. */
   orders: SavedOrder[];
   addOrder: (order: SavedOrder) => void;
+  /** Forget the orders saved on this device. */
+  clearOrders: () => void;
   saveProfile: (profile: Profile) => void;
   /** Adds (no id) or updates an address. The first address becomes the default. */
   saveAddress: (input: AddressInput, id?: string) => Address;
@@ -59,6 +61,7 @@ export const useAccount = create<AccountState>()(
       addresses: [],
       orders: [],
       addOrder: (order) => set((state) => ({ orders: [order, ...state.orders.filter((item) => item.number !== order.number)].slice(0, 50) })),
+      clearOrders: () => set({ orders: [] }),
       saveProfile: (profile) => set({ profile }),
       saveAddress: (input, id) => {
         const existing = id ? get().addresses.find((address) => address.id === id) : undefined;

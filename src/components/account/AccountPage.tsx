@@ -29,6 +29,7 @@ import {
   useAccount,
 } from "@/lib/account-store";
 import { cartCount, cartSubtotal, useCart } from "@/lib/cart-store";
+import { ORDERS_ENABLED } from "@/lib/orders-config";
 import { useWishlist } from "@/lib/wishlist-store";
 import { useRecentlyViewed } from "@/lib/recent-store";
 import { useDestination } from "@/lib/delivery";
@@ -401,7 +402,13 @@ function Addresses() {
 const ORDER_DATE = new Intl.DateTimeFormat("en-IN", { day: "numeric", month: "short", year: "numeric", timeZone: "Asia/Kolkata" });
 
 function Orders() {
-  const orders = useAccount((state) => state.orders);
+  const saved = useAccount((state) => state.orders);
+  const clearOrders = useAccount((state) => state.clearOrders);
+  // Until ordering opens, no real orders exist: forget any test orders saved on this device.
+  useEffect(() => {
+    if (!ORDERS_ENABLED && saved.length) clearOrders();
+  }, [saved.length, clearOrders]);
+  const orders = ORDERS_ENABLED ? saved : [];
   return (
     <section
       id="orders"
@@ -422,7 +429,9 @@ function Orders() {
       {orders.length === 0 ? (
         <>
           <p className="relative z-[2] mt-5 max-w-[520px] text-[15px] leading-7 text-graphite/85">
-            No orders yet. When you place one, its order number, status and details will appear right here.
+            {ORDERS_ENABLED
+              ? "No orders yet. When you place one, its order number, status and details will appear right here."
+              : "No orders yet. Secure checkout is being set up — once it opens, your orders, their order numbers, status and tracking will appear right here."}
           </p>
           <Link href="/shop" className="btn-iris relative z-[2] mt-6 !px-8 !py-3.5">
             Explore the collection
