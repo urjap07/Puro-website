@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ChevronRight, MessageCircle } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import FaqList from "@/components/faq/FaqList";
-import { SITE } from "@/lib/site";
 import { FAQ } from "@/lib/support";
 
 export const metadata: Metadata = {
   title: "Frequently Asked Questions",
-  description: "Delivery times, free delivery, returns, payment, ingredients and more — answers to common questions about PURO Body & Soul.",
+  description: "Delivery, returns and payment, plus skincare advice for face, skin, body and hair — answers to common questions about PURO Body & Soul.",
   alternates: { canonical: "/faq" },
 };
 
@@ -18,7 +17,12 @@ export default function FaqPage() {
     "@type": "FAQPage",
     mainEntity: FAQ.flatMap((section) => section.items)
       .filter((item) => !item.placeholder)
-      .map((item) => ({ "@type": "Question", name: item.q, acceptedAnswer: { "@type": "Answer", text: item.a.join(" ") } })),
+      .map((item) => ({
+        "@type": "Question",
+        name: item.q,
+        // Links are written [label](/path); search engines get the plain label.
+        acceptedAnswer: { "@type": "Answer", text: item.a.join(" ").replace(/\[([^\]]+)\]\([^)]*\)/g, "$1") },
+      })),
   }).replace(/</g, "\\u003c");
 
   return (
@@ -51,15 +55,12 @@ export default function FaqPage() {
         <div className="glass tint-quartz flex flex-col items-center gap-5 rounded-[32px] px-6 py-10 text-center sm:flex-row sm:justify-between sm:px-10 sm:text-left">
           <div className="relative z-[2]">
             <p className="font-display text-[30px] leading-tight text-midnight">Still have a question?</p>
-            <p className="mt-1 text-[15px] text-stone">We&rsquo;re happy to help — write to us or say hello on WhatsApp.</p>
+            <p className="mt-1 text-[15px] text-stone">We&rsquo;re happy to help — write to us or give us a call.</p>
           </div>
           <div className="relative z-[2] flex flex-wrap justify-center gap-3">
             <Link href="/contact" className="btn-primary !px-8 !py-3.5">
               Contact us
             </Link>
-            <a href={SITE.whatsapp} target="_blank" rel="noopener noreferrer" className="btn-glass !px-7 !py-3.5">
-              <MessageCircle size={15} strokeWidth={1.6} /> WhatsApp
-            </a>
           </div>
         </div>
       </section>

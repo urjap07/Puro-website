@@ -68,7 +68,7 @@ export default async function PolicyPage({ params }: PolicyPageProps) {
           <h1 className="mt-5 font-display text-[44px] font-light leading-[1.02] text-midnight sm:text-[64px]">{policy.title}</h1>
           <p className="mt-4 text-[13px] text-stone">Last updated {POLICIES_UPDATED}</p>
           <p className="mt-5 max-w-[680px] text-[17px] leading-[1.8] text-graphite">{policy.intro}</p>
-          {POLICIES_DRAFT && (
+          {POLICIES_DRAFT && !policy.final && (
             <p className="glass tint-saffron mt-6 flex items-start gap-3 rounded-[20px] px-5 py-4 text-[14px] leading-[1.6] text-[#5f430f]">
               <Info size={17} strokeWidth={1.6} className="relative z-[2] mt-0.5 shrink-0" />
               <span className="relative z-[2]">

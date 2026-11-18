@@ -5,6 +5,7 @@ import { parseFilters, type RawParams } from "@/lib/results-params";
 import ResultsHero from "@/components/commerce/ResultsHero";
 import { concernTint } from "@/components/commerce/tints";
 import ShopResults from "@/components/commerce/ShopResults";
+import { CONCERN_COPY } from "@/lib/live-copy";
 
 export const dynamic = "force-dynamic";
 
@@ -28,15 +29,17 @@ export default async function ConcernPage({ params, searchParams }: ConcernPageP
   if (!concern) notFound();
 
   const matching = products.filter((product) => product.concerns.some((item) => item.slug === slug));
+  const copy = CONCERN_COPY[slug];
   const backdrop = matching[0]?.images[1]?.imageUrl ?? "/media/brand/02.jpg";
 
   return (
     <>
       <ResultsHero
         crumbs={[{ label: "Home", href: "/" }, { label: "Shop", href: "/shop" }, { label: concern.name }]}
-        eyebrow={concern.type === "hair" ? "Shop by hair concern" : "Shop by skin concern"}
+        eyebrow={copy?.tagline ?? (concern.type === "hair" ? "Shop by hair concern" : "Shop by skin concern")}
         title={concern.name}
-        description={concern.description}
+        description={copy?.intro ?? concern.description}
+        note={copy?.frequency && <>Routine frequency · <strong className="font-semibold">{copy.frequency}</strong></>}
         image={backdrop}
         links={concerns
           .filter((item) => item.type === concern.type)

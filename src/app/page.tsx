@@ -22,6 +22,7 @@ import Reveal from "@/components/ui/Reveal";
 import ImageReveal from "@/components/motion/ImageReveal";
 import Parallax from "@/components/motion/Parallax";
 import ScrollWords from "@/components/motion/ScrollWords";
+import TrustAndBusiness from "@/components/home/TrustAndBusiness";
 
 export const dynamic = "force-dynamic";
 
@@ -471,6 +472,14 @@ export default async function Home() {
                   <div>
                     <h3 className="font-display text-[32px] font-light leading-[1.05] sm:text-[40px]">{principle.title}</h3>
                     <p className="mt-4 max-w-[520px] text-[15px] leading-[1.8] text-graphite sm:text-[16px]">{principle.text}</p>
+                    {index === 0 && (
+                      <figure className="mt-6 flex items-center gap-4">
+                        <span className="relative h-24 w-24 shrink-0 overflow-hidden rounded-full shadow-[0_14px_30px_-16px_rgba(14,39,42,0.6)] ring-4 ring-white/70">
+                          <Image src="/media/brand/sa-ni-sa-women.webp" alt="Women of Sa-Ni-Sa, who make PURO" fill sizes="96px" className="object-cover" />
+                        </span>
+                        <figcaption className="text-[13px] leading-[1.6] text-stone">Empowering under-privileged women in rural India — the heart of Shramik Naari Sangh.</figcaption>
+                      </figure>
+                    )}
                   </div>
                 </li>
               </Reveal>
@@ -485,6 +494,9 @@ export default async function Home() {
           </ol>
         </div>
       </section>
+
+      {/* ═════ 9 · Why PURO, PURO for business, our clients (from purobodysoul.com) ═════ */}
+      <TrustAndBusiness />
 
       {/* ═════ 10 · Customer reviews ═════ */}
       {reviews.length > 0 && (

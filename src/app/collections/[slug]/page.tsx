@@ -6,6 +6,7 @@ import { parseFilters, type RawParams } from "@/lib/results-params";
 import ResultsHero from "@/components/commerce/ResultsHero";
 import { collectionTint } from "@/components/commerce/tints";
 import ShopResults from "@/components/commerce/ShopResults";
+import { COLLECTION_COPY } from "@/lib/live-copy";
 
 export const dynamic = "force-dynamic";
 
@@ -37,9 +38,9 @@ export default async function CollectionPage({ params, searchParams }: Collectio
     <>
       <ResultsHero
         crumbs={[{ label: "Home", href: "/" }, { label: "Shop", href: "/shop" }, { label: collection.title }]}
-        eyebrow={`${count} ${count === 1 ? "ritual" : "rituals"}`}
+        eyebrow={COLLECTION_COPY[slug] ? `${COLLECTION_COPY[slug].tagline} · ${count} ${count === 1 ? "ritual" : "rituals"}` : `${count} ${count === 1 ? "ritual" : "rituals"}`}
         title={collection.title}
-        description={collection.description}
+        description={COLLECTION_COPY[slug]?.intro ?? collection.description}
         image={collection.image}
         links={COLLECTIONS.map((item) => ({ label: item.title, href: `/collections/${item.slug}`, active: item.slug === slug, tint: collectionTint(item.slug) }))}
         tint={collectionTint(slug)}

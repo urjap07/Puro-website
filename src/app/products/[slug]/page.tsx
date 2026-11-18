@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Check, ChevronRight, Leaf, Rabbit, ShieldCheck } from "lucide-react";
+import { Check, ChevronLeft, ChevronRight, Leaf, Rabbit, ShieldCheck } from "lucide-react";
 import { getActiveProducts, getProductBySlug, getProductReviews, type Product } from "@/db/queries/products";
 import { getProductCollection, productsInCollection } from "@/lib/collections";
 import { displayCertifications } from "@/lib/format";
@@ -126,6 +126,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const reviews = await getProductReviews(product.id);
 
   const collection = getProductCollection(product);
+  // Previous / next product, within this product's collection when it has one.
+  const siblings = collection ? products.filter((item) => getProductCollection(item)?.slug === collection.slug) : products;
+  const position = siblings.findIndex((item) => item.slug === product.slug);
+  const previous = position > 0 ? siblings[position - 1] : null;
+  const next = position >= 0 && position < siblings.length - 1 ? siblings[position + 1] : null;
   const others = products.filter((item) => item.id !== product.id);
   const sameCollection = byReviews(collection ? productsInCollection(others, collection) : others);
   const concernSlugs = product.concerns.map((concern) => concern.slug);
@@ -218,6 +223,21 @@ export default async function ProductPage({ params }: ProductPageProps) {
           )}
           <ChevronRight size={13} strokeWidth={1.4} />
           <span className="text-ink">{product.name}</span>
+          {(previous || next) && (
+            <span className="ml-auto flex items-center gap-1">
+              {previous && (
+                <Link href={`/products/${previous.slug}`} title={previous.name} className="flex items-center gap-1 rounded-full px-3 py-1.5 text-midnight transition hover:bg-white/70">
+                  <ChevronLeft size={14} strokeWidth={1.6} /> Prev
+                </Link>
+              )}
+              <span aria-hidden="true" className="text-stone/50">|</span>
+              {next && (
+                <Link href={`/products/${next.slug}`} title={next.name} className="flex items-center gap-1 rounded-full px-3 py-1.5 text-midnight transition hover:bg-white/70">
+                  Next <ChevronRight size={14} strokeWidth={1.6} />
+                </Link>
+              )}
+            </span>
+          )}
         </nav>
 
         <div className="mt-6 grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] xl:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)_340px] xl:gap-10">

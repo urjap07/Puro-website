@@ -2,12 +2,11 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import clsx from "clsx";
-import { Banknote, CheckCircle2, Gift, MapPin, MessageCircle, PackageCheck, Truck } from "lucide-react";
+import { Banknote, CheckCircle2, Gift, MapPin, PackageCheck, Truck } from "lucide-react";
 import { getActiveProducts } from "@/db/queries/products";
 import { getOrder } from "@/lib/orders";
 import { cutoutFor } from "@/lib/cutouts";
 import { formatPrice } from "@/lib/format";
-import { SITE } from "@/lib/site";
 import CopyOrderNumber from "@/components/orders/CopyOrderNumber";
 
 export const dynamic = "force-dynamic";
@@ -221,9 +220,6 @@ export default async function OrderPage({ params, searchParams }: OrderPageProps
                 <Link href={`/contact?order=${encodeURIComponent(order.number)}`} className="btn-primary !px-6 !py-3 !text-[11px]">
                   Contact us
                 </Link>
-                <a href={SITE.whatsapp} target="_blank" rel="noopener noreferrer" className="btn-glass !px-5 !py-3 !text-[11px]">
-                  <MessageCircle size={14} strokeWidth={1.6} /> WhatsApp
-                </a>
               </div>
             </section>
           </div>

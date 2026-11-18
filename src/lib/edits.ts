@@ -1,6 +1,7 @@
 import type { Product } from "@/db/queries/products";
 import type { SortKey } from "@/components/commerce/ShopResults";
 import type { Tint } from "@/components/commerce/tints";
+import { COLLECTION_COPY } from "@/lib/live-copy";
 
 /**
  * The shop's curated edits: Bestsellers, New Arrivals and PURO Classics.
@@ -58,10 +59,11 @@ export const EDITS: Record<EditKey, Edit> = {
     key: "classics",
     href: "/classics",
     label: "PURO Classics",
-    eyebrow: "Timeless favourites",
+    eyebrow: "Pure. Classic. Traditional.",
     title: "PURO Classics",
     emphasis: "Classics",
-    description: "Time-honoured rituals that have stayed in our collection from the very beginning.",
+    // From purobodysoul.com (lib/live-copy.ts).
+    description: COLLECTION_COPY.classics.intro,
     tint: "terracotta",
     sort: "featured",
   },

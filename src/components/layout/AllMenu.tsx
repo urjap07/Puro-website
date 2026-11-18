@@ -24,6 +24,11 @@ const PURO_WORLD = [
   { label: "Skincare finder", href: "/finder" },
 ];
 
+const BUSINESS = [
+  { label: "Hotel amenities", href: "/hotel" },
+  { label: "Spa products", href: "/spa" },
+];
+
 const HELP = [
   { label: "Contact us", href: "/contact" },
   { label: "FAQs", href: "/faq" },
@@ -71,10 +76,7 @@ export default function AllMenu({
             transition={{ duration: 0.5, ease: EASE }}
           >
             <div className="flex shrink-0 items-center justify-between border-b border-white/70 px-6 py-4">
-              <span className="leading-none">
-                <span className="block font-display text-[26px] font-medium tracking-[0.3em] text-midnight">PURO</span>
-                <span className="mt-1 block text-[8px] font-medium uppercase tracking-[0.5em] text-champagne-deep">Body &amp; Soul</span>
-              </span>
+              <Image src="/media/brand/puro-logo.png" alt="Puro Body & Soul" width={634} height={393} className="h-[44px] w-auto" />
               <button type="button" onClick={onClose} aria-label="Close menu" className="btn-glass h-11 w-11 !p-0">
                 <X size={18} strokeWidth={1.3} />
               </button>
@@ -148,6 +150,15 @@ export default function AllMenu({
                 <ChevronRight size={16} strokeWidth={1.3} className="text-stone" />
               </Link>
               {PURO_WORLD.map((item) => (
+                <Link key={item.href} href={item.href} onClick={onClose} className={row}>
+                  {item.label}
+                  <ChevronRight size={16} strokeWidth={1.3} className="text-stone" />
+                </Link>
+              ))}
+
+              <div className="mx-6 mt-4 h-px bg-ink/10" />
+              <p className={heading}>For business</p>
+              {BUSINESS.map((item) => (
                 <Link key={item.href} href={item.href} onClick={onClose} className={row}>
                   {item.label}
                   <ChevronRight size={16} strokeWidth={1.3} className="text-stone" />

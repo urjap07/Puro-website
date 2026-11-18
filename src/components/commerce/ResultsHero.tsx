@@ -17,6 +17,7 @@ export default function ResultsHero({
   description,
   image,
   links,
+  note,
   tint = "apricot",
 }: {
   crumbs: Crumb[];
@@ -25,6 +26,8 @@ export default function ResultsHero({
   description?: string | null;
   image?: string;
   links?: { label: string; href: string; active?: boolean; tint?: Tint }[];
+  /** A small highlighted note under the description, e.g. a routine frequency. */
+  note?: React.ReactNode;
   /** Colour of the glass: a collection's or concern's tint. */
   tint?: Tint;
 }) {
@@ -51,6 +54,7 @@ export default function ResultsHero({
             <p className={clsx("eyebrow mt-6", colour.text)}>{eyebrow}</p>
             <h1 className="mt-3 font-display text-[44px] leading-[1] text-midnight sm:text-[64px] [&_em]:text-iris [&_em]:pr-1">{title}</h1>
             {description && <p className="mt-4 max-w-[560px] text-[16px] leading-[1.75] text-graphite">{description}</p>}
+            {note && <p className="mt-4 inline-flex items-center gap-2 rounded-full bg-white/70 px-4 py-2 text-[13px] font-medium text-midnight shadow-[inset_0_0_0_1px_rgba(255,255,255,0.8)]">{note}</p>}
             {links && links.length > 0 && (
               <div className="no-scrollbar -mx-3 mt-7 flex gap-2 overflow-x-auto px-3 py-1 sm:mx-0 sm:flex-wrap sm:px-0">
                 {links.map((link) => (

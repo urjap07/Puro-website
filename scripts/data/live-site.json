@@ -52,11 +52,60 @@
     },
     "reviews": [
       {
+        "author": "Sneha Khan",
+        "rating": 5,
+        "title": "Gentle Cleansing Magic!",
+        "body": "This facewash works like gentle cleansing magic! HydrO'Clock foams up luxuriously, removing impurities without stripping away moisture. With Aquaxyl� and Vitamin E, it's perfect for maintaining hydrated, healthy skin.",
+        "date": "2024-04-18",
+        "verified": false
+      },
+      {
+        "author": "Ridhi",
+        "rating": 5,
+        "title": "Skin Hydration Essential!",
+        "body": "HydrO'Clock Foaming Facewash is an essential for skin hydration! It optimizes water reserves and leaves my skin feeling deeply moisturized. With Aquaxyl� and Phytosterol, it's become my go to for soft, supple skin.",
+        "date": "2024-04-12",
+        "verified": false
+      },
+      {
+        "author": "Pratik",
+        "rating": 5,
+        "title": "Revitalizing Refreshment!",
+        "body": "This facewash provides revitalizing refreshment with each use! HydrO'Clock foams up luxuriously, leaving my skin feeling clean and hydrated. With Pro Vitamin B5 and Saffron, it's my daily dose of skin nourishment.",
+        "date": "2024-04-09",
+        "verified": false
+      },
+      {
         "author": "Priyal",
         "rating": 5,
         "title": "Softness Supreme!",
-        "body": "Softness supreme is what HydrO'Clock Foaming Facewash delivers! It's like a spa treatment in every wash, leaving my skin feeling velvety smooth. With Aquaxyl™ and Organic Squalene, it's a must have for hydrated, radiant skin.",
-        "date": "2024-05-30"
+        "body": "Softness supreme is what HydrO'Clock Foaming Facewash delivers! It's like a spa treatment in every wash, leaving my skin feeling velvety smooth. With Aquaxyl� and Organic Squalene, it's a must have for hydrated, radiant skin.",
+        "date": "2024-03-15",
+        "verified": false
+      },
+      {
+        "author": "Komal Khara",
+        "rating": 5,
+        "title": "Radiance Unlocked!",
+        "body": "HydrO'Clock Foaming Facewash unlocks radiance like no other! It optimizes water reserves and maximizes circulation, revealing softer, smoother skin. With Saffron and Vitamin E, it's my secret to a glowing complexion.",
+        "date": "2024-03-11",
+        "verified": false
+      },
+      {
+        "author": "Darshan Pancholi",
+        "rating": 5,
+        "title": "Bubbly Bliss!",
+        "body": "This facewash is pure bubbly bliss! HydrO'Clock leaves my skin feeling refreshed and revitalized with each wash. Infused with Aquaxyl� and Pro Vitamin B5, it's my go to for intense hydration and soft, supple skin.",
+        "date": "2024-02-15",
+        "verified": false
+      },
+      {
+        "author": "Khyati Sanghvi",
+        "rating": 5,
+        "title": "Hydration Heaven!",
+        "body": "HydrO'Clock Foaming Facewash is my hydration heaven! It's like a splash of joy for my skin, leaving it soft, smooth, and nourished. With Aquaxyl� and Vitamin E, it's become an essential part of my skincare routine.",
+        "date": "2024-01-08",
+        "verified": false
       }
     ]
   },
@@ -72,7 +121,137 @@
     "rating": {
       "value": 5,
       "count": 16
-    }
+    },
+    "reviews": [
+      {
+        "author": "Jsdv",
+        "rating": 5,
+        "title": "Awesome web",
+        "body": "Jsdv",
+        "date": "2024-06-01",
+        "verified": false
+      },
+      {
+        "author": "Maya Gupta",
+        "rating": 5,
+        "title": "Radiant Skin Secret!",
+        "body": "I've discovered the secret to radiant skin with Good Cleanse Facewash! It banishes grease and impurities, revealing a fresh complexion. The combination of Turmeric and Licorice works wonders for my skin.",
+        "date": "2024-05-30",
+        "verified": false
+      },
+      {
+        "author": "Kabir Sharma",
+        "rating": 5,
+        "title": "Grease Fighter Extraordinaire!",
+        "body": "Good Cleanse Facewash is an absolute grease fighter! It keeps my oily skin in check without stripping away moisture. Thanks to Turmeric and Aloe Vera, my skin feels clean and balanced.",
+        "date": "2024-05-23",
+        "verified": false
+      },
+      {
+        "author": "Amrita Patel",
+        "rating": 5,
+        "title": "Refreshing Rejuvenator!",
+        "body": "Good Cleanse Facewash is a refreshing rejuvenator! It washes away grease without drying out my skin. With Aloe Vera and Licorice, it's my daily pick-me-up for clear, supple skin.",
+        "date": "2024-05-06",
+        "verified": false
+      },
+      {
+        "author": "Rahul Mehta",
+        "rating": 5,
+        "title": "Radiance Reviver!",
+        "body": "As a guy who loves outdoor activities, I rely on Good Cleanse Facewash to revive my radiance after a long day. Its gentle formula with Turmeric and Licorice clears away impurities, leaving my skin feeling rejuvenated.",
+        "date": "2024-04-18",
+        "verified": false
+      },
+      {
+        "author": "Natasha Khan",
+        "rating": 5,
+        "title": "Glow Getter's Dream!",
+        "body": "Good Cleanse Facewash is every glow getter's dream! It effortlessly removes grease and leaves my skin feeling fresh and bright. Infused with Turmeric and Aloe Vera, it's a staple in my skincare routine.",
+        "date": "2024-04-12",
+        "verified": false
+      },
+      {
+        "author": "Natasha Gupta",
+        "rating": 5,
+        "title": "Skin Renewal Elixir!",
+        "body": "It is like a skin renewal elixir! It washes away grease and impurities, leaving my skin feeling soft and refreshed. With Aloe Vera and Licorice, it's a gentle yet effective cleanser for daily use.",
+        "date": "2023-12-21",
+        "verified": false
+      },
+      {
+        "author": "Siddharth Sharma",
+        "rating": 5,
+        "title": "Complexion Reviver!",
+        "body": "This Facewash is my complexion reviver! It removes grease and reveals a brighter, clearer skin tone. Infused with Turmeric and Licorice, it's become my go-to for achieving a fresh, radiant complexion.",
+        "date": "2023-11-11",
+        "verified": false
+      },
+      {
+        "author": "Priya Mehta",
+        "rating": 5,
+        "title": "Clear Skin Crusader!",
+        "body": "Good Cleanse Facewash is my clear skin crusader! It banishes grease and impurities, leaving my skin feeling fresh and rejuvenated. With the goodness of Turmeric and Aloe Vera, it's perfect for maintaining a healthy complexion.",
+        "date": "2023-09-15",
+        "verified": false
+      },
+      {
+        "author": "Veer Patel",
+        "rating": 5,
+        "title": "Skin Clarifying Champion!",
+        "body": "I feel it is the skin clarifying champion I've been searching for! It effectively removes grease and leaves my skin feeling clean and refreshed. With Aloe Vera and Licorice, it's a must-have for my daily routine.",
+        "date": "2023-08-12",
+        "verified": false
+      },
+      {
+        "author": "Aisha Ahmed",
+        "rating": 5,
+        "title": "Freshness Infusion!",
+        "body": "With Good Cleanse Facewash, it's like a daily infusion of freshness for my skin! It removes grease and impurities without stripping away moisture. Infused with Turmeric and Licorice, it's my secret to a clear complexion.",
+        "date": "2023-07-12",
+        "verified": false
+      },
+      {
+        "author": "Kabir Khan",
+        "rating": 5,
+        "title": "Oil Control Expert!",
+        "body": "Good Cleanse Facewash is my oil control expert! It keeps my skin matte without over-drying. Thanks to Turmeric and Aloe Vera, my complexion looks clearer and more balanced.",
+        "date": "2022-12-26",
+        "verified": false
+      },
+      {
+        "author": "Meera Desai",
+        "rating": 5,
+        "title": "Skin Illuminator!",
+        "body": "Good Cleanse Facewash is my skin illuminator! It washes away grease and leaves my skin feeling soft and supple. With Aloe Vera and Licorice, it's a gentle yet effective cleanser for achieving a radiant complexion.",
+        "date": "2022-12-04",
+        "verified": false
+      },
+      {
+        "author": "Rohit Singh",
+        "rating": 5,
+        "title": "Pore Purifier!",
+        "body": "Good Cleanse Facewash is my go-to pore purifier! It deeply cleanses my skin without drying it out. With Turmeric and Licorice, it's perfect for preventing breakouts and maintaining clear, healthy skin.",
+        "date": "2022-11-25",
+        "verified": false
+      },
+      {
+        "author": "Sameer Patel",
+        "rating": 5,
+        "title": "Skin Savior!",
+        "body": "Good Cleanse Facewash is a true skin savior! It clears away grease and leaves my skin feeling clean and refreshed. With Aloe Vera and Licorice, it's gentle yet effective, perfect for my sensitive skin.",
+        "date": "2022-11-16",
+        "verified": false
+      },
+      {
+        "author": "Priya Sharma",
+        "rating": 5,
+        "title": "Gentle Glow Enhancer!",
+        "body": "Good Cleanse Facewash is a gentle glow enhancer! It removes grease and reveals a brighter complexion. Infused with Turmeric and Aloe Vera, it's become my go-to for achieving clear, radiant skin.",
+        "date": "2022-08-11",
+        "verified": false
+      }
+    ]
   },
   "aqua-riche-night-repair-gel-cream": {
     "liveSlug": "night-gel-lotion",
@@ -100,7 +279,168 @@
         "rating": 5,
         "title": "Just Love the product",
         "body": "I have used this.It has done wonders for me.",
-        "date": "2024-05-31"
+        "date": "2024-05-31",
+        "verified": false
+      },
+      {
+        "author": "Aarav Singh",
+        "rating": 5,
+        "title": "Skin Renewal Wonder!",
+        "body": "I'm blown away by the results of this exfoliator! It gently renews my skin, leaving it looking smoother and more refreshed. Definitely a must-have in my skincare arsenal!",
+        "date": "2024-05-30",
+        "verified": false
+      },
+      {
+        "author": "Riya Kapoor",
+        "rating": 5,
+        "title": "Radiant Complexion Essential!",
+        "body": "This exfoliator is essential for achieving a radiant complexion! It leaves my skin looking brighter and more even-toned. I can't imagine my skincare routine without it!",
+        "date": "2024-05-23",
+        "verified": false
+      },
+      {
+        "author": "Rahul Sharma",
+        "rating": 5,
+        "title": "Skin Savior!",
+        "body": "I'm so impressed by this exfoliator! It's like a miracle worker for my skin. My complexion looks more radiant and feels incredibly soft. Definitely a game-changer!",
+        "date": "2024-05-06",
+        "verified": false
+      },
+      {
+        "author": "Priya Malhotra",
+        "rating": 5,
+        "title": "Youthful Glow Restored!",
+        "body": "This product has restored my youthful glow! My skin looks brighter and feels smoother after just a few uses. It's gentle yet effective. Love it!",
+        "date": "2024-04-18",
+        "verified": false
+      },
+      {
+        "author": "Varun Kapoor",
+        "rating": 5,
+        "title": "Skin Revival Miracle!",
+        "body": "I'm amazed by the results of this exfoliator! It has revived my dull, tired skin and left it looking refreshed and rejuvenated. I can't recommend it enough!",
+        "date": "2024-04-12",
+        "verified": false
+      },
+      {
+        "author": "Kritika Sharma",
+        "rating": 5,
+        "title": "Skin Love Affair!",
+        "body": "This exfoliator is my skin's new love affair! It leaves my complexion feeling soft, smooth, and pampered. The natural ingredients are a bonus. Definitely worth trying!",
+        "date": "2024-04-09",
+        "verified": false
+      },
+      {
+        "author": "Sameer Shah",
+        "rating": 5,
+        "title": "Radiance Restored!",
+        "body": "I can't get enough of this exfoliator! It has completely restored radiance to my complexion. My skin looks brighter and feels more refreshed after every use. Highly recommend!",
+        "date": "2024-03-15",
+        "verified": false
+      },
+      {
+        "author": "Ananya Singh",
+        "rating": 5,
+        "title": "Skincare Staple!",
+        "body": "This product has become a staple in my skincare routine! It leaves my skin feeling soft, smooth, and rejuvenated. The results are truly amazing. Love it!",
+        "date": "2024-03-11",
+        "verified": false
+      },
+      {
+        "author": "Vikram Malhotra",
+        "rating": 5,
+        "title": "Smooth Skin Delight!",
+        "body": "I'm in love with this exfoliator! It's like a spa treatment at home. My skin feels incredibly smooth and looks more even-toned. Definitely a must-have in any skincare routine!",
+        "date": "2024-02-15",
+        "verified": false
+      },
+      {
+        "author": "Riya Sharma",
+        "rating": 5,
+        "title": "Glow Getter!",
+        "body": "This exfoliator is my secret to achieving a radiant glow! It gently buffs away dead skin cells, leaving my complexion looking brighter and more refreshed. Highly recommend!",
+        "date": "2024-01-08",
+        "verified": false
+      },
+      {
+        "author": "Arjun Khanna",
+        "rating": 5,
+        "title": "Skin Saver!",
+        "body": "Scrubulush to the rescue! This exfoliator has saved my skin from dullness and dryness. I love how it leaves my skin feeling soft, hydrated, and rejuvenated. Definitely a must-have for anyone looking to upgrade their skincare routine!",
+        "date": "2023-12-21",
+        "verified": false
+      },
+      {
+        "author": "Priyanka Singh",
+        "rating": 5,
+        "title": "Youthful Glow Booster!",
+        "body": "Scrubulush is my secret weapon for a youthful glow! I love how it sloughs away dead skin cells, revealing brighter, smoother skin underneath. It's become a staple in my skincare routine!",
+        "date": "2023-11-11",
+        "verified": false
+      },
+      {
+        "author": "Aditya Desai",
+        "rating": 5,
+        "title": "Smooth Skin Magic!",
+        "body": "Scrubulush works like magic! It's incredible how soft and smooth my skin feels after just one use. Plus, the subtle scent is so calming. I'm hooked!",
+        "date": "2023-09-15",
+        "verified": false
+      },
+      {
+        "author": "Riya Sharma",
+        "rating": 5,
+        "title": "Skin Treat Bliss!",
+        "body": "Scrubulush is a treat for my skin! I look forward to using it because it leaves my skin feeling pampered and refreshed. The natural ingredients work wonders, and I love how soft and smooth my skin feels afterward. Highly recommend!",
+        "date": "2023-08-12",
+        "verified": false
+      },
+      {
+        "author": "Siddharth Mehta",
+        "rating": 5,
+        "title": "Radiant Skin Essential!",
+        "body": "Scrubulush is my secret to radiant skin! I've noticed a significant difference in my complexion since using this exfoliator. It's gentle enough for my sensitive skin but still effective at buffing away dullness. Definitely a must-have in any skincare routine!",
+        "date": "2023-07-12",
+        "verified": false
+      },
+      {
+        "author": "Alisha Kapoor",
+        "rating": 5,
+        "title": "Skin's New BFF!",
+        "body": "Scrubulush is my skin's new best friend! I love how it gently exfoliates away dead skin cells, leaving my skin feeling smooth and looking radiant. The natural ingredients make me feel good about what I'm putting on my skin. Highly recommend!",
+        "date": "2022-12-26",
+        "verified": false
+      },
+      {
+        "author": "Rohan Gupta",
+        "rating": 5,
+        "title": "Game-Changer Alert!",
+        "body": "Scrubulush is a game-changer! I've struggled with dull skin for ages, but this exfoliator has completely transformed my complexion. It's easy to use and delivers visible results. My skin has never looked better!",
+        "date": "2022-12-04",
+        "verified": false
+      },
+      {
+        "author": "Sneha Rao",
+        "rating": 5,
+        "title": "Miracle Worker!",
+        "body": "Scrubulush is pure magic! It's gentle yet effective, and the results speak for themselves. My skin feels softer, looks clearer, and has a natural glow. Definitely a must-have in my skincare routine!",
+        "date": "2022-11-25",
+        "verified": false
+      },
+      {
+        "author": "Tanvi Shah",
+        "rating": 5,
+        "title": "Glow Goals Achieved!",
+        "body": "Scrubulush is my new go-to for radiant skin! The heavenly scent of rose and vanilla makes me feel like I'm at a spa. Plus, my skin has never felt smoother. Highly recommend!",
+        "date": "2022-11-16",
+        "verified": false
+      },
+      {
+        "author": "Amit Patel",
+        "rating": 5,
+        "title": "Skin's Best Friend!",
+        "body": "Who knew a scrub could work wonders? Scrubulush has become my daily essential. It's like a mini spa treatment in a jar. My skin feels rejuvenated and looks brighter after every use. Love it!",
+        "date": "2022-08-11",
+        "verified": false
       }
     ]
   },
@@ -126,7 +466,168 @@
         "rating": 5,
         "title": "An absolute essential",
         "body": "My weekend routine starts with the Glow up pithi pack followed by this amazing Nutri Nat hair mask. An absolute essential to get rid of all the dust pollution damage during the week. In love with the glow!!",
-        "date": "2024-05-30"
+        "date": "2024-11-20",
+        "verified": false
+      },
+      {
+        "author": "Rohan Kapoor",
+        "rating": 5,
+        "title": "Radiant Complexion Essential!",
+        "body": "Glow Up Pithi Pack is essential for achieving a radiant complexion! It's like a dose of radiance for my skin",
+        "date": "2024-05-30",
+        "verified": false
+      },
+      {
+        "author": "Tanvi Shah",
+        "rating": 5,
+        "title": "Skin Radiance Restored!",
+        "body": "Thanks to Glow Up Pithi Pack, my skin's radiance has been restored! It's perfect for reducing dullness and revealing a brighter complexion",
+        "date": "2024-05-23",
+        "verified": false
+      },
+      {
+        "author": "Ankit Patel",
+        "rating": 5,
+        "title": "Youthful Glow Unveiled!",
+        "body": "Glow Up Pithi Pack has unveiled a youthful glow for my skin! It's like a burst of radiance in a tube",
+        "date": "2024-05-06",
+        "verified": false
+      },
+      {
+        "author": "Sunita Mehta",
+        "rating": 5,
+        "title": "Skin Renewal Essential!",
+        "body": "This Pithi Pack is essential for renewing my skin! It's perfect for sloughing away dead skin cells and revealing a brighter complexion",
+        "date": "2024-04-18",
+        "verified": false
+      },
+      {
+        "author": "Reena Patel",
+        "rating": 5,
+        "title": "Brighter Complexion Achieved!",
+        "body": "Glow Up Pithi Pack has helped me achieve a brighter complexion! It's like a boost of radiance for my skin",
+        "date": "2024-04-12",
+        "verified": false
+      },
+      {
+        "author": "Sanjay Gupta",
+        "rating": 5,
+        "title": "Skin Revival Wonder!",
+        "body": "This Pithi Pack is a wonder for skin revival! It's perfect for reducing dullness and revealing a brighter complexion",
+        "date": "2024-04-09",
+        "verified": false
+      },
+      {
+        "author": "Aarti Mishra",
+        "rating": 5,
+        "title": "Youthful Radiance Restored!",
+        "body": "Thanks to Glow Up Pithi Pack, my youthful radiance has been restored! It's like turning back the clock for my complexion",
+        "date": "2024-03-15",
+        "verified": false
+      },
+      {
+        "author": "Akash Tiwari",
+        "rating": 5,
+        "title": "Skin Pampering Essential!",
+        "body": "This Pithi Pack is an essential part of my skincare routine for pampering my skin! It's perfect for bringing back that youthful glow",
+        "date": "2024-03-11",
+        "verified": false
+      },
+      {
+        "author": "Swati Sharma",
+        "rating": 5,
+        "title": "Skin Refreshment Delight!",
+        "body": "Glow Up Pithi Pack is a delightful treat for refreshing my skin! It's like giving my complexion a breath of fresh air",
+        "date": "2024-02-15",
+        "verified": false
+      },
+      {
+        "author": "Aditya Desai",
+        "rating": 5,
+        "title": "Skin Revitalization Essential!",
+        "body": "This Pithi Pack is essential for revitalizing my skin! It's perfect for sloughing away dead skin cells and revealing a brighter complexion",
+        "date": "2024-01-08",
+        "verified": false
+      },
+      {
+        "author": "Priyanka Singh",
+        "rating": 5,
+        "title": "Skin Brightening Magic!",
+        "body": "Glow Up Pithi Pack works like magic for brightening my skin! It's perfect for reducing dullness and uneven skin tone",
+        "date": "2023-12-21",
+        "verified": false
+      },
+      {
+        "author": "Rohan Gupta",
+        "rating": 5,
+        "title": "Glowing Complexion Essential!",
+        "body": "Glow Up Pithi Pack is an essential part of my skincare routine for achieving a glowing complexion! It's like a mini facial at home",
+        "date": "2023-11-11",
+        "verified": false
+      },
+      {
+        "author": "Riya Sharma",
+        "rating": 5,
+        "title": "Radiant Skin Revealed!",
+        "body": "Thanks to Glow Up Pithi Pack, my radiant skin has been revealed! It's perfect for reducing dullness and revealing a brighter complexion",
+        "date": "2023-09-15",
+        "verified": false
+      },
+      {
+        "author": "Arjun Patel",
+        "rating": 5,
+        "title": "Skin Renewal Miracle!",
+        "body": "This Pithi Pack is a miracle worker for skin renewal! It's like hitting the reset button for my complexion",
+        "date": "2023-08-12",
+        "verified": false
+      },
+      {
+        "author": "Nisha Singh",
+        "rating": 5,
+        "title": "Skin Revitalization Wonder!",
+        "body": "Glow Up Pithi Pack is a wonder for skin revitalization! It's perfect for bringing back that youthful radiance",
+        "date": "2023-07-12",
+        "verified": false
+      },
+      {
+        "author": "Aakash Sharma",
+        "rating": 5,
+        "title": "Youthful Glow Unlocked!",
+        "body": "Thanks to Glow Up Pithi Pack, I've unlocked a youthful glow! It's like a fountain of youth in a tube",
+        "date": "2022-12-26",
+        "verified": false
+      },
+      {
+        "author": "Sneha Rao",
+        "rating": 5,
+        "title": "Skin Nourishment at its Best!",
+        "body": "Glow Up Pithi Pack provides nourishment at its best! It's like giving my skin a much needed drink of water",
+        "date": "2022-12-04",
+        "verified": false
+      },
+      {
+        "author": "Priya Patel",
+        "rating": 5,
+        "title": "Glowing Complexion Achieved!",
+        "body": "Thanks to Glow Up Pithi Pack, I've achieved the glowing complexion I've always dreamed of! It's like a secret weapon for radiant skin",
+        "date": "2022-11-25",
+        "verified": false
+      },
+      {
+        "author": "Riya Sharma",
+        "rating": 5,
+        "title": "Radiance Restored!",
+        "body": "Glow Up Pithi Pack has truly restored radiance to my skin! It's like a rejuvenating spa treatment in a tube",
+        "date": "2022-11-16",
+        "verified": false
+      },
+      {
+        "author": "Vikram Malhotra",
+        "rating": 5,
+        "title": "Skin Savior!",
+        "body": "This Pithi Pack is a true skin savior! I've struggled with dullness and uneven skin tone, but Glow Up has come to the rescue",
+        "date": "2022-08-11",
+        "verified": false
       }
     ]
   },
@@ -146,11 +647,180 @@
     },
     "reviews": [
       {
+        "author": "Vikram",
+        "rating": 5,
+        "title": "Glow Guru",
+        "body": "Glow goals! This pack brightens up my complexion and smells amazing. A must-have in my skincare routine!",
+        "date": "2024-05-30",
+        "verified": false
+      },
+      {
+        "author": "Sakshi Nagia",
+        "rating": 5,
+        "title": "Skin Perfection Elixir",
+        "body": "Flawless skin in a jar! Seriously, this pack is a game-changer. Smooth, bright, and radiant!",
+        "date": "2024-05-23",
+        "verified": false
+      },
+      {
+        "author": "Kiran Rajput",
+        "rating": 5,
+        "title": "Effortless Glow Infuser",
+        "body": "Amazing results, no effort required! This pack clears up my skin and leaves it looking fresh and glowing.",
+        "date": "2024-05-06",
+        "verified": false
+      },
+      {
+        "author": "Pooja",
+        "rating": 5,
+        "title": "Refreshing Radiance Enhancer",
+        "body": "Clear, smooth, and radiant! This pack is like a breath of fresh air for my skin. Easy to use and effective!",
+        "date": "2024-04-18",
+        "verified": false
+      },
+      {
+        "author": "Aryan Goswami",
+        "rating": 5,
+        "title": "Glow Getter",
+        "body": "Radiant skin, here I come! This pack gives me that lit-from-within glow. Plus, it's so refreshing to use!",
+        "date": "2024-04-12",
+        "verified": false
+      },
+      {
+        "author": "Shreya",
+        "rating": 5,
+        "title": "Flawless Radiance Booster",
+        "body": "Second chance at flawless skin? Yes, please! This pack makes my complexion brighter and more radiant than ever.",
+        "date": "2024-04-09",
+        "verified": false
+      },
+      {
+        "author": "Rohan Patel",
+        "rating": 5,
+        "title": "Silky Smooth Sensation",
+        "body": "Smooth operator! This pack leaves my skin feeling ridiculously soft and supple. Like a spa day at home!",
+        "date": "2024-03-15",
+        "verified": false
+      },
+      {
+        "author": "Anjali Banerjee",
+        "rating": 5,
+        "title": "Radiance Revealer",
+        "body": "Hello, glow! This pack brightens up my complexion like nobody's business. Plus, it smells amazing!",
+        "date": "2024-03-11",
+        "verified": false
+      },
+      {
+        "author": "Rajat M",
+        "rating": 5,
+        "title": "Youthful Firmness Guru",
+        "body": "Who needs surgery when you have Vita Clay? This pack firms and tightens like a dream. Youthful skin, here I come!",
+        "date": "2024-02-15",
+        "verified": false
+      },
+      {
+        "author": "Neha Kukreja",
+        "rating": 5,
+        "title": "Blemish Banisher",
+        "body": "Blemishes? Bye-bye! This pack is like a magic eraser for my skin. Clear and radiant? Check and check!",
+        "date": "2024-01-08",
+        "verified": false
+      },
+      {
+        "author": "Sneha Turakhia",
+        "rating": 5,
+        "title": "Pore Perfectionist",
+        "body": "Pores? What pores? Seriously, this pack tightens them up like nobody's business. Smooth skin, here I come!",
+        "date": "2023-12-21",
+        "verified": false
+      },
+      {
+        "author": "Vivek Mehta",
+        "rating": 5,
+        "title": "Citrus Bliss",
+        "body": "Citrus vibes for days! This Vita Clay Ubtan Pack not only makes my skin look amazing but smells incredible too!",
+        "date": "2023-11-11",
+        "verified": false
+      },
+      {
+        "author": "Priya Reddy",
+        "rating": 5,
+        "title": "Tan Vanishing Miracle",
+        "body": "Tan lines? Not on my watch! This pack makes them vanish, and it smells like a tropical vacation. Win-win!",
+        "date": "2023-09-15",
+        "verified": false
+      },
+      {
+        "author": "Rahul Singh",
+        "rating": 5,
+        "title": "Shine-Be-Gone Savior",
+        "body": "Game-changer alert! Oily skin? Meet your match. This stuff keeps shine at bay and leaves my skin smooth as silk.",
+        "date": "2023-08-12",
+        "verified": false
+      },
+      {
+        "author": "Aarti Malhotra",
+        "rating": 5,
+        "title": "Spa-like Freshness",
+        "body": "This Vita Clay Ubtan Pack? Obsessed! It leaves my skin feeling fresh and clean, like a spa day at home!",
+        "date": "2023-07-12",
+        "verified": false
+      },
+      {
+        "author": "Divya Patel",
+        "rating": 5,
+        "title": "Glow-Boosting Wonder",
+        "body": "This pack is pure magic! It brightens my complexion and leaves my skin glowing. Vita Clay, you've won me over!",
+        "date": "2022-12-26",
+        "verified": false
+      },
+      {
+        "author": "Amit Pandey",
+        "rating": 5,
+        "title": "Youthful Skin Secret",
+        "body": "Vita Clay is my skincare MVP! It firms and tightens my skin, giving it a youthful appearance. Plus, the citrus fragrance is so refreshing.",
+        "date": "2022-12-04",
+        "verified": false
+      },
+      {
+        "author": "Riya",
+        "rating": 5,
+        "title": "Pore-Perfecting Powerhouse",
+        "body": "Say hello to flawless skin! This pack minimizes my pores and controls oil like a boss. Can't imagine my skincare routine without it!",
+        "date": "2022-11-25",
+        "verified": false
+      },
+      {
+        "author": "Kavita Jain",
+        "rating": 5,
+        "title": "Radiance Regimen Essential",
+        "body": "Obsessed with Vita Clay! It's my go-to for that radiant glow. My skin feels refreshed and rejuvenated after every use.",
+        "date": "2022-11-16",
+        "verified": false
+      },
+      {
+        "author": "Aditya Sharma",
+        "rating": 5,
+        "title": "Tan-Detox Dynamo",
+        "body": "Vita Clay Ubtan Pack is a game-changer! It's like a detox session for my skin, banishing tan lines and leaving it smooth and clear.",
+        "date": "2022-08-11",
+        "verified": false
+      },
+      {
+        "author": "Hemina",
+        "rating": 5,
+        "title": "Works like magic",
+        "body": "I have found my match with this Ubtan Pack! All I need to do is apply once a week, let it work its magic on my skin for 30 minutes & wash. My skin feels clean, firm, refreshed & ready to take on the week!",
+        "date": "2022-07-05",
+        "verified": false
+      },
+      {
         "author": "Reshma",
         "rating": 5,
         "title": "Saviour for my Oily skin",
         "body": "Being a mother of two keeps me busy always. Am so happy I found Puro's Vita Clay Ubtan Pack that gives my skin all the care with its wonderful formulation in just 20 minutes. A saviour for my oily skin & a relief during scorching summers!",
-        "date": "2024-05-30"
+        "date": "2021-12-21",
+        "verified": false
       }
     ]
   },
@@ -175,7 +845,128 @@
         "rating": 5,
         "title": "Awsom Result & amazing product",
         "body": "My Nephew n son both  13 year old has severe heat burns as they has to play their passion cricket in hot summer.... very effective in Reducing heat burns,redness n dryness v fast n easily",
-        "date": "2026-05-06"
+        "date": "2026-05-06",
+        "verified": false
+      },
+      {
+        "author": "Sanjay Gupta",
+        "rating": 5,
+        "title": "Cooling Care for Stressed Skin!",
+        "body": "Aquench Soothing Hydro Gel provides cooling care for my stressed skin! It's perfect for soothing irritation and redness post waxing or threading. With Witch Hazel and Aloe Vera, it's a must have for my skincare routine.",
+        "date": "2024-04-09",
+        "verified": false
+      },
+      {
+        "author": "Aarti Mishra",
+        "rating": 5,
+        "title": "Revitalize and Relax!",
+        "body": "This hydro gel helps me revitalize and relax my skin! Aquench soothes irritation and redness with ease. Infused with Essential Oils and Aloe Vera, it's a calming treat for my skin after a long day.",
+        "date": "2024-03-15",
+        "verified": false
+      },
+      {
+        "author": "Akash Tiwari",
+        "rating": 5,
+        "title": "Skin Calming Elixir!",
+        "body": "Aquench Soothing Hydro Gel is a skin calming elixir! It's perfect for soothing irritation and redness post threading. With Licorice and Aloe Vera, it's gentle yet effective, leaving my skin feeling cool and refreshed.",
+        "date": "2024-03-11",
+        "verified": false
+      },
+      {
+        "author": "Swati Sharma",
+        "rating": 5,
+        "title": "Hydration Booster Shot!",
+        "body": "Aquench Soothing Hydro Gel is like a hydration booster shot for my skin! It's perfect for replenishing moisture after exposure to heat or pollution. With Essential Oils and Aloe Vera, it's my skin's best friend!",
+        "date": "2024-02-15",
+        "verified": false
+      },
+      {
+        "author": "Aditya Desai",
+        "rating": 5,
+        "title": "Rescue Remedy for Skin Woes!",
+        "body": "Aquench Soothing Hydro Gel is my rescue remedy for all skin woes! It's perfect for soothing irritation and redness post waxing. With Witch Hazel and Aloe Vera, it's gentle yet effective, leaving my skin feeling calm and refreshed.",
+        "date": "2024-01-08",
+        "verified": false
+      },
+      {
+        "author": "Priyanka Singh",
+        "rating": 5,
+        "title": "Renew and Rejuvenate!",
+        "body": "This hydro gel helps me renew and rejuvenate my skin! Aquench is perfect for repairing damage from heat and pollution. With Essential Oils and Aloe Vera, it's my go to for revitalization and hydration.",
+        "date": "2023-12-21",
+        "verified": false
+      },
+      {
+        "author": "Rohan Gupta",
+        "rating": 5,
+        "title": "Cooling Quencher for My Skin!",
+        "body": "Aquench Soothing Hydro Gel is the cooling quencher my skin needs! It's perfect for soothing any post sun or waxing irritation. With Aloe Vera and Witch Hazel, it's a refreshing treat for my skin.",
+        "date": "2023-11-11",
+        "verified": false
+      },
+      {
+        "author": "Riya Sharma",
+        "rating": 5,
+        "title": "Redness Relief Magic!",
+        "body": "Aquench Soothing Hydro Gel works magic for redness relief! It's my go to solution for calming down post threading irritation. With Licorice and Aloe Vera, it's gentle yet effective, leaving my skin feeling calm and cool.",
+        "date": "2023-09-15",
+        "verified": false
+      },
+      {
+        "author": "Arjun Patel",
+        "rating": 5,
+        "title": "Repair and Refreshment Combo!",
+        "body": "This hydro gel is the ultimate repair and refreshment combo! Aquench soothes my skin after any heat or pollution damage. Infused with Essential Oils and Aloe Vera, it's a game changer for hydration and repair.",
+        "date": "2023-08-12",
+        "verified": false
+      },
+      {
+        "author": "Nisha Singh",
+        "rating": 5,
+        "title": "Soothing Sensation in a Tube!",
+        "body": "Aquench Soothing Hydro Gel is a soothing sensation in a tube! It's perfect for calming my skin after a day in the sun or a threading session. With Witch Hazel and Aloe Vera, it's a skincare essential for me.",
+        "date": "2023-07-12",
+        "verified": false
+      },
+      {
+        "author": "Aakash Sharma",
+        "rating": 5,
+        "title": "Revitalize and Replenish!",
+        "body": "Aquench Soothing Hydro Gel revitalizes and replenishes my skin like no other! It's perfect for addressing post threading or waxing redness. With Essential Oils and Aloe Vera, it's my go to for repair and hydration.",
+        "date": "2022-12-26",
+        "verified": false
+      },
+      {
+        "author": "Sneha Rao",
+        "rating": 5,
+        "title": "Instant Cooling Therapy!",
+        "body": "I swear by Aquench Soothing Hydro Gel for instant cooling therapy! It's my rescue remedy for post sun exposure or waxing irritation. With Aloe Vera and Witch Hazel, it soothes and calms my skin instantly.",
+        "date": "2022-12-04",
+        "verified": false
+      },
+      {
+        "author": "Priya Patel",
+        "rating": 5,
+        "title": "Hydration Heaven!",
+        "body": "Aquench Soothing Hydro Gel is like heaven for my skin's hydration! It's perfect for tackling the damage from heat and pollution. With Licorice and Essential Oils, it's a powerhouse of regeneration and moisture. Love it!",
+        "date": "2022-11-25",
+        "verified": false
+      },
+      {
+        "author": "Vikram Malhotra",
+        "rating": 5,
+        "title": "Cooling Comfort in a Bottle!",
+        "body": "Aquench Soothing Hydro Gel is my go to for cooling comfort! It's a lifesaver after threading or waxing, instantly calming any irritation. With the power of Aloe Vera and Witch Hazel, it's a must have for my skincare routine!",
+        "date": "2022-11-16",
+        "verified": false
+      },
+      {
+        "author": "Riya Sharma",
+        "rating": 5,
+        "title": "Skin Relief at Its Finest!",
+        "body": "This hydro gel is true relief for my skin! Aquench works wonders for any post threading or waxing redness. Infused with Aloe Vera and Essential Oils, it soothes and repairs, leaving my skin feeling rejuvenated.",
+        "date": "2022-08-11",
+        "verified": false
       }
     ]
   },
@@ -198,7 +989,8 @@
         "rating": 5,
         "title": "Best Skin healer",
         "body": "I realised that with age, my skin needed extra nourishment. Body balm melts into my skin, comforts rought patches & uplifts the senses. Now it is my go-to product for dry skin, chapped lips, cracked heels, sunburn & chafing!",
-        "date": "2024-05-30"
+        "date": "2021-07-22",
+        "verified": false
       }
     ]
   },
@@ -219,7 +1011,8 @@
         "rating": 5,
         "title": "Highly recommend this product!",
         "body": "I was done with soaps that strip skin of its natural oils. What I love about this soap? The lovely fragrance of wild rose, the moisturizing effect, & clean ingredients!",
-        "date": "2024-05-30"
+        "date": "2021-11-11",
+        "verified": false
       }
     ]
   },
@@ -241,8 +1034,17 @@
         "author": "Smitha Borundia",
         "rating": 5,
         "title": "Very good product",
-        "body": "I had severe hair fall after surgery. I was so worried for my hair because day by day  volume was getting decreased Then I got to know about Puro hair regrowth oil which has no harmful chemicals .So started to apply and .got amazing results in 3 month.started to grow new baby hair on scalp.I didn't not stop application.Within a year I got same volume like earlier.",
-        "date": "2025-02-07"
+        "body": "I had severe hair fall after surgery.\nI was so worried for my hair because day by day  volume was getting decreased \nThen I got to know about Puro hair regrowth oil which has no harmful chemicals .So started to apply and .got amazing results in 3 month.started to grow new baby hair on scalp.I didn't not stop application.Within a year I got same volume like earlier.",
+        "date": "2025-02-07",
+        "verified": false
+      },
+      {
+        "author": "Parul",
+        "rating": 5,
+        "title": "Really works wonders",
+        "body": "I have a severe hairfall issue, but I am amazed with the results I got after using Lavender Rosemary Hair regrowth serum! It has not only strengthened my hair but has a pleasant aroma too. I will most definitely repurchase this totally natural haircare product!",
+        "date": "2021-10-27",
+        "verified": false
       }
     ]
   },

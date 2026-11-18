@@ -2,14 +2,14 @@ import { Suspense } from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import clsx from "clsx";
-import { ArrowUpRight, ChevronRight, Clock, Mail, MapPin, MessageCircle, Package, Phone } from "lucide-react";
+import { ArrowUpRight, ChevronRight, Clock, Mail, MapPin, Package, Phone } from "lucide-react";
 import ContactForm from "@/components/contact/ContactForm";
 import { SITE } from "@/lib/site";
 import { CONTACT } from "@/lib/support";
 
 export const metadata: Metadata = {
   title: "Contact Us",
-  description: `Write, call or WhatsApp PURO Body & Soul — questions about orders, products, corporate gifting or anything else. ${CONTACT.replyTime}`,
+  description: `Write to or call PURO Body & Soul — questions about orders, products, corporate gifting or anything else. ${CONTACT.replyTime}`,
   alternates: { canonical: "/contact" },
 };
 
@@ -40,16 +40,6 @@ const WAYS = [
     href: SITE.phoneHref,
     tint: "tint-aqua",
     ink: "text-aqua-deep",
-  },
-  {
-    icon: MessageCircle,
-    title: "WhatsApp",
-    note: "Send us a message on WhatsApp",
-    value: "Chat with us",
-    href: SITE.whatsapp,
-    tint: "tint-sage",
-    ink: "text-sage-deep",
-    external: true,
   },
 ];
 
@@ -95,12 +85,11 @@ export default function ContactPage() {
 
       {/* Ways to reach us */}
       <section aria-label="Ways to reach us" className="container-site mt-12">
-        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {WAYS.map(({ icon: Icon, title, note, value, href, tint, ink, external }) => (
+        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {WAYS.map(({ icon: Icon, title, note, value, href, tint, ink }) => (
             <li key={title}>
               <a
                 href={href}
-                {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                 className={clsx("glass glass-hover group flex h-full flex-col rounded-[28px] p-6", tint)}
               >
                 <span className="relative z-[2] flex items-center justify-between">

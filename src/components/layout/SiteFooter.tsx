@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight, BadgeCheck, Check, FlaskConical, HandHeart, Mail, MapPin, Phone, Rabbit } from "lucide-react";
+import { ArrowUpRight, Check, Mail, MapPin, Phone } from "lucide-react";
 import NewsletterForm from "./NewsletterForm";
 import BackToTop from "./BackToTop";
 import RotatingSeal from "@/components/ui/RotatingSeal";
@@ -34,15 +34,21 @@ const COLUMNS = [
       ["Our philosophy", "/our-story"],
       ["Ingredients", "/ingredients"],
       ["Skincare finder", "/finder"],
+      ["Hotel amenities", "/hotel"],
+      ["Spa products", "/spa"],
     ],
   },
 ];
 
-const PROMISES = [
-  { icon: Rabbit, label: "Cruelty-free", note: "PETA certified", tint: "tint-sage", ink: "text-sage-deep" },
-  { icon: FlaskConical, label: "Dermatologically tested", note: "Gentle on skin", tint: "tint-aqua", ink: "text-aqua-deep" },
-  { icon: BadgeCheck, label: "GMP certified", note: "Made with care", tint: "tint-saffron", ink: "text-saffron-deep" },
-  { icon: HandHeart, label: "Gives back", note: "Supports rural women", tint: "tint-quartz", ink: "text-quartz-deep" },
+/** Certification badges, as shown on purobodysoul.com. */
+const BADGES = [
+  { src: "/media/badges/gmp-certified.png", label: "GMP certified" },
+  { src: "/media/badges/dermatologically-tested.png", label: "Dermatologically tested" },
+  { src: "/media/badges/natural-ingredients.png", label: "Natural ingredients" },
+  { src: "/media/badges/silicone-paraben-free.png", label: "Silicone & paraben free" },
+  { src: "/media/badges/peta-cruelty-free.png", label: "PETA cruelty-free" },
+  { src: "/media/badges/non-toxic.png", label: "Non-toxic" },
+  { src: "/media/badges/no-petroleum-mineral-oil.png", label: "No petroleum or mineral oil" },
 ];
 
 const PERKS = ["First look at new rituals", "Seasonal gift edits", "Stories from Sa-Ni-Sa"];
@@ -71,23 +77,9 @@ function FacebookIcon() {
   );
 }
 
-function WhatsAppIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden="true">
-      <path d="M4 20l1.2-3.6A8 8 0 1 1 8 19.1L4 20z" strokeLinejoin="round" />
-      <path
-        d="M9.2 8.6c.2-.4.5-.4.7-.4h.5c.2 0 .4.1.5.4l.6 1.4c.1.2 0 .5-.1.6l-.4.5c-.1.2-.1.4 0 .5.5.9 1.3 1.7 2.2 2.2.2.1.4.1.5 0l.5-.4c.2-.1.4-.2.6-.1l1.4.6c.3.1.4.3.4.5v.5c0 .3-.1.5-.4.7-.5.3-1.1.5-1.7.4-2.6-.5-4.7-2.6-5.2-5.2-.1-.6.1-1.2.4-1.7z"
-        fill="currentColor"
-        stroke="none"
-      />
-    </svg>
-  );
-}
-
 const SOCIALS = [
   { label: "Instagram", href: SITE.social.instagram, icon: InstagramIcon },
   { label: "Facebook", href: SITE.social.facebook, icon: FacebookIcon },
-  { label: "WhatsApp", href: SITE.whatsapp, icon: WhatsAppIcon },
 ];
 
 export default function SiteFooter() {
@@ -142,24 +134,19 @@ export default function SiteFooter() {
         </div>
       </div>
 
-      {/* Promises */}
+      {/* Kind to you, kind to the environment — the brand's certification badges */}
       <div className="container-site">
-        <ul className="grid grid-cols-1 gap-3 min-[480px]:grid-cols-2 lg:grid-cols-4">
-          {PROMISES.map(({ icon: Icon, label, note, tint, ink }) => (
-            <li
-              key={label}
-              className={`glass glass-hover flex items-center gap-4 rounded-[24px] p-4 sm:p-5 ${tint}`}
-            >
-              <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/60 shadow-[inset_0_1px_0_rgba(255,255,255,1),inset_0_0_0_1px_rgba(255,255,255,0.6)] ${ink}`}>
-                <Icon size={19} strokeWidth={1.2} />
-              </span>
-              <span>
-                <span className="block font-display text-[18px] leading-tight text-midnight sm:text-[21px]">{label}</span>
-                <span className="mt-0.5 block text-[12px] text-graphite sm:text-[13px]">{note}</span>
-              </span>
-            </li>
-          ))}
-        </ul>
+        <div className="glass rounded-[32px] px-5 py-8 sm:px-10">
+          <p className="relative z-[2] text-center font-display text-[26px] italic leading-tight text-midnight sm:text-[32px]">Kind to you, kind to the environment</p>
+          <ul className="relative z-[2] mt-6 grid grid-cols-4 gap-x-2 gap-y-5 sm:grid-cols-7">
+            {BADGES.map((badge) => (
+              <li key={badge.label} className="flex flex-col items-center text-center">
+                <Image src={badge.src} alt="" width={84} height={84} className="h-16 w-16 opacity-85 sm:h-20 sm:w-20" />
+                <span className="mt-2 text-[11px] leading-tight text-graphite sm:text-[12px]">{badge.label}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
 
       {/* Links + visit */}
@@ -242,10 +229,7 @@ export default function SiteFooter() {
       <div className="container-site pb-24 pt-3 md:pb-6 md:pr-28">
         <div className="glass-strong flex flex-col items-center gap-6 rounded-[32px] px-6 py-6 text-center md:flex-row md:justify-between md:rounded-full md:px-8 md:py-4 md:text-left">
           <Link href="/" aria-label="Puro Body & Soul — home" className="leading-none">
-            <span className="block font-display text-[30px] tracking-[0.2em] text-midnight" style={{ marginRight: "-0.2em" }}>
-              PURO
-            </span>
-            <span className="mt-1 block text-[9px] font-medium uppercase tracking-[0.5em] text-champagne-deep">Body &amp; Soul</span>
+            <Image src="/media/brand/puro-logo.png" alt="Puro Body & Soul" width={634} height={393} className="h-[56px] w-auto" />
           </Link>
           <div className="flex flex-col items-center gap-2 md:items-start">
             <p className="text-[13px] text-stone">

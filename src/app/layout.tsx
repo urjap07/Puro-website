@@ -39,6 +39,7 @@ const ORGANIZATION_LD = JSON.stringify({
   "@type": "Organization",
   name: "PURO Body & Soul",
   url: SITE.url,
+  logo: `${SITE.url}/media/brand/puro-logo.png`,
   parentOrganization: { "@type": "Organization", name: SITE.organisation },
   email: SITE.email,
   telephone: SITE.phone,

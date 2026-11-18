@@ -6,6 +6,25 @@ import clsx from "clsx";
 import { ChevronDown, Search, X } from "lucide-react";
 import type { FaqSection } from "@/lib/support";
 
+/** Renders an answer, turning [label](/path) into links to pages on this site. */
+function Answer({ text }: { text: string }) {
+  const parts = text.split(/(\[[^\]]+\]\(\/[^)\s]*\))/g);
+  return (
+    <>
+      {parts.map((part, index) => {
+        const match = part.match(/^\[([^\]]+)\]\((\/[^)\s]*)\)$/);
+        return match ? (
+          <Link key={index} href={match[2]} className="font-medium text-[#5E4B8A] underline underline-offset-2 hover:text-midnight">
+            {match[1]}
+          </Link>
+        ) : (
+          part
+        );
+      })}
+    </>
+  );
+}
+
 const TINTS = ["tint-saffron", "tint-aqua", "tint-quartz", "tint-sage", "tint-lilac", "tint-champagne"];
 
 /** Searchable, grouped FAQs. Each question opens in place. */
@@ -21,7 +40,7 @@ export default function FaqList({ sections }: { sections: FaqSection[] }) {
           ...section,
           items: section.items
             .map((item, index) => ({ ...item, key: `${section.id}-${index}` }))
-            .filter((item) => !q || [item.q, ...item.a].join(" ").toLowerCase().includes(q)),
+            .filter((item) => !q || [item.q, ...item.a].join(" ").replace(/\]\([^)]*\)/g, "]").toLowerCase().includes(q)),
         }))
         .filter((section) => section.items.length > 0),
     [sections, q],
@@ -92,7 +111,7 @@ export default function FaqList({ sections }: { sections: FaqSection[] }) {
                     <div id={`${item.key}-answer`} hidden={!expanded} className="pb-5 pr-8">
                       {item.a.map((paragraph) => (
                         <p key={paragraph} className="mt-2 text-[15px] leading-[1.75] text-graphite first:mt-0">
-                          {paragraph}
+                          <Answer text={paragraph} />
                         </p>
                       ))}
                     </div>

@@ -36,37 +36,37 @@ const PILLARS: {
   {
     icon: HeartHandshake,
     title: "Ethical, inside out",
-    text: "Founded to generate awareness about clean beauty, with products that are natural, cruelty-free, non-toxic and free from harmful chemicals and toxins.",
+    text: "Founded to generate awareness about clean beauty, with products that are natural, cruelty-free, non-toxic and free from harmful chemicals and toxins — developed to be safe and effective, and rigorously tested for quality, purity and real, visible results.",
     image: "/media/brand/03.jpg",
   },
   {
     icon: Sprout,
     title: "Inspired by nature",
-    text: "We harness the potent properties of botanical extracts, essential oils and other natural ingredients.",
+    text: "We harness the potent properties of botanical extracts, essential oils and other natural ingredients, sourcing only the finest and purest — each formulation crafted to be kind to your skin and the environment.",
     image: "/media/products/aloe-vibe-shower-gel/02.jpg",
   },
   {
     icon: FlaskConical,
     title: "Backed by science",
-    text: "Historical beauty knowledge meets contemporary research, in formulations rigorously tested for quality and performance.",
+    text: "Puro infuses the magic of ancient beauty secrets with modern science, combining research and proven skincare techniques to develop safe, efficacious formulations tested for quality, purity and performance.",
     image: "/media/products/aqua-riche-night-repair-gel-cream/04.jpg",
   },
   {
     icon: Recycle,
     title: "Kind to the planet",
-    text: "We strive to minimise our environmental footprint with recyclable packaging and sustainable practices.",
+    text: "Every item in our collection is gentle, non-toxic and safe for all skin types — and we strive to minimise our environmental footprint with recyclable packaging and sustainable practices.",
     image: "/media/products/terra-tress-hair-scalp-oil/03.jpg",
   },
   {
     icon: ShieldCheck,
     title: "Transparency & integrity",
-    text: "From sourcing our ingredients to the manufacturing process, we prioritise integrity and honesty.",
+    text: "From sourcing our ingredients to the manufacturing process, we prioritise integrity and honesty. What's listed on our labels is exactly what goes into our products.",
     image: "/media/products/vita-clay-ubtan-pack/06.jpg",
   },
   {
     icon: Rabbit,
     title: "Vegan & cruelty-free",
-    text: "All our products are certified Animal Cruelty-Free by PETA.",
+    text: "All our products are plant-based and certified Animal Cruelty-Free by PETA. None of our items are tested on animals — a compassionate approach to skincare.",
     image: "/media/products/coco-silk-cold-pressed-virgin-coconut-oil/04.jpg",
   },
 ];

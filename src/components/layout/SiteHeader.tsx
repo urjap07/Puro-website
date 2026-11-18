@@ -31,6 +31,11 @@ const SHOP_LINKS = [
   { label: "Gift sets", href: "/collections/gifting" },
 ];
 
+const BUSINESS_LINKS = [
+  { label: "Hotel amenities", href: "/hotel" },
+  { label: "Spa products", href: "/spa" },
+];
+
 const MORE_EDITS = [
   { label: "Top rated", href: "/search?sort=rating" },
   { label: "Under ₹500", href: "/search?price=0-500" },
@@ -44,28 +49,20 @@ const SHOP_FEATURE = [
 
 type PanelKey = "shop" | "concerns";
 
+/** The PURO Body & Soul logo; white over the homepage film, full colour elsewhere. */
 export function Wordmark({ tone = "light" }: { tone?: "light" | "dark" }) {
   return (
-    <span className="block text-center leading-none">
-      <span
-        className={clsx(
-          "block font-display text-[30px] font-medium tracking-[0.32em] transition-colors duration-500 sm:text-[34px]",
-          tone === "light" ? "text-ivory" : "text-midnight",
-        )}
-        style={{ marginRight: "-0.32em" }}
-      >
-        PURO
-      </span>
-      <span
-        className={clsx(
-          "mt-1 block text-[8px] font-medium uppercase tracking-[0.5em] transition-colors duration-500",
-          tone === "light" ? "text-champagne" : "text-champagne-deep",
-        )}
-        style={{ marginRight: "-0.5em" }}
-      >
-        Body &amp; Soul
-      </span>
-    </span>
+    <Image
+      src="/media/brand/puro-logo.png"
+      alt="Puro Body & Soul"
+      width={634}
+      height={393}
+      priority
+      className={clsx(
+        "block h-[46px] w-auto transition-[filter] duration-500 sm:h-[58px]",
+        tone === "light" && "[filter:brightness(0)_invert(1)_drop-shadow(0_1px_6px_rgba(0,0,0,0.35))]",
+      )}
+    />
   );
 }
 
@@ -321,6 +318,16 @@ export default function SiteHeader({ concerns = [], hasNewArrivals = false }: { 
                     <p className="eyebrow">Edits</p>
                     <ul className="mt-5 space-y-3.5">
                       {shopEdits.map((link) => (
+                        <li key={link.href}>
+                          <Link href={link.href} className="text-[14px] text-graphite transition hover:text-midnight">
+                            {link.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                    <p className="eyebrow mt-8">For business</p>
+                    <ul className="mt-4 space-y-3.5">
+                      {BUSINESS_LINKS.map((link) => (
                         <li key={link.href}>
                           <Link href={link.href} className="text-[14px] text-graphite transition hover:text-midnight">
                             {link.label}

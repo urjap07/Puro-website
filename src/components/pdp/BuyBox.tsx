@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import clsx from "clsx";
 import { Gift, Lock, ShoppingBag, Truck, Zap } from "lucide-react";
 import type { Product } from "@/db/queries/products";
@@ -17,7 +18,7 @@ import DeliverTo from "@/components/commerce/DeliverTo";
 export default function BuyBox({ product, isGift = false }: { product: Product; isGift?: boolean }) {
   const variant = useSelectedVariant(product);
   const add = useCart((state) => state.add);
-  const open = useCart((state) => state.open);
+  const router = useRouter();
   const { destination, dates, zone, freeDeliveryApplies } = useDeliveryEstimate();
   const [quantity, setQuantity] = useState(1);
   // A different size may have less stock: start again at one.
@@ -87,8 +88,10 @@ export default function BuyBox({ product, isGift = false }: { product: Product; 
             <button
               type="button"
               onClick={() => {
+                // As on purobodysoul.com: straight to checkout with this item in the bag.
                 add(toCartItem(product, variant), quantity);
-                open();
+                useCart.getState().dismissNotice();
+                router.push("/checkout");
               }}
               className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-gradient-to-b from-[#2b5a5f] via-[#173c40] to-[#10302f] text-ivory shadow-[inset_0_1px_0_rgba(255,255,255,0.35),inset_0_-1px_0_rgba(0,0,0,0.25),0_14px_30px_-14px_rgba(14,39,42,0.7)] text-[13px] font-semibold uppercase tracking-[0.16em] transition hover:brightness-110 active:scale-[0.99]"
             >
